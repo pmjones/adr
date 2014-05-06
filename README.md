@@ -255,8 +255,8 @@ class BlogCreateAction extends Action
         }
 
         // set data into the response
-        $this->response->setData(array('blog' => $blog));
-        $this->response->__invoke();
+        $this->responder->setData(array('blog' => $blog));
+        $this->responder->__invoke();
     }
 }
 ?>
@@ -274,11 +274,11 @@ class BlogCreateResponder extends Responder
         if ($this->data->blog->id) {
             // yes, which means it was saved already.
             // redirect to editing.
-            $this->setRedirect('/blog/edit/{$blog->id}');
+            $this->response->setRedirect('/blog/edit/{$blog->id}');
         } else {
             // no, which means it has not been saved yet.
             // show the creation form with the current response data.
-            $this->setContent($this->view->render(
+            $this->response->setContent($this->view->render(
                 'create.html.php',
                 $this->data
             ));
