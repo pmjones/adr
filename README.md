@@ -44,8 +44,6 @@ The dominant pattern describing web interactions is _Model-View-Controller_. Is 
 
 The two seem very similar. How are they different?
 
-The _View_ does not update the _Model_ or respond back to the _Controller_. Typically, the _View_ does not consider response headers, only the response body. Also typically, a _Controller_ has more than one _Action_ method in it, and managing the different preconditions for these _Action_ methods carries its own overhead.
-
 #### _Model_ vs _Domain_
 
 I can think of no significant differences here, other than that the _Responder_ does not interact with the _Domain_ in meaningful ways. The _Responder_ might use _Domain_ objects like entities and collections, but only for presentation purposes; it does not modify the _Domain_ or feed information back to the _Domain_ as described under MVC.
