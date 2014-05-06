@@ -39,9 +39,9 @@ control to the _Reponse_.
 
 The dominant pattern describing web interactions is _Model-View-Controller_. Is _Action-Domain-Response_ really just _Model-View-Controller_ in drag?  We can see that the ADR terms map very neatly to MVC terms:
 
-    _Model_      <--> _Domain_
-    _View_       <--> _Response_
-    _Controller_ <--> _Action_
+    Model      <--> Domain
+    View       <--> Response
+    Controller <--> Action
 
 The two seem very similar. How are they different?
 
@@ -95,7 +95,7 @@ This does not seem to fit the description of ADR very well.
 
 #### MVC Starting Point
 
-An MVC directory structure for a naive blogging system might look like the following. Note that index and read present an alternative JSON type, and the comments template is a "partial" that also presents an alternative JSON type.
+An MVC directory structure for a naive blogging system might look like the following. Note that `index` and `read` present an alternative JSON type, and the comments template is a "partial" that also presents an alternative JSON type.
 
     controllers/
         BlogController.php # index(), create(), read(), update(), delete()
