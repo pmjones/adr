@@ -1,24 +1,24 @@
-# Action-Domain-Response
+# Action-Domain-Responder
 
 Organizes a single interaction between a web client and a web application into three distinct roles.
 
 ```
-    Action ---> Response
+    Action ---> Responder
       ||
     Domain 
 ```
 
 ## Terms
 
-_Action_ (taken from `<form action="...">`) is the logic that connects the _Domain_ and _Response_.
+_Action_ (taken from `<form action="...">`) is the logic that connects the _Domain_ and _Responder_.
 
 _Domain_ is the domain logic. It manipulates the domain, session, application, and environment data, modifying state and persistence as needed.
 
-_Response_ is logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.
+_Responder_ is logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.
 
 ## Narrative
 
-The term MVC has experienced some [semantic diffusion](http://martinfowler.com/bliki/SemanticDiffusion.html) from its original meaning, especially in a web context. Because of this diffusion, the _Action-Domain-Response_ pattern description is intended as a web-specific refinement of the MVC pattern. 
+The term MVC has experienced some [semantic diffusion](http://martinfowler.com/bliki/SemanticDiffusion.html) from its original meaning, especially in a web context. Because of this diffusion, the _Action-Domain-Responder_ pattern description is intended as a web-specific refinement of the MVC pattern. 
 
 I think ADR more closely fits what we actually do in web development on a daily basis. For example, this pattern is partly revealed by how we generally do web routing and dispatch. We generally route and dispatch *not* to a controller class per se, but to a particular action method within a controller class. 
 
@@ -30,17 +30,16 @@ It is also partly revealed by the fact that we commonly think of the *temnplate*
 
 1. The _Action_ interacts with the _Domain_ and gets back _Domain_ data.
 
-1. The _Action_ feeds the _Domain_ data to the _Response_ logic, and then gives
-control to the _Reponse_.
+1. The _Action_ feeds the _Domain_ data to the _Responder_, and then gives control to the _Reponder_.
 
-1. The web handler sends the response back to the client.
+1. The _Responder_ builds a response, which the web web handler sends back to the client.
 
 ### Compare and Contrast With MVC
 
-The dominant pattern describing web interactions is _Model-View-Controller_. Is _Action-Domain-Response_ really just _Model-View-Controller_ in drag?  We can see that the ADR terms map very neatly to MVC terms:
+The dominant pattern describing web interactions is _Model-View-Controller_. Is _Action-Domain-Responder_ really just _Model-View-Controller_ in drag?  We can see that the ADR terms map very neatly to MVC terms:
 
     Model      <--> Domain
-    View       <--> Response
+    View       <--> Responder
     Controller <--> Action
 
 The two seem very similar. How are they different?
@@ -49,7 +48,7 @@ The _View_ does not update the _Model_ or respond back to the _Controller_. Typi
 
 #### _Model_ vs _Domain_
 
-I can think of no significant differences here, other than that the _Response_ does not interact with the _Domain_ in meaningful ways. The _Response_ might use _Domain_ objects like entities and collections, but only for presentation purposes; it does not modify the _Domain_ or feed information back to the _Domain_ as described under MVC.
+I can think of no significant differences here, other than that the _Responder_ does not interact with the _Domain_ in meaningful ways. The _Responder_ might use _Domain_ objects like entities and collections, but only for presentation purposes; it does not modify the _Domain_ or feed information back to the _Domain_ as described under MVC.
 
 #### _Controller_ vs _Action_
 
@@ -57,15 +56,15 @@ In common usage, most _Controller_ classes in an MVC architecture contain severa
 
 In an ADR architecture, a single _Action_ is the main purpose of a class or closure. Multiple _Action_s would be represented by multiple classes.
 
-The _Action_ interacts with the _Domain_ in the same way a _Controller_ interacts with a _Model_, but does *not* interact with a _View_ or template system. It sets data on the _Response_ and hands over control to it.
+The _Action_ interacts with the _Domain_ in the same way a _Controller_ interacts with a _Model_, but does *not* interact with a _View_ or template system. It sets data on the _Responder_ and hands over control to it.
 
-#### _View_ vs _Response_
+#### _View_ vs _Responder_
 
 In an MVC architecture, a _Controller_ method will usually generate body content via a _View_ (e.g. a _Template View_ or a _Two Step View_). The _Controller_ then injects the generated body content into the response.  The _Controller_ action method will manipulate the response directly to set any needed headers.
 
 Some _Controller_ action methods may present alternative content-types for the same domain data. Because these alternatives may not be consistent over all the different methods, this leads to the presentation logic being somewhat different in each method, each with its own preconditions.
 
-In an ADR architecture, each _Action_ has a separate corresponding _Response_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Response_ and then hands off to the _Response_ completely. The _Response_ is entirely in charge of setting headers, picking content types, rendering a _View_ for the body content, and so on.
+In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering a _View_ for the body content, and so on.
 
 ### Other MVC Pattern Alternatives
 
@@ -199,7 +198,7 @@ The `create()` logic could be reduced somewhat by moving even more of the model 
 
 ### ADR Comparison
 
-In comparison, an ADR directory structure might instead look like this. Note how each _Action_ has a corresponding _Response_.
+In comparison, an ADR directory structure might instead look like this. Note how each _Action_ has a corresponding _Responder_.
 
     Blog/
         Action/
@@ -210,12 +209,12 @@ In comparison, an ADR directory structure might instead look like this. Note how
             BlogDeleteAction.php
         Domain/
             # Model, Gateway, Mapper, Entity, Collection, Service, etc.
-        Response/
-            BlogIndexResponse.php
-            BlogCreateResponse.php
-            BlogReadResponse.php
-            BlogUpdateResponse.php
-            BlogDeleteResponse.php
+        Responder/
+            BlogIndexResponder.php
+            BlogCreateResponder.php
+            BlogReadResponder.php
+            BlogUpdateResponder.php
+            BlogDeleteResponder.php
             html/
                 index.html.php
                 create.html.php
@@ -228,7 +227,7 @@ In comparison, an ADR directory structure might instead look like this. Note how
                 read.json.php
                 _comments.json.php
 
-The _Action_ and _Response_ class pair corresponding to the above _Controller_ `create()` example might look like this:
+The _Action_ and _Responder_ class pair corresponding to the above _Controller_ `create()` example might look like this:
 
 ```php
 <?php
@@ -267,9 +266,9 @@ class BlogCreateAction extends Action
 
 ```php
 <?php
-use Framework\Response;
+use Framework\Responder;
 
-class BlogCreateResponse extends Response
+class BlogCreateResponder extends Responder
 {
     public function __invoke()
     {
@@ -291,12 +290,12 @@ class BlogCreateResponse extends Response
 ?>
 ```
 
-Again, we can see numerous refactoring opportunities here, especially in the domain model work. The point is that the _Action_ does not perform any  _Response_ work at all. That work is handled entirely by the _Response_ logic.
+Again, we can see numerous refactoring opportunities here, especially in the domain model work. The point is that the _Action_ does not perform any  _Responder_ work at all. That work is handled entirely by the _Responder_ logic.
 
 ## Benefits and Drawbacks
 
 One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.
 
-One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Response_ also goes in its own class.
+One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
 
-This drawback may not be so terrible in the longer term. Invididual classes may lead cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Response_. These will play themselves out differently in different systems.
+This drawback may not be so terrible in the longer term. Invididual classes may lead cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
