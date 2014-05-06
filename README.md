@@ -2,11 +2,7 @@
 
 Organizes a single interaction between a web client and a web application into three distinct roles.
 
-```
-    Action ---> Responder
-      ||
-    Domain 
-```
+![ADR](adr.png)
 
 ## Terms
 
@@ -87,6 +83,29 @@ This does not seem to fit the description of ADR very well.
 #### Model-View-ViewModel
 
 [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
+
+#### Resource-Method-Representation
+
+I had not heard of [RMR](http://www.peej.co.uk/articles/rmr-architecture.html) before it was pointed out to me by [ircmaxell on Reddit](http://www.reddit.com/r/PHP/comments/24s8yn/actiondomainresponse_a_tentative_mvc_refinement/cha8jo1)
+
+ADR and RMR seem very similar, and seem to map well to each other:
+
+    Resource       <--> Domain
+    Method         <--> Action
+    Representation <--> Responder
+
+However, some nuances of RMR make me think they are still somewhat different from each other. For example:
+
+> So in an OO language, a HTTP resource can be thought of as an object with private member variables and a number of public methods that correspond to the standard HTTP methods. From an MVC point of view, a resource can be thought of as a model with a bit of controller thrown in.
+
+To me, this seems like mixing concerns just a bit too much. I'd rather see a clearer of the domain model from the action being applied to the domain.
+
+> So the representation is like a view in MVC, we give it a resource object and tell it to serialize the data into it's output format.
+
+There seems to be no allowance for other kinds of HTTP responses, such as "Not Found".  That kind of response is clearly not a representation of the requested resource.
+
+Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into _Domain_ and a _Action_, and where the representation of the response is handled by a _Responder_.
+
 
 ### Examples of MVC vs ADR
 
@@ -268,6 +287,8 @@ use Framework\Responder;
 
 class BlogCreateResponder extends Responder
 {
+    // $this->response is the actual response object, or a response descriptor
+    // $this->view is a view or template system
     public function __invoke()
     {
         // is there an ID on the blog instance?
@@ -297,3 +318,19 @@ One benefit overall is that the pattern more closely describes the day-to-day wo
 One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
 
 This drawback may not be so terrible in the longer term. Invididual classes may lead cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
+
+## Missing Elements
+
+ This pattern concentrates on the refinement of _Model-View-Controller_, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a _Front Controller_.
+
+The ADR pattern does not describe a routing or dispatching element, nor how the _Action_ and _Responder_ relate to a dispatcher. Routing and dispatching are more properly the purview of _Front Controller_, and there are many ways for the _Action_, _Responder_, and any _Front Controller_ mechanism to interact:
+
+- the _Action_ may invoke the _Responder_ directly, which then returns a response;
+
+- the _Responder_ and response may be shared with a _Front Controller_ so that it can invoke them directly;
+
+- the _Action_ may return a _Responder_, which is then invoked to return a response, which is then invoked to send itself;
+
+- and so on.
+
+The ADR pattern does not describe any sort of pre-filter or request-validation element.  These things may either be part of the execution chain *before* an _Action_ is invoked, or they may be part of the invoked _Action_, or they may be injected into an _Action_.  The pre-filter or request-validation logic may or may not bypass the _Action_ to invoke the _Responder_ directly, or it may deliver a response of its own, or it may invoke a separate _Action_ as a result of its logic, and so on.
