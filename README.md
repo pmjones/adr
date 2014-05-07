@@ -24,13 +24,13 @@ _Responder_ is the logic to build an HTTP response or response description. It d
 
 ## Collaborations
 
-1. The web handler dispatches the incoming request to an _Action_.
+1. The web handler dispatches the incoming client request to an _Action_.
 
 1. The _Action_ interacts with the _Domain_ and gets back _Domain_ data.
 
-1. The _Action_ feeds the _Domain_ data to the _Responder_, and then gives control to the _Reponder_.
+1. The _Action_ feeds the _Domain_ data to the _Responder_.
 
-1. The _Responder_ builds a response, which the web handler sends back to the client.
+1. The _Responder_ builds and returns response, which the web handler sends back to the client.
 
 ## Comparisons
 
