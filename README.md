@@ -311,6 +311,8 @@ class BlogCreateResponder extends Responder
 
 Again, we can see numerous refactoring opportunities here, especially in the domain model work. The point is that the _Action_ does not perform any  _Responder_ work at all. That work is handled entirely by the _Responder_ logic.
 
+You can review an extended set of sample ADR code [here](/pmjones/tree/master/src/example-code/).
+
 ## Benefits and Drawbacks
 
 One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.
