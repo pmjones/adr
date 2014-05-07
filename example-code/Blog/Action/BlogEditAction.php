@@ -19,13 +19,12 @@ class BlogEditAction extends AbstractBlogAction
 
     public function __invoke($id)
     {
-        $blog = $this->domain->fetchOneById($id);
-        if ($blog) {
+        $this->responder->blog = $this->domain->fetchOneById($id);
+        if ($this->responder->blog) {
             $data = $this->request->post->get('blog');
-            $this->domain->update($blog, $data);
+            $this->domain->update($this->responder->blog, $data);
         }
             
-        $this->responder->blog = $blog;
         return $this->response();
     }
 }
