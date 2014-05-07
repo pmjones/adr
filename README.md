@@ -62,9 +62,9 @@ In an MVC architecture, a _Controller_ method will usually generate body content
 
 Some _Controller_ action methods may present alternative content-types for the same domain data. Because these alternatives may not be consistent over all the different methods, this leads to the presentation logic being somewhat different in each method, each with its own preconditions.
 
-In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely.
+In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering templates, and so on.
 
-The _Responder_ is entirely in charge of setting headers, picking content types, rendering templates, and so on. Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Transform View_, or any other kind of _View_ system.
+Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Transform View_, or any other kind of _View_ system. Note also that a generic _Responder_ may be used by more than one _Action_. The point is that the _Action_ leaves all header and content work to the _Responder_, not that there must be a different _Responder_ for each different _View_.
 
 ### DCI (Data-Context-Interaction)
 
