@@ -32,6 +32,7 @@ _Responder_ is the logic to build an HTTP response or response description. It d
 
 1. The _Responder_ builds and returns response, which the web handler sends back to the client.
 
+
 ## Comparisons
 
 ### MVC (Model-View-Controller)
@@ -315,17 +316,9 @@ Again, we can see numerous refactoring opportunities here, especially in the dom
 
 You can review an extended set of sample ADR code [here](/pmjones/mvc-refinement/tree/master/example-code).
 
-## Benefits and Drawbacks
+## Commentary
 
-One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.
-
-One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
-
-This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
-
-## Missing Elements
-
- This pattern concentrates on the refinement of _Model-View-Controller_, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a _Front Controller_.
+This pattern concentrates on the refinement of _Model-View-Controller_, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a _Front Controller_.
 
 The ADR pattern does not describe a routing or dispatching element, nor how the _Action_ and _Responder_ relate to a dispatcher. Routing and dispatching are more properly the purview of _Front Controller_, and there are many ways for the _Action_, _Responder_, and any _Front Controller_ mechanism to interact:
 
@@ -337,16 +330,23 @@ The ADR pattern does not describe a routing or dispatching element, nor how the 
 
 - and so on.
 
-The ADR pattern does not describe any sort of pre-filter or request-validation element.  These things may either be part of the execution chain *before* an _Action_ is invoked, or they may be part of the invoked _Action_, or they may be injected into an _Action_.  The pre-filter or request-validation logic may or may not bypass the _Action_ to invoke the _Responder_ directly, or it may deliver a response of its own, or it may invoke a separate _Action_ as a result of its logic, and so on.
+The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a _Front Controller_. Note that pre-filter or request-validation logic may or may not bypass the _Action_ to invoke the _Responder_ directly, or it may deliver a response of its own, or it may invoke a separate _Action_ as a result of its logic, and so on. Likewise, the invoked _Action_ may have its own set of pre-condition checks that cause it to invoke the _Responder_ without ever interacting with the _Domain_. Reasons for these short-circuiting behaviors may include:
 
-* * *
+- HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested _Action_, the _Front Controller_ may return an error response instead of dispatching to the requested _Action_.
 
-Note from MWOP, to be revised for the final version of this document:
+- Authentication. The presence or absence of client credentials, and their validity status, may curtail the need to dispatch to an _Action_ in the first place, or to interact with the _Domain_ while in an _Action_.
 
->I think the main thing is to note that the Front Controller may be
-able to send a response without invoking an ADR triad, and that the
-Action may be able to return a generic and/or application-generic
-response without touching on the domain -- noting the activities I
-mentioned above as potential candidates for such treatment.
+- Authorization. Access-control systems may deny the client's request for the given _Action_, or cause the _Action_ to bypass interactions with _Domain_, and possibly return a response of their own.
 
+- Content negotiation. The _Front Controller_, _Action_, or other intermediary layers may negotiate the various `Accept` headers in the client request. Unsuccessful negotiation may pre-empt _Action_ or _Domain_ behaviors, and/or result in an early-exit response.
+
+- Content validation. If the incoming request data is malformed in some way, the _Action_ might not interact with the _Domain_ at all and move directly to interacting with a _Responder_ to send an error response.
+
+## Benefits and Drawbacks
+
+One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.
+
+One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
+
+This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
 
