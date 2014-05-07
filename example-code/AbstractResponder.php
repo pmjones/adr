@@ -39,7 +39,7 @@ abstract class AbstractResponder
 
     abstract public function __invoke();
 
-    public function responseView($view)
+    protected function responseView($view)
     {
         $this->view->setView($view);
         $this->view->setData($this->data);
