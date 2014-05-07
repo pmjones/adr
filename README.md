@@ -18,7 +18,7 @@ The term MVC has experienced some [semantic diffusion](http://martinfowler.com/b
 
 I think ADR more closely fits what we actually do in web development on a daily basis. For example, this pattern is partly revealed by how we generally do web routing and dispatch. We generally route and dispatch *not* to a controller class per se, but to a particular action method within a controller class. 
 
-It is also partly revealed by the fact that we commonly think of the *temnplate* as the _View_, when in a web context it may be more accurate to say that the *HTTP response* is the _View_.  As such, I think ADR may represent a better separation of concerns than MVC does in a web context.
+It is also partly revealed by the fact that we commonly think of the template as the _View_, when in a web context it may be more accurate to say that the HTTP response is the _View_.  As such, I think ADR may represent a better separation of concerns than MVC does in a web context.
 
 ### Operational Description
 
