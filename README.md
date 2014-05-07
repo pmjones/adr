@@ -83,11 +83,11 @@ Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Tra
 
 This does not seem to fit the description of ADR very well.
 
-### Model-View-ViewModel
+### MVVM (Model-View-ViewModel)
 
 [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
 
-### Resource-Method-Representation
+### RMR (Resource-Method-Representation)
 
 I had not heard of [RMR](http://www.peej.co.uk/articles/rmr-architecture.html) before it was pointed out to me by [ircmaxell on Reddit](http://www.reddit.com/r/PHP/comments/24s8yn/actiondomainresponse_a_tentative_mvc_refinement/cha8jo1).
 
