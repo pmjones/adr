@@ -16,9 +16,9 @@ It is also partly revealed by the fact that we commonly think of the template as
 
 ## Components
 
-_Action_ is the logic that connects the _Domain_ and _Responder_.
+_Action_ is the logic that connects the _Domain_ and _Responder_. It receives the incoming request input, uses that input to interact with the _Domain_, and uses the _Domain_ results to interact with the _Responder_.
 
-_Domain_ is the domain logic. It manipulates the domain, session, application, and environment data, modifying state and persistence as needed.
+_Domain_ is the logic to manipulate the domain, session, application, and environment data, modifying state and persistence as needed.
 
 _Responder_ is the logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.
 
