@@ -28,7 +28,7 @@ It is also partly revealed by the fact that we commonly think of the *temnplate*
 
 1. The _Action_ feeds the _Domain_ data to the _Responder_, and then gives control to the _Reponder_.
 
-1. The _Responder_ builds a response, which the web web handler sends back to the client.
+1. The _Responder_ builds a response, which the web handler sends back to the client.
 
 ### Compare and Contrast With MVC
 
