@@ -321,7 +321,7 @@ One benefit overall is that the pattern more closely describes the day-to-day wo
 
 One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
 
-This drawback may not be so terrible in the longer term. Invididual classes may lead cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
+This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
 
 ## Missing Elements
 
