@@ -1,18 +1,12 @@
 # Action-Domain-Responder
 
+## Purpose
+
 Organizes a single interaction between a web client and a web application into three distinct roles.
 
 ![ADR](adr.png)
 
-## Terms
-
-_Action_ (taken from `<form action="...">`) is the logic that connects the _Domain_ and _Responder_.
-
-_Domain_ is the domain logic. It manipulates the domain, session, application, and environment data, modifying state and persistence as needed.
-
-_Responder_ is logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.
-
-## Narrative
+## Background
 
 The term MVC has experienced some [semantic diffusion](http://martinfowler.com/bliki/SemanticDiffusion.html) from its original meaning, especially in a web context. Because of this diffusion, the _Action-Domain-Responder_ pattern description is intended as a web-specific refinement of the MVC pattern. 
 
@@ -20,7 +14,15 @@ I think ADR more closely fits what we actually do in web development on a daily 
 
 It is also partly revealed by the fact that we commonly think of the template as the _View_, when in a web context it may be more accurate to say that the HTTP response is the _View_.  As such, I think ADR may represent a better separation of concerns than MVC does in a web context.
 
-### Operational Description
+## Components
+
+_Action_ is the logic that connects the _Domain_ and _Responder_.
+
+_Domain_ is the domain logic. It manipulates the domain, session, application, and environment data, modifying state and persistence as needed.
+
+_Responder_ is the logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.
+
+## Collaborations
 
 1. The web handler dispatches the incoming request to an _Action_.
 
@@ -30,7 +32,9 @@ It is also partly revealed by the fact that we commonly think of the template as
 
 1. The _Responder_ builds a response, which the web handler sends back to the client.
 
-### Compare and Contrast With MVC
+## Comparisons
+
+### MVC (Model-View-Controller)
 
 The dominant pattern describing web interactions is _Model-View-Controller_. Is _Action-Domain-Responder_ really just _Model-View-Controller_ in drag?  We can see that the ADR terms map very neatly to MVC terms:
 
@@ -48,7 +52,7 @@ I can think of no significant differences here, other than that the _Responder_ 
 
 In common usage, most _Controller_ classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same _Controller_, the _Controller_ ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each _Controller_ is an individual closure or invokable object, mapping more closely to a single _Action_ (cf. [Slim](http://slimframeworkcom)).
 
-In an ADR architecture, a single _Action_ is the main purpose of a class or closure. Multiple _Action_s would be represented by multiple classes.
+In an ADR architecture, a single _Action_ is the main purpose of a class or closure. Each _Action_ would be represented by a individual class or closure.
 
 The _Action_ interacts with the _Domain_ in the same way a _Controller_ interacts with a _Model_, but does *not* interact with a _View_ or template system. It sets data on the _Responder_ and hands over control to it.
 
@@ -60,19 +64,15 @@ Some _Controller_ action methods may present alternative content-types for the s
 
 In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering a _View_ for the body content, and so on.
 
-### Other MVC Pattern Alternatives
-
-How does ADR compare to other MVC alternatives?
-
-#### DCI (Data-Context-Interaction)
+### DCI (Data-Context-Interaction)
 
 [DCI is described as a complement to MVC](https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction), not a replacement for MVC. I think it is fair to call it a complement to ADR as well.
 
-#### MVP (Model-View-Presenter)
+### MVP (Model-View-Presenter)
 
 [MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html), neither of which seem to fit the ADR description very closely.
 
-#### PAC (Presentation-Abstraction-Control)
+### PAC (Presentation-Abstraction-Control)
 
 [From Wikipedia](https://en.wikipedia.org/wiki/Presentation-abstraction-control):
 
@@ -80,11 +80,11 @@ How does ADR compare to other MVC alternatives?
 
 This does not seem to fit the description of ADR very well.
 
-#### Model-View-ViewModel
+### Model-View-ViewModel
 
 [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
 
-#### Resource-Method-Representation
+### Resource-Method-Representation
 
 I had not heard of [RMR](http://www.peej.co.uk/articles/rmr-architecture.html) before it was pointed out to me by [ircmaxell on Reddit](http://www.reddit.com/r/PHP/comments/24s8yn/actiondomainresponse_a_tentative_mvc_refinement/cha8jo1)
 
@@ -336,3 +336,15 @@ The ADR pattern does not describe a routing or dispatching element, nor how the 
 - and so on.
 
 The ADR pattern does not describe any sort of pre-filter or request-validation element.  These things may either be part of the execution chain *before* an _Action_ is invoked, or they may be part of the invoked _Action_, or they may be injected into an _Action_.  The pre-filter or request-validation logic may or may not bypass the _Action_ to invoke the _Responder_ directly, or it may deliver a response of its own, or it may invoke a separate _Action_ as a result of its logic, and so on.
+
+* * *
+
+Note from MWOP, to be revised for the final version of this document:
+
+>I think the main thing is to note that the Front Controller may be
+able to send a response without invoking an ADR triad, and that the
+Action may be able to return a generic and/or application-generic
+response without touching on the domain -- noting the activities I
+mentioned above as potential candidates for such treatment.
+
+
