@@ -1,5 +1,5 @@
 <?php
-namespace Aura\Blog\Responder;
+namespace Blog\Responder;
 
 abstract class AbstractBlogResponder
 {
