@@ -10,17 +10,17 @@ class BlogBrowseAction extends AbstractBlogAction
     public function __construct(
         Request $request,
         BlogService $domain,
-        BlogReadResponder $responder
+        BlogBrowseResponder $responder
     ) {
         $this->request = $request;
         $this->domain = $domain;
         $this->responder = $responder;
     }
 
-    public function __invoke($id)
+    public function __invoke()
     {
         $page = $this->request->query->get('page', 1);
-        $this->responder->collection = $this->domain->fetchAllByPage($page);
+        $this->responder->data->collection = $this->domain->fetchAllByPage($page);
         return $this->response();
     }
 }

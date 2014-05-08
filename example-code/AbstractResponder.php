@@ -4,7 +4,7 @@ use Aura\Web\Response;
 
 abstract class AbstractResponder
 {
-    protected $data;
+    public $data;
 
     protected $response;
 
@@ -19,7 +19,7 @@ abstract class AbstractResponder
 
     public function __get($key)
     {
-        return $this->data->$key;
+        return isset($this->data->$key) ? $this->data->{$key} : '';
     }
 
     public function __set($key, $val)

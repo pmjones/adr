@@ -19,7 +19,7 @@ class BlogReadAction extends AbstractBlogAction
 
     public function __invoke($id)
     {
-        $this->responder->blog = $this->domain->fetchOneById($id);
+        $this->responder->data->blog = $this->domain->fetchOneById($id);
         return $this->response();
     }
 }

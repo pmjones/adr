@@ -5,7 +5,9 @@ class BlogReadResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        return $this->notFound('collection')
+        $view_registry = $this->view->getViewRegistry();
+        $view_registry->set('read', __DIR__ . '/views/read.php');
+        return $this->notFound('blog')
             || $this->responseView('read');
     }
 }
