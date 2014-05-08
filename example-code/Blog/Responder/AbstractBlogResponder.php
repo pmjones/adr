@@ -1,7 +1,8 @@
 <?php
 namespace Blog\Responder;
+use AbstractResponder;
 
-abstract class AbstractBlogResponder
+abstract class AbstractBlogResponder extends AbstractResponder
 {
     protected function notFound($key)
     {
