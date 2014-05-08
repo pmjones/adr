@@ -314,7 +314,7 @@ class BlogCreateResponder extends Responder
 
 Again, we can see numerous refactoring opportunities here, especially in the domain model work. The point is that the _Action_ does not perform any  _Responder_ work at all. That work is handled entirely by the _Responder_ logic.
 
-You can review an extended set of sample ADR code [here](/pmjones/mvc-refinement/tree/master/example-code).
+You can review an extended set of sample ADR code [here](https://github.com/pmjones/mvc-refinement/blob/master/example-code).
 
 ## Commentary
 
