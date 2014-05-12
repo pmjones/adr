@@ -34,9 +34,7 @@ _Responder_ is the logic to build an HTTP response or response description. It d
 
 1. The web handler sends the response back to the client.
 
-## Comparisons
-
-### MVC (Model-View-Controller)
+## Comparison to MVC (Model-View-Controller)
 
 The dominant pattern describing web interactions is _Model-View-Controller_. Is _Action-Domain-Responder_ really just _Model-View-Controller_ in drag?  We can see that the ADR terms map very neatly to MVC terms:
 
@@ -46,11 +44,11 @@ The dominant pattern describing web interactions is _Model-View-Controller_. Is 
 
 The two seem very similar. How are they different?
 
-#### _Model_ vs _Domain_
+### _Model_ vs _Domain_
 
 I can think of no significant differences here, other than that the _Responder_ does not interact with the _Domain_ in meaningful ways. The _Responder_ might use _Domain_ objects like entities and collections, but only for presentation purposes; it does not modify the _Domain_ or feed information back to the _Domain_ as described under MVC.
 
-#### _Controller_ vs _Action_
+### _Controller_ vs _Action_
 
 In common usage, most _Controller_ classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same _Controller_, the _Controller_ ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each _Controller_ is an individual closure or invokable object, mapping more closely to a single _Action_ (cf. [Slim](http://slimframeworkcom)).
 
@@ -58,7 +56,7 @@ In an ADR architecture, a single _Action_ is the main purpose of a class or clos
 
 The _Action_ interacts with the _Domain_ in the same way a _Controller_ interacts with a _Model_, but does not interact with a _View_ or template system. It sets data on the _Responder_ and hands over control to it.
 
-#### _View_ vs _Responder_
+### _View_ vs _Responder_
 
 In an MVC architecture, a _Controller_ method will usually generate body content via a _View_ (e.g. a _Template View_ or a _Two Step View_). The _Controller_ then injects the generated body content into the response.  The _Controller_ action method will manipulate the response directly to set any needed headers.
 
@@ -67,6 +65,10 @@ Some _Controller_ action methods may present alternative content-types for the s
 In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering templates, and so on.
 
 Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Transform View_, or any other kind of _View_ system. Note also that a generic _Responder_ may be used by more than one _Action_. The point is that the _Action_ leaves all header and content work to the _Responder_, not that there must be a different _Responder_ for each different _View_.
+
+## Comparisons to Other Patterns
+
+These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to MVC.
 
 ### EBI (Entity-Boundary-Interactor)
 
@@ -127,9 +129,9 @@ There seems to be no allowance for other kinds of HTTP responses, such as "Not F
 Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into _Domain_ and a _Action_, and where the representation of the response is handled by a _Responder_.
 
 
-### Examples of MVC vs ADR
+## Examples of MVC vs ADR
 
-#### MVC Starting Point
+### MVC Starting Point
 
 An MVC directory structure for a naive blogging system might look like the following. Note that `index` and `read` present an alternative JSON type, and the comments template is a "partial" that also presents an alternative JSON type.
 
@@ -233,7 +235,7 @@ class BlogController extends Controller
 
 The `create()` logic could be reduced somewhat by moving even more of the model interactions into a _Service Layer_, but the point remains that the _Controller_ typically sets the response headers and content.
 
-### ADR Comparison
+### ADR Revision
 
 In comparison, an ADR directory structure might instead look like this. Note how each _Action_ has a corresponding _Responder_.
 
