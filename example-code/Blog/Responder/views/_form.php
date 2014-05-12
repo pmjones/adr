@@ -34,4 +34,4 @@
             ?></td>
         </tr>
     </table>
-</form>
+<?= $this->tag('/form') ?>

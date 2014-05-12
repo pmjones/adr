@@ -1,6 +1,7 @@
-<?php use Aura\Html\Functions; ?>
+<?php use Aura\Html\Escaper as e; ?>
+
 <p>
     Failed to delete blog post
-    titled "<?= h($this->blog->title); ?>"
-    by <?= h($this->blog->author); ?>.
+    titled "<?= e::h($this->blog->title) ?>"
+    by <?= e::h($this->blog->author) ?>.
 </p>
