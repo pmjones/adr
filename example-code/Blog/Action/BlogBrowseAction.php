@@ -20,7 +20,7 @@ class BlogBrowseAction extends AbstractBlogAction
     public function __invoke()
     {
         $page = $this->request->query->get('page', 1);
-        $this->responder->data->collection = $this->domain->fetchAllByPage($page);
+        $this->responder->collection = $this->domain->fetchAllByPage($page);
         return $this->response();
     }
 }
