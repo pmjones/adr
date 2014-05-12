@@ -4,7 +4,7 @@ use Aura\Web\Response;
 
 abstract class AbstractResponder
 {
-    public $data;
+    protected $data;
 
     protected $response;
 
@@ -15,11 +15,17 @@ abstract class AbstractResponder
         $this->response = $response;
         $this->view = $view;
         $this->data = (object) array();
+        $this->init();
+    }
+
+    protected function init()
+    {
+        // empty by default
     }
 
     public function __get($key)
     {
-        return isset($this->data->$key) ? $this->data->{$key} : '';
+        return $this->data->$key;
     }
 
     public function __set($key, $val)
