@@ -1,0 +1,24 @@
+{
+    "name": "pmjones/mvc-refinement",
+    "description": "An attempt to refine MVC for a web-specific environment.",
+    "homepage": "https://github.com/pmjones/mvc-refinement",
+    "require": {
+        "aura/view": "dev-reduced",
+        "aura/web": "2.0.*@dev",
+        "aura/html": "2.0.*@dev"
+    },
+    "license": "BSD-2-Clause",
+    "authors": [
+        {
+            "name": "Paul M Jones",
+            "email": "pmjones88@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Blog\\": "example-code/Blog",
+            "": "example-code"
+        }
+    },
+    "minimum-stability": "dev"
+}
