@@ -74,7 +74,7 @@ Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Tra
 
 EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, is separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".
 
-I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading the EBI may better describe domain interactions rather than MVC architectural patters.
+I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patters.
 
 If the above description is accurate, though, it appears that ADR maps only roughly to EBI:
 
