@@ -67,6 +67,22 @@ In an ADR architecture, each _Action_ has a separate corresponding _Responder_. 
 
 Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Transform View_, or any other kind of _View_ system. Note also that a generic _Responder_ may be used by more than one _Action_. The point is that the _Action_ leaves all header and content work to the _Responder_, not that there must be a different _Responder_ for each different _View_.
 
+### EBI (Entity-Boundary-Interactor)
+
+[EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) appears to go by several synonyms: ports and adapters, hexagonal architecture, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
+
+EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, is separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".
+
+I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading the EBI may better describe domain interactions rather than MVC architectural patters.
+
+If the above description is accurate, though, it appears that ADR maps only roughly to EBI:
+
+-  the ADR _Action_ and _Responder_ elements represent a web-specific EBI _Boundary_
+
+- the ADR _Domain_ element represents an EBI _Interactor_ element, encapsulating or otherwise hiding the EBI _Entity_ elements from the ADR _Action_.
+
+The fact that ADR is a web-specific pattern, and EBI is general-purpose, makes me think that ADR might be considered subordinate to or a subset of EBI, as it is described above.
+
 ### DCI (Data-Context-Interaction)
 
 [DCI is described as a complement to MVC](https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction), not a replacement for MVC. I think it is fair to call it a complement to ADR as well.
@@ -75,6 +91,10 @@ Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Tra
 
 [MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html), neither of which seem to fit the ADR description very closely.
 
+### MVVM (Model-View-ViewModel)
+
+[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
+
 ### PAC (Presentation-Abstraction-Control)
 
 [From Wikipedia](https://en.wikipedia.org/wiki/Presentation-abstraction-control):
@@ -82,10 +102,6 @@ Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Tra
 > PAC is used as a hierarchical structure of agents, each consisting of a triad of presentation, abstraction and control parts. The agents (or triads) communicate with each other only through the control part of each triad. It also differs from MVC in that within each triad, it completely insulates the presentation (view in MVC) and the abstraction (model in MVC). This provides the option to separately multithread the model and view which can give the user experience of very short program start times, as the user interface (presentation) can be shown before the abstraction has fully initialized.
 
 This does not seem to fit the description of ADR very well.
-
-### MVVM (Model-View-ViewModel)
-
-[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
 
 ### RMR (Resource-Method-Representation)
 
