@@ -5,7 +5,11 @@ class BlogBrowseResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        return $this->notFound('collection')
-            || $this->responseView('browse');
+        $responded = $this->notFound('collection')
+                  || $this->responseView('browse');
+
+        if ($responded) {
+            return $this->response;
+        }
     }
 }

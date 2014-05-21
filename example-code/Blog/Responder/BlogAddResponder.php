@@ -5,8 +5,12 @@ class BlogReadResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        return $this->created()
-            || $this->responseView('add');
+        $responded = $this->created()
+                  || $this->responseView('add');
+                  
+        if ($responded) {
+            return $this->response;
+        }
     }
 
     protected function created()

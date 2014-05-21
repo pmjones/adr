@@ -5,9 +5,13 @@ class BlogDeleteResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        return $this->notFound('blog')
-            || $this->deleteSuccess()
-            || $this->deleteFailure();
+        $responded = $this->notFound('blog')
+                  || $this->deleteSuccess()
+                  || $this->deleteFailure();
+
+        if ($responded) {
+            return $this->response;
+        }
     }
 
     protected function deleteSuccess()
