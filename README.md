@@ -365,7 +365,7 @@ The ADR pattern does not describe any pre-filter or request-validation elements,
 
 ### Alternative Formulations
 
-This pattern may be better formulated as variations on Controller and View from _Model-View-Controller_ instead of a pattern of its own. That is, it may be that _Action_ is a variation similar to _Page Controller_, and thus better termed an _Action Controller_, thereby fitting into the _Controller_ portion of MVC.  Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_, thereby fitting into the _View_ portion of MVC.
+This pattern may be better formulated as variations on _Controller_ and _View_ from _Model-View-Controller_ instead of a pattern of its own. That is, it may be that _Action_ is a variation similar to _Page Controller_, and thus better termed an _Action Controller_, thereby fitting into the _Controller_ portion of MVC.  Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_, thereby fitting into the _View_ portion of MVC.
 
 Having said that, I believe those alternative formulations are probably not as accurate, mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
 
