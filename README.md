@@ -337,6 +337,8 @@ You can review an extended set of sample ADR code [here](https://github.com/pmjo
 
 ## Commentary
 
+### Front Controller Omission
+
 This pattern concentrates on the refinement of _Model-View-Controller_, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a _Front Controller_.
 
 The ADR pattern does not describe a routing or dispatching element, nor how the _Action_ and _Responder_ relate to a dispatcher. Routing and dispatching are more properly the purview of _Front Controller_, and there are many ways for the _Action_, _Responder_, and any _Front Controller_ mechanism to interact:
@@ -360,6 +362,12 @@ The ADR pattern does not describe any pre-filter or request-validation elements,
 - Content negotiation. The _Front Controller_, _Action_, or other intermediary layers may negotiate the various `Accept` headers in the client request. Unsuccessful negotiation may pre-empt _Action_ or _Domain_ behaviors, and/or result in an early-exit response.
 
 - Content validation. If the incoming request data is malformed in some way, the _Action_ might not interact with the _Domain_ at all and move directly to interacting with a _Responder_ to send an error response.
+
+### Alternative Formulations
+
+This pattern may be better formulated as variations on Controller and View from _Model-View-Controller_ instead of a pattern of its own. That is, it may be that _Action_ is a variation similar to _Page Controller_, and thus better termed an _Action Controller_, thereby fitting into the _Controller_ portion of MVC.  Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_, thereby fitting into the _View_ portion of MVC.
+
+Having said that, I believe those alternative formulations are probably not as accurate, mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
 
 ## Benefits and Drawbacks
 
