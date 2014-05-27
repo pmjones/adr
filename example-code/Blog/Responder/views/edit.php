@@ -3,8 +3,8 @@
 <?= $this->ul()->items($this->blog->getMessages())->get(); ?>
 
 <?= $this->render('_form', array(
-    'method' => 'PATCH',
-    'action' => '/blog/edit',
-    'submit' => 'Update',
-    'blog' => $this->blog,
+    '_method' => 'PATCH',
+    '_action' => '/blog/edit',
+    '_submit' => 'Update',
+    '_blog' => $this->blog,
 )); ?>
