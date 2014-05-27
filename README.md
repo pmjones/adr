@@ -44,6 +44,10 @@ The dominant pattern describing web interactions is _Model-View-Controller_. Is 
 
 The two seem very similar. How are they different?
 
+Overall, we can see from Fowler in his [GUI Architectures](http://martinfowler.com/eaaDev/uiArchs.html) essay that "there's not just one view and controller, you have a view-controller pair for each element of the screen, each of the controls and the screen as a whole." This is the primary element of semantic diffusion when applying MVC to web applications.
+
+Here are some more comparisons of the individual elements in MVC vs ADR.
+
 ### _Model_ vs _Domain_
 
 I can think of no significant differences here, other than that the _Responder_ does not interact with the _Domain_ in meaningful ways. The _Responder_ might use _Domain_ objects like entities and collections, but only for presentation purposes; it does not modify the _Domain_ or feed information back to the _Domain_ as described under MVC.
@@ -68,7 +72,7 @@ Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Tra
 
 ## Comparisons to Other Patterns
 
-These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to MVC.
+These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to MVC. See also [the pattern discussion from Derek Greer at LosTechies](http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/).
 
 ### EBI (Entity-Boundary-Interactor)
 
@@ -96,7 +100,15 @@ The fact that ADR is a web-specific pattern, and EBI is general-purpose, makes m
 
 ### MVVM (Model-View-ViewModel)
 
-[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems more suited to desktop applications than web interactions. (Recall that ADR is specifically intended for web interactions.)
+[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR.
+
+The [pattern originator himself](http://blogs.msdn.com/b/johngossman/archive/2005/10/08/478683.aspx) mentions that "the [view] controls themselves manage the interaction with the input devices that is the responsibility of Controller in MVC". Since the _Action_ in ADR roughly corresponds to a _Controller_ in MVC, this means that _Action_ portion in ADR is absent in MVVM.
+
+Likewise, the pattern originator states "In simple examples, the View is data bound directly to the Model. ... the ViewModel contains data-transformers that convert Model types into View types, and it contains Commands the View can use to interact with the Model." So it appears the _View_ and the _Model_ in MVVM are relatively closely tied, whereas in ADR they are not.
+
+Otherwise, the _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
+
+Based on those descriptions, MVVM does not seem to fit the ADR description.
 
 ### PAC (Presentation-Abstraction-Control)
 
@@ -127,6 +139,10 @@ To me, this seems like mixing concerns just a bit too much. I'd rather see a cle
 There seems to be no allowance for other kinds of HTTP responses, such as "Not Found".  That kind of response is clearly not a representation of the requested resource.
 
 Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into _Domain_ and a _Action_, and where the representation of the response is handled by a _Responder_.
+
+### Separated Presentation
+
+There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentatinon, not a specific approach to doing so.
 
 
 ## Examples of MVC vs ADR
@@ -337,6 +353,10 @@ You can review an extended set of sample ADR code [here](https://github.com/pmjo
 
 ## Commentary
 
+### Request Omission
+
+A common critique so far has been that there is no "HTTP request" element present in the pattern.  An earlier version of this document included a request under the title "Request-Action-Domain-Response". However, on further research into MVC and other related architectural pattersn, I noticed that none of them define an input element. To stay in line with precedent, this pattern omits the incoming HTTP request.
+
 ### Front Controller Omission
 
 This pattern concentrates on the refinement of _Model-View-Controller_, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a _Front Controller_.
@@ -365,9 +385,35 @@ The ADR pattern does not describe any pre-filter or request-validation elements,
 
 ### Alternative Formulations
 
-This pattern may be better formulated as variations on _Controller_ and _View_ from _Model-View-Controller_ instead of a pattern of its own. That is, it may be that _Action_ is a variation similar to _Page Controller_, and thus better termed an _Action Controller_, thereby fitting into the _Controller_ portion of MVC.  Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_, thereby fitting into the _View_ portion of MVC.
+This pattern may be better formulated as variations on _Controller_ and _View_ from _Model-View-Controller_ instead of a pattern of its own. 
 
-Having said that, I believe those alternative formulations are probably not as accurate, mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
+That is, it may be that _Action_ is a variation similar to _Page Controller_, and thus better termed an _Action Controller_. It would thereby fit into the _Controller_ portion of MVC.  (Indeed, the formal description for _Page Controller_ says that it represents a "page or action.")
+
+Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_. It would thereby fit into the _View_ portion of MVC.
+
+Having said that, I believe those alternative formulations are probably not as a description of web-based interactions as is ADR. This is mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
+
+### Ambiguous Domain
+
+_Domain_ covers a lot: not just the business domain, but environment and application state as well. It might be better to call this a _Model_, but that too is somewhat ambiguous.
+
+Additionally, it may be that the _Action_ should pass a [_Presentation Model_](http://martinfowler.com/eaaDev/PresentationModel.html) to the _Responder_ instead of _Domain_ data. But then, maybe the _Domain_ service layer used by the _Action_ returns a _Presentation Model_ that encapsulates application state.
+
+### Expanding Actions
+
+One commenter noted that the _Action_ element might be interpreted to allow for different logic based on the incoming request. For example, he noted that readers might expand a single _Action_ to cover different HTTP methods, and put the logc for the different HTTP methods into the same _Action_.
+
+While I believe the pattern implies that each _Action_ should do only one thing, that implication rising from the [_Controller_ vs _Action_](#controller-vs-action) and [RMR vs ADR](#rmr-resource-method-representation) comparisons, I will state it more explicitly here: the idea is that each _Action_ should express one, and only one, action in response to the incoming request.
+
+### Other Commentary
+
+The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
+
+Stephan Hochdörfer responded to that offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; followup discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
+
+Jon Leighton writes about a "Focused Controller" that maps well to the _Action_element in ADR at <http://www.jonathanleighton.com/articles/2012/explaining-focused-controller>.
+
+A followup post regarding _View_ vs _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
 
 ## Benefits and Drawbacks
 
@@ -375,5 +421,16 @@ One benefit overall is that the pattern more closely describes the day-to-day wo
 
 One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
 
-This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.
+This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.  Others have noted that "many classes" may be more easily manageable via IDEs and editors than "fewer classes but more methods" since class lookups are frequently easier than method lookups.
 
+## Acknowledgements
+
+My thanks to the many people who have helped refine this offering, whether through questions, comments, criticism, or commendation. In no particular order, these include:
+
+- Matthew Weier O'Phinney
+- Hari KT
+- Stephan Hochdörfer
+- Adam Culp
+- Dan Horrigan
+- Josh Lockhart
+- Beau Simensen
