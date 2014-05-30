@@ -80,15 +80,15 @@ These are some of the other patterns that are generally seen as refinements of, 
 
 EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, is separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".
 
-I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patters.
+I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patters. If the above description is accurate, it appears that ADR maps only roughly to EBI:
 
-If the above description is accurate, though, it appears that ADR maps only roughly to EBI:
+-  the ADR _Action_ and _Responder_ elements may represent a web-specific EBI _Boundary_
 
--  the ADR _Action_ and _Responder_ elements represent a web-specific EBI _Boundary_
+- the ADR _Domain_ element may represent an EBI _Interactor_ element, encapsulating or otherwise hiding the EBI _Entity_ elements from the ADR _Action_.
 
-- the ADR _Domain_ element represents an EBI _Interactor_ element, encapsulating or otherwise hiding the EBI _Entity_ elements from the ADR _Action_.
+Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the _Action_ as a "port" through which an EBI _Boundary_ is invoked as part of the ADR _Domain_. Finally, the _Responder_ could be seen as an "adapter" back through which the application data is returned.
 
-The fact that ADR is a web-specific pattern, and EBI is general-purpose, makes me think that ADR might be considered subordinate to or a subset of EBI, as it is described above.
+Regardless, it does not appear that ADR is a direct replacement for EBI. It seems more likely that they are complements to each other.
 
 ### DCI (Data-Context-Interaction)
 
@@ -100,15 +100,12 @@ The fact that ADR is a web-specific pattern, and EBI is general-purpose, makes m
 
 ### MVVM (Model-View-ViewModel)
 
-[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR.
+[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR. The _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
 
-The [pattern originator himself](http://blogs.msdn.com/b/johngossman/archive/2005/10/08/478683.aspx) mentions that "the [view] controls themselves manage the interaction with the input devices that is the responsibility of Controller in MVC". Since the _Action_ in ADR roughly corresponds to a _Controller_ in MVC, this means that _Action_ portion in ADR is absent in MVVM.
+However, the _ViewModel_ does not map well to a _Controller_ in MVC or an _Action_ in ADR. Because ADR is a refinement of MVC, it seems reasonable to think that comparisons between MVVM and MVC would apply equally well to ADR.
 
-Likewise, the pattern originator states "In simple examples, the View is data bound directly to the Model. ... the ViewModel contains data-transformers that convert Model types into View types, and it contains Commands the View can use to interact with the Model." So it appears the _View_ and the _Model_ in MVVM are relatively closely tied, whereas in ADR they are not.
+For an extended description of those differences, please see these articles from [Joel Wenzel](http://joel.inpointform.net/software-development/mvvm-vs-mvp-vs-mvc-the-differences-explained/), [Avtar Singh Sohi](http://www.codeproject.com/Articles/228214/Understanding-Basics-of-UI-Design-Pattern-MVC-MVP), [Rachel Appel](http://www.rachelappel.com/comparing-the-mvc-and-mvvm-patterns-along-with-their-respective-viewmodels), and [Niraj Bhatt](https://nirajrules.wordpress.com/2009/07/18/mvc-vs-mvp-vs-mvvm/).
 
-Otherwise, the _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
-
-Based on those descriptions, MVVM does not seem to fit the ADR description.
 
 ### PAC (Presentation-Abstraction-Control)
 
