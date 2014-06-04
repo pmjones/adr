@@ -131,7 +131,7 @@ However, some nuances of RMR make me think they are still somewhat different fro
 
 > So in an OO language, a HTTP resource can be thought of as an object with private member variables and a number of public methods that correspond to the standard HTTP methods. From an MVC point of view, a resource can be thought of as a model with a bit of controller thrown in.
 
-To me, this seems like mixing concerns just a bit too much. I'd rather see a clearer of the domain model from the action being applied to the domain.
+To me, this seems like mixing concerns just a bit too much. I'd rather see a cleaner separation of the domain model from the action being applied to the domain.
 
 > So the representation is like a view in MVC, we give it a resource object and tell it to serialize the data into it's output format.
 
