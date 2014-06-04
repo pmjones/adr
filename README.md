@@ -406,6 +406,14 @@ One commenter noted that the _Action_ element might be interpreted to allow for 
 
 While I believe the pattern implies that each _Action_ should do only one thing, that implication rising from the [_Controller_ vs _Action_](#controller-vs-action) and [RMR vs ADR](#rmr-resource-method-representation) comparisons, I will state it more explicitly here: the idea is that each _Action_ should express one, and only one, action in response to the incoming request.
 
+### A Replacement For, Not Refinement Of, MVC
+
+Nate Abele opines that the ADR pattern should be *replacement* for MVC, one that applies to server-side applications:
+
+> I will say that the more I learn about MVC, the more I think it has little to nothing to do with server-side web applications. ... I think the biggest upshot of your ADR idea is that it provides us a clean break from what I have come to understand is a bad abstraction. My advice would be to avoid defining ADR in terms of MVC except where absolutely necessary.
+
+Via <http://paul-m-jones.com/archives/5993#comment-42425>.
+
 ### Other Commentary
 
 The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
