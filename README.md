@@ -137,7 +137,7 @@ To me, this seems like mixing concerns just a bit too much. I'd rather see a cle
 
 There seems to be no allowance for other kinds of HTTP responses, such as "Not Found".  That kind of response is clearly not a representation of the requested resource.
 
-Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into _Domain_ and a _Action_, and where the representation of the response is handled by a _Responder_.
+Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into a _Domain_ and an _Action_, and where the _Representation_ (i.e., the building of the response) is handled by a _Responder_.
 
 ### Separated Presentation
 
