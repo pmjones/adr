@@ -96,7 +96,24 @@ Regardless, it does not appear that ADR is a direct replacement for EBI. It seem
 
 ### MVP (Model-View-Presenter)
 
-[MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html), neither of which seem to fit the ADR description very closely.
+[MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html). At first this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each otheras noted on the _Passive View_ page. From Fowler's narrative:
+
+> Supervising Controller uses a controller both to handle input response but also to manipulate the view to handle more complex view logic ...
+>
+> A Passive View handles this by reducing the behavior of the UI components to the absolute minimum by using a controller that not just handles responses to user events, but also does all the updating of the view. This allows testing to be focused on the controller with little risk of problems in the view.
+
+Let us examine a little more closely:
+
+- _Model_ and the _Domain_ map closely, as they do in MVC.
+
+- _Passive View_ does not map well to either _Action_ or _Responder_; it might better be regarded as the response that gets returned to the client.
+
+- _Supervising Controller_ might map to _Responder_, in that it "manipulate[s] the view to handle more complex view logic". However, _Responder_ is not responsible for interacting with the _Domain_, and it does not receive the client input, so does not seem to be a good fit for _Supervising Controller_.
+
+- Alternatively, _Supervising Controller_ might map to _Action_, but the _Action_ is not responsible for manipulating the view (i.e. the response).
+
+In all, this seems a case of close-but-not-quite.
+
 
 ### MVVM (Model-View-ViewModel)
 
