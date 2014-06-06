@@ -371,7 +371,7 @@ You can review an extended set of sample ADR code [here](https://github.com/pmjo
 
 ### Request Omission
 
-A common critique so far has been that there is no "HTTP request" element present in the pattern.  An earlier version of this document included a request under the title "Request-Action-Domain-Response". However, on further research into MVC and other related architectural pattersn, I noticed that none of them define an input element. To stay in line with precedent, this pattern omits the incoming HTTP request.
+A common critique so far has been that there is no "HTTP request" element present in the pattern.  An earlier version of this document included a request under the title "Request-Action-Domain-Response". However, on further research into MVC and other related architectural patterns, I noticed that none of them define an input element. To stay in line with precedent, this pattern omits the incoming HTTP request.
 
 ### Front Controller Omission
 
@@ -391,7 +391,7 @@ The ADR pattern does not describe any pre-filter or request-validation elements,
 
 - HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested _Action_, the _Front Controller_ may return an error response instead of dispatching to the requested _Action_.
 
-- Authentication. The presence or absence of client credentials, and their validity status, may curtail the need to dispatch to an _Action_ in the first place, or to interact with the _Domain_ while in an _Action_.
+- Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an _Action_ in the first place, or to interact with the _Domain_ while in an _Action_.
 
 - Authorization. Access-control systems may deny the client's request for the given _Action_, or cause the _Action_ to bypass interactions with _Domain_, and possibly return a response of their own.
 
@@ -425,7 +425,7 @@ While I believe the pattern implies that each _Action_ should do only one thing,
 
 ### A Replacement For, Not Refinement Of, MVC
 
-Nate Abele opines that the ADR pattern should be *replacement* for MVC, one that applies to server-side applications:
+Nate Abele opines that the ADR pattern should be a *replacement* for MVC, one that applies to server-side applications:
 
 > I will say that the more I learn about MVC, the more I think it has little to nothing to do with server-side web applications. ... I think the biggest upshot of your ADR idea is that it provides us a clean break from what I have come to understand is a bad abstraction. My advice would be to avoid defining ADR in terms of MVC except where absolutely necessary.
 
@@ -447,7 +447,7 @@ One benefit overall is that the pattern more closely describes the day-to-day wo
 
 One drawback is that we end up with more classes in the application. Not only does each _Action_ go in its own class, each _Responder_ also goes in its own class.
 
-This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or less-deep inheritance hierachies. It may also lead to  better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.  Others have noted that "many classes" may be more easily manageable via IDEs and editors than "fewer classes but more methods" since class lookups are frequently easier than method lookups.
+This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or shallower inheritance hierachies. It may also lead to better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems.  Others have noted that "many classes" may be more easily manageable via IDEs and editors than "fewer classes but more methods" since class lookups are frequently easier than method lookups.
 
 ## Acknowledgements
 
