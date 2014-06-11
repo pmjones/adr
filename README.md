@@ -78,9 +78,9 @@ These are some of the other patterns that are generally seen as refinements of, 
 
 [EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) appears to go by several synonyms: ports and adapters, hexagonal architecture, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
 
-EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, is separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".
+EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, are separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".
 
-I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patters. If the above description is accurate, it appears that ADR maps only roughly to EBI:
+I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patterns. If the above description is accurate, it appears that ADR maps only roughly to EBI:
 
 -  the ADR _Action_ and _Responder_ elements may represent a web-specific EBI _Boundary_
 
@@ -96,7 +96,7 @@ Regardless, it does not appear that ADR is a direct replacement for EBI. It seem
 
 ### MVP (Model-View-Presenter)
 
-[MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html). At first this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each otheras noted on the _Passive View_ page. From Fowler's narrative:
+[MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html). At first this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each other as noted on the _Passive View_ page. From Fowler's narrative:
 
 > Supervising Controller uses a controller both to handle input response but also to manipulate the view to handle more complex view logic ...
 >
@@ -158,7 +158,7 @@ Having said all that, it may be that ADR could be considered an expanded or supe
 
 ### Separated Presentation
 
-There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentatinon, not a specific approach to doing so.
+There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentation, not a specific approach to doing so.
 
 
 ## Examples of MVC vs ADR
@@ -199,7 +199,7 @@ Here's another type of MVC directory structure:
             _comments.html.php
             _comments.json.php
 
-A typical _Controller_ class in MVC might looks something like the following. Note that there are multiple actions within the _Controller_ class, and that
+A typical _Controller_ class in MVC might look something like the following. Note that there are multiple actions within the _Controller_ class, and that
 the action method deals with the response headers.
 
 ```php
@@ -407,7 +407,7 @@ That is, it may be that _Action_ is a variation similar to _Page Controller_, an
 
 Likewise, it may be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_. It would thereby fit into the _View_ portion of MVC.
 
-Having said that, I believe those alternative formulations are probably not as a description of web-based interactions as is ADR. This is mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
+Having said that, I believe those alternative formulations are probably not as good of a description of web-based interactions as is ADR. This is mostly because of the implicit interactions between _Model_ and _View_ in MVC.  In MVC, the _View_ updates the _Model_. In ADR, the _Responder_ does not update the _Domain_.
 
 ### Ambiguous Domain
 
@@ -419,7 +419,7 @@ Regardless, recall that ADR is presented as a refinement to MVC. Thus, ADR has o
 
 ### Expanding Actions
 
-One commenter noted that the _Action_ element might be interpreted to allow for different logic based on the incoming request. For example, he noted that readers might expand a single _Action_ to cover different HTTP methods, and put the logc for the different HTTP methods into the same _Action_.
+One commenter noted that the _Action_ element might be interpreted to allow for different logic based on the incoming request. For example, he noted that readers might expand a single _Action_ to cover different HTTP methods, and put the logic for the different HTTP methods into the same _Action_.
 
 While I believe the pattern implies that each _Action_ should do only one thing, that implication rising from the [_Controller_ vs _Action_](#controller-vs-action) and [RMR vs ADR](#rmr-resource-method-representation) comparisons, I will state it more explicitly here: the idea is that each _Action_ should express one, and only one, action in response to the incoming request.
 
@@ -435,11 +435,11 @@ Via <http://paul-m-jones.com/archives/5993#comment-42425>.
 
 The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
 
-Stephan Hochdörfer responded to that offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; followup discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
+Stephan Hochdörfer responded to that offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; follow-up discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
 
 Jon Leighton writes about a "Focused Controller" that maps well to the _Action_ element in ADR at <http://www.jonathanleighton.com/articles/2012/explaining-focused-controller>.
 
-A followup post regarding _View_ vs _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
+A follow-up post regarding _View_ vs _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
 
 ## Benefits and Drawbacks
 
