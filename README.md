@@ -199,7 +199,7 @@ Here's another type of MVC directory structure:
             _comments.html.php
             _comments.json.php
 
-A typical _Controller_ class in MVC might looks something like the following. Note that there are multiple actions within the _Controller_ class, and that
+A typical _Controller_ class in MVC might look something like the following. Note that there are multiple actions within the _Controller_ class, and that
 the action method deals with the response headers.
 
 ```php
