@@ -158,7 +158,7 @@ Having said all that, it may be that ADR could be considered an expanded or supe
 
 ### Separated Presentation
 
-There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentatinon, not a specific approach to doing so.
+There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentation, not a specific approach to doing so.
 
 
 ## Examples of MVC vs ADR
