@@ -59,12 +59,12 @@ abstract class AbstractResponder
 
     protected function isFound($key)
     {
-        if (! $this->data->$key) {
+        if (! isset($this->data->$key)) {
             $this->response->status->set(404);
-            return true;
+            return false;
         }
 
-        return false;
+        return true;
     }
 
     protected function isAcceptable()
