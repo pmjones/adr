@@ -441,6 +441,9 @@ Jon Leighton writes about a "Focused Controller" that maps well to the _Action_ 
 
 A followup post regarding _View_ vs _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
 
+Akihito Koritama offers these notes: <https://koriym.github.io/blog/2014/06/08/action-domain-responder/>
+
+
 ## Benefits and Drawbacks
 
 One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.
