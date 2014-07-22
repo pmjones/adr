@@ -63,6 +63,8 @@ abstract class AbstractResponder
             $this->response->status->set(404);
             return true;
         }
+
+        return false;
     }
 
     protected function isAcceptable()
