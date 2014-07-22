@@ -52,16 +52,17 @@ abstract class AbstractResponder
 
     abstract public function __invoke();
 
-    protected function renderView($view)
+    public function setAccept(Accept $accept)
     {
-        $content_type = $this->response->content->getType();
-        if ($content_type) {
-            $view .= $this->available[$content_type];
-        }
+        $this->accept = $accept;
+    }
 
-        $this->view->setView($view);
-        $this->view->setData($this->data);
-        $this->response->content->set($this->view->__invoke());
+    protected function isFound($key)
+    {
+        if (! $this->data->$key) {
+            $this->response->status->set(404);
+            return true;
+        }
     }
 
     protected function isAcceptable()
@@ -80,16 +81,15 @@ abstract class AbstractResponder
         return true;
     }
 
-    public function setAccept(Accept $accept)
+    protected function renderView($view)
     {
-        $this->accept = $accept;
-    }
-
-    protected function isFound($key)
-    {
-        if (! $this->data->$key) {
-            $this->response->status->set(404);
-            return true;
+        $content_type = $this->response->content->getType();
+        if ($content_type) {
+            $view .= $this->available[$content_type];
         }
+
+        $this->view->setView($view);
+        $this->view->setData($this->data);
+        $this->response->content->set($this->view->__invoke());
     }
 }
