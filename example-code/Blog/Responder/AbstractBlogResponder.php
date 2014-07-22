@@ -9,7 +9,9 @@ abstract class AbstractBlogResponder extends AbstractResponder
     {
         $view_names = array(
             'browse',
+            'browse.json',
             'read',
+            'read.json',
             'edit',
             'add',
             'delete-failure',

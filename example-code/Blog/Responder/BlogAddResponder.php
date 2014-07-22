@@ -7,7 +7,7 @@ class BlogReadResponder extends AbstractBlogResponder
     {
         $responded = $this->created()
                   || $this->responseView('add');
-                  
+
         if ($responded) {
             return $this->response;
         }
