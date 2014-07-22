@@ -16,11 +16,9 @@ abstract class AbstractResponder
     protected $view;
 
     public function __construct(
-        Accept $accept,
         Response $response,
         View $view
     ) {
-        $this->accept = $accept;
         $this->response = $response;
         $this->view = $view;
         $this->data = (object) array();
@@ -54,7 +52,7 @@ abstract class AbstractResponder
 
     abstract public function __invoke();
 
-    protected function responseView($view)
+    protected function renderView($view)
     {
         $content_type = $this->response->content->getType();
         if ($content_type) {
@@ -64,30 +62,34 @@ abstract class AbstractResponder
         $this->view->setView($view);
         $this->view->setData($this->data);
         $this->response->content->set($this->view->__invoke());
-        return $this->response;
     }
 
-    protected function notAcceptable()
+    protected function isAcceptable()
     {
-        // nothing available? ignore negotiation.
-        if (! $this->available) {
-            return false;
-        }
-
-        // negotiate a media type.
-        $media = $this->accept->media->negotiate(
-            $this->data->acceptable,
-            array_keys($this->available)
-        );
-
-        // negotiation failure?
-        if (! $media) {
-            $this->response->status->set(406);
+        if (! $this->available || ! $this->accept) {
             return true;
         }
 
-        // negotiation success.
+        $media = $this->accept->media->negotiate(array_keys($this->available));
+        if (! $media) {
+            $this->response->status->set(406);
+            return false;
+        }
+
         $this->response->content->setType($media->available->getValue());
-        return false;
+        return true;
+    }
+
+    public function setAccept(Accept $accept)
+    {
+        $this->accept = $accept;
+    }
+
+    protected function isFound($key)
+    {
+        if (! $this->data->$key) {
+            $this->response->status->set(404);
+            return true;
+        }
     }
 }

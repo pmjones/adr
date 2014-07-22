@@ -5,11 +5,10 @@ class BlogEditResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        $responded = $this->notFound('blog')
-                  || $this->responseView('edit');
-
-        if ($responded) {
-            return $this->response;
+        if ($this->isFound('blog')) {
+            $this->renderView('edit');
         }
+
+        return $this->response;
     }
 }

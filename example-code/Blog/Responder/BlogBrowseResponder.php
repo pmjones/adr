@@ -10,12 +10,10 @@ class BlogBrowseResponder extends AbstractBlogResponder
 
     public function __invoke()
     {
-        $responded = $this->notFound('collection')
-                  || $this->notAcceptable()
-                  || $this->responseView('browse');
-
-        if ($responded) {
-            return $this->response;
+        if ($this->isFound('collection') && $this->isAcceptable()) {
+            $this->renderView('browse');
         }
+
+        return $this->response;
     }
 }

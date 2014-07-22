@@ -21,7 +21,7 @@ class BlogBrowseAction extends AbstractBlogAction
     {
         $page = $this->request->query->get('page', 1);
         $this->responder->collection = $this->domain->fetchAllByPage($page);
-        $this->responder->acceptable = $this->request->accept->media->get();
+        $this->responder->setAccept($this->request->accept);
         return $this->response();
     }
 }

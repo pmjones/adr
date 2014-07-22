@@ -10,12 +10,10 @@ class BlogReadResponder extends AbstractBlogResponder
 
     public function __invoke()
     {
-        $responded = $this->notFound('blog')
-                  || $this->notAcceptable()
-                  || $this->responseView('read');
-
-        if ($responded) {
-            return $this->response;
+        if ($this->isFound('blog') && $this->isAcceptable()) {
+            $this->renderView('read');
         }
+
+        return $this->response;
     }
 }

@@ -20,7 +20,7 @@ class BlogReadAction extends AbstractBlogAction
     public function __invoke($id)
     {
         $this->responder->blog = $this->domain->fetchOneById($id);
-        $this->responder->acceptable = $this->request->accept->media->get();
+        $this->responder->setAccept($this->request->accept);
         return $this->response();
     }
 }

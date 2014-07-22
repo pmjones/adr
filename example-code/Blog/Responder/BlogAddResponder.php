@@ -5,12 +5,11 @@ class BlogReadResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        $responded = $this->created()
-                  || $this->responseView('add');
-
-        if ($responded) {
-            return $this->response;
+        if (! $this->created()) {
+            $this->renderView('add');
         }
+
+        return $this->response;
     }
 
     protected function created()
@@ -18,7 +17,9 @@ class BlogReadResponder extends AbstractBlogResponder
         if (isset($this->data->blog->id)) {
             $id = $this->data->blog->id;
             $this->response->redirect->created("/blog/read/{$id}");
-            return $this->response;
+            return true;
         }
+
+        return false;
     }
 }
