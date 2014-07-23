@@ -73,9 +73,12 @@ abstract class AbstractResponder
             return true;
         }
 
-        $media = $this->accept->media->negotiate(array_keys($this->available));
+        $available = array_keys($this->available);
+        $media = $this->accept->media->negotiate($available);
         if (! $media) {
             $this->response->status->set(406);
+            $this->response->content->setType('text/plain');
+            $this->response->content->set(implode(',', $available));
             return false;
         }
 
