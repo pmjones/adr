@@ -1,11 +1,12 @@
 <?php
-namespace Blog\Action;
+namespace Web\Blog\Action;
 
 use Aura\Web\Request;
-use Blog\Domain\BlogService;
-use Blog\Responder\BlogBrowseResponder;
+use Domain\Blog\BlogService;
+use Web\Blog\Responder\BlogBrowseResponder;
+use Web\AbstractAction;
 
-class BlogBrowseAction extends AbstractBlogAction
+class BlogBrowseAction extends AbstractAction
 {
     public function __construct(
         Request $request,

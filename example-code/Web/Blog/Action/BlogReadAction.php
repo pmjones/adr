@@ -1,16 +1,17 @@
 <?php
-namespace Blog\Action;
+namespace Web\Blog\Action;
 
 use Aura\Web\Request;
-use Blog\Domain\BlogService;
-use Blog\Responder\BlogDeleteResponder;
+use Domain\Blog\BlogService;
+use Web\Blog\Responder\BlogReadResponder;
+use Web\AbstractAction;
 
-class BlogDeleteAction extends AbstractBlogAction
+class BlogReadAction extends AbstractAction
 {
     public function __construct(
         Request $request,
         BlogService $domain,
-        BlogDeleteResponder $responder
+        BlogReadResponder $responder
     ) {
         $this->request = $request;
         $this->domain = $domain;
@@ -20,12 +21,7 @@ class BlogDeleteAction extends AbstractBlogAction
     public function __invoke($id)
     {
         $this->responder->blog = $this->domain->fetchOneById($id);
-
-        $this->responder->success = null;
-        if ($this->responder->blog) {
-            $this->responder->success = $this->domain->delete($blog);
-        }
-        
+        $this->responder->setAccept($this->request->accept);
         return $this->response();
     }
 }
