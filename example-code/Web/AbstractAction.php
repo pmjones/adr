@@ -1,7 +1,7 @@
 <?php
-namespace Blog\Action;
+namespace Web;
 
-class AbstractBlogAction
+abstract class AbstractAction
 {
     protected $request;
     protected $domain;
