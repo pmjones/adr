@@ -4,10 +4,13 @@ namespace Web\Blog\Action;
 use Aura\Web\Request;
 use Domain\Blog\BlogService;
 use Web\Blog\Responder\BlogDeleteResponder;
-use Web\AbstractAction;
 
-class BlogDeleteAction extends AbstractAction
+class BlogDeleteAction
 {
+    protected $request;
+    protected $domain;
+    protected $responder;
+
     public function __construct(
         Request $request,
         BlogService $domain,
@@ -21,6 +24,6 @@ class BlogDeleteAction extends AbstractAction
     public function __invoke($id)
     {
         $this->responder->status = $this->domain->deleteById($id);
-        return $this->response();
+        return $this->responder->__invoke();
     }
 }

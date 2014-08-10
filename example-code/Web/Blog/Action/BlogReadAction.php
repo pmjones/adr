@@ -4,10 +4,13 @@ namespace Web\Blog\Action;
 use Aura\Web\Request;
 use Domain\Blog\BlogService;
 use Web\Blog\Responder\BlogReadResponder;
-use Web\AbstractAction;
 
-class BlogReadAction extends AbstractAction
+class BlogReadAction
 {
+    protected $request;
+    protected $domain;
+    protected $responder;
+
     public function __construct(
         Request $request,
         BlogService $domain,
@@ -22,6 +25,6 @@ class BlogReadAction extends AbstractAction
     {
         $this->responder->blog = $this->domain->fetchOneById($id);
         $this->responder->setAccept($this->request->accept);
-        return $this->response();
+        return $this->responder->__invoke();
     }
 }

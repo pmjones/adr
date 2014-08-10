@@ -7,22 +7,22 @@ class BlogDeleteResponder extends AbstractBlogResponder
 {
     public function __invoke()
     {
-        if (! $this->isFound('status') || ! $this->deleted()) {
-            $this->response->setStatus(500);
-            $this->renderView('delete-failure');
+        if ($this->isFound('status') && $this->isDeleted()) {
+            $this->response->setStatus(200);
+            $this->renderView('delete-success');
         }
 
         return $this->response;
     }
 
-    protected function deleted()
+    protected function isDeleted()
     {
         if ($this->data->status instanceof Status\Deleted) {
-            $this->response->setStatus(200);
-            $this->renderView('delete-success');
             return true;
         }
 
+        $this->response->setStatus(500);
+        $this->renderView('delete-failure');
         return false;
     }
 }

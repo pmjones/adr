@@ -4,7 +4,7 @@ namespace Web;
 use Aura\View\View;
 use Aura\Web\Response;
 use Aura\Web\Request\Accept;
-use Domain\Exception\NotFound;
+use Domain\Status;
 
 abstract class AbstractResponder
 {
@@ -62,7 +62,10 @@ abstract class AbstractResponder
 
     protected function isFound($key)
     {
-        if ($this->data->$key instanceof NotFound) {
+        $not_found = ! isset($this->data->$key)
+                  || $this->data->$key instanceof Status\NotFound;
+
+        if ($not_found) {
             $this->response->status->set(404);
             return false;
         }
