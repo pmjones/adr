@@ -1,14 +1,19 @@
 <?php
 namespace Blog\Responder;
 
+use Domain\Result;
+
 class BlogEditResponder extends AbstractBlogResponder
 {
-    public function __invoke()
-    {
-        if ($this->isFound('blog')) {
-            $this->renderView('edit');
-        }
+    protected $result_method = array(
+        Result::STATUS_FOUND => 'found',
+        Result::STATUS_NOT_FOUND => 'notFound'
+    );
 
-        return $this->response;
+    public function found()
+    {
+        return $this->renderView('edit', array(
+            'blog' => $this->result->getSubject()
+        ));
     }
 }

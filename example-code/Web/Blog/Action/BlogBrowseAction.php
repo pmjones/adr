@@ -24,7 +24,9 @@ class BlogBrowseAction
     public function __invoke()
     {
         $page = $this->request->query->get('page', 1);
-        $this->responder->collection = $this->domain->fetchAllByPage($page);
+        $paging = $this->request->query->get('paging', 10);
+        $result = $this->domain->fetchPage($page, $paging);
+        $this->responder->setResult($result);
         $this->responder->setAccept($this->request->accept);
         return $this->responder->__invoke();
     }

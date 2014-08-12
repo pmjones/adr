@@ -4,17 +4,19 @@ namespace Web;
 use Aura\View\View;
 use Aura\Web\Response;
 use Aura\Web\Request\Accept;
-use Domain\Status;
+use Domain\Result;
 
 abstract class AbstractResponder
 {
-    protected $data;
-
     protected $accept;
 
     protected $available = array();
 
     protected $response;
+
+    protected $result;
+
+    protected $result_method = array();
 
     protected $view;
 
@@ -24,7 +26,6 @@ abstract class AbstractResponder
     ) {
         $this->response = $response;
         $this->view = $view;
-        $this->data = (object) array();
         $this->init();
     }
 
@@ -33,47 +34,35 @@ abstract class AbstractResponder
         // empty by default
     }
 
-    public function __get($key)
+    public function __invoke()
     {
-        return $this->data->$key;
+        $status = $this->result->getStatus();
+        $method = isset($this->result_method[$status])
+                ? $this->result_method[$status]
+                : 'notRecognized';
+        $this->$method();
+        return $this->response;
     }
-
-    public function __set($key, $val)
-    {
-        $this->data->$key = $val;
-    }
-
-    public function __isset($key)
-    {
-        return isset($this->data->$key);
-    }
-
-    public function __unset($key)
-    {
-        unset($this->data->$key);
-    }
-
-    abstract public function __invoke();
 
     public function setAccept(Accept $accept)
     {
         $this->accept = $accept;
     }
 
-    protected function isFound($key)
+    public function setResult(Result $result)
     {
-        $not_found = ! isset($this->data->$key)
-                  || $this->data->$key instanceof Status\NotFound;
-
-        if ($not_found) {
-            $this->response->status->set(404);
-            return false;
-        }
-
-        return true;
+        $this->result = $result;
     }
 
-    protected function isAcceptable()
+    protected function notRecognized()
+    {
+        $domain_status = $this->result->getStatus();
+        $this->response->setStatus('500');
+        $this->response->setBody("Unknown domain result status: '$status'");
+        return $this->response;
+    }
+
+    protected function negotiateMediaType()
     {
         if (! $this->available || ! $this->accept) {
             return true;
@@ -92,7 +81,7 @@ abstract class AbstractResponder
         return true;
     }
 
-    protected function renderView($view)
+    protected function renderView($view, array $data = array())
     {
         $content_type = $this->response->content->getType();
         if ($content_type) {
@@ -100,7 +89,13 @@ abstract class AbstractResponder
         }
 
         $this->view->setView($view);
-        $this->view->setData($this->data);
+        $this->view->addData($data);
         $this->response->content->set($this->view->__invoke());
+    }
+
+    protected function error()
+    {
+        $this->response->setStatus('500');
+        $this->response->setBody($this->getInfo()->getMessage());
     }
 }

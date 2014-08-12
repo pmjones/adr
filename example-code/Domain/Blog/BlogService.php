@@ -1,116 +1,110 @@
 <?php
 namespace Domain\Blog;
 
-use Aura\Sql\ExtendedPdo;
-use Domain\Status;
+use Domain\ResultFactory;
+use Exception;
 
-// a naive domain service for example purposes only
 class BlogService
 {
-    protected $pdo;
+    protected $gateway;
+    protected $result;
 
-    public function __construct(ExtendedPdo $pdo)
-    {
-        $this->pdo = $pdo;
+    public function __construct(
+        BlogGateway $gateway,
+        BlogFactory $factory,
+        ResultFactory $result
+    ) {
+        $this->gateway = $gateway;
+        $this->factory = $factory;
+        $this->result = $result;
     }
 
-    public function fetchAllByPage($page = 1, $paging = 10)
+    public function fetchPage($page = 1, $paging = 10)
     {
-        $collection = array();
-        $limit = (int) $paging;
-        $offset = ($page - 1) * $limit;
-
-        $rows = $this->pdo->fetchAll(
-            "SELECT * FROM blog LIMIT $limit OFFSET $offset"
-        );
-
-        foreach ($rows as $row) {
-            $collection[] = new BlogEntity($row);
+        try {
+            $collection = $this->gateway->fetchAllByPage($page, $paging);
+            if ($collection) {
+                return $this->result->found($collection);
+            } else {
+                return $this->result->notFound($collection);
+            }
+        } catch (Exception $e) {
+            return $this->result->error($e);
         }
-
-        return $collection;
     }
 
-    public function fetchOneById($id)
+    public function fetchPost($id)
     {
-        $row = $this->pdo->fetchOne(
-            'SELECT * FROM blog WHERE id = :id',
-            array('id' => (int) $id)
-        );
-
-        if (! $row) {
-            return new Status\NotFound($id);
+        try {
+            $entity = $this->gateway->fetchOneById($id);
+            if ($entity) {
+                return $this->result->found($entity);
+            }
+            return $this->result->notFound($id);
+        } catch (Exception $e) {
+            return $this->result->error($e);
         }
+    }
 
-        return new BlogEntity($row);
+    public function newPost(array $data)
+    {
+        $entity = $this->factory->newEntity($data);
+        return $this->result->newInstance($entity);
     }
 
     public function create(array $data)
     {
-        $blog = new BlogEntity($data);
-
-        $result = $this->pdo->perform(
-            'INSERT INTO blog (
-                author, title, intro, body
-            ) VALUES (
-                :author, :title, :intro, :body
-            )',
-            $data
-        );
-
-        if (! $result) {
-            $blog->setMessages(array('Could not create blog.'));
-        } else {
-            $blog->id = $this->pdo->lastInsertId();
+        try {
+            $entity = $this->gateway->create($data);
+            if ($entity) {
+                return $this->result->created($entity);
+            } else {
+                return new $this->result->notCreated($data);
+            }
+        } catch (Exception $e) {
+            return $this->result->error($e, $data);
         }
-
-        return $blog;
     }
 
-    public function updateById($id, array $data)
+    public function update($id, array $data)
     {
-        $blog = $this->fetchOneById($id);
-        if ($blog instanceof Status\NotFound) {
-            return $blog;
+        try {
+            $entity = $this->gateway->fetchOneById($id);
+            if (! $entity) {
+                return $this->result->notFound($id);
+            }
+
+            unset($data['id']);
+            $entity->setData($data);
+            $updated = $this->gateway->update($entity);
+
+            if ($updated) {
+                return $this->result->updated($entity);
+            } else {
+                return $this->result->notUpdated($entity);
+            }
+
+        } catch (Exception $e) {
+            return $this->result->error($e, $entity);
         }
-
-        unset($data['id']);
-        $blog->setData($data);
-
-        $result = $this->pdo->perform(
-            'UPDATE blog
-            SET
-                author = :author,
-                title = :title,
-                intro = :intro,
-                body = :body
-            WHERE id = :id',
-            $data
-        );
-
-        if (! $result) {
-            $blog->setMessages(array('Could not update blog.'));
-        }
-
-        return $blog;
     }
 
-    public function deleteById($id)
+    public function delete($id)
     {
-        $blog = $this->fetchOneById($id);
-        if ($blog instanceof Status\NotFound) {
-            return $blog;
+        try {
+            $entity = $this->gateway->fetchOneById($id);
+            if (! $entity) {
+                return $this->result->notFound($id);
+            }
+
+            $deleted = $this->gateway->delete($entity);
+            if ($deleted) {
+                return $this->result->deleted($entity);
+            } else {
+                return $this->result->notDeleted($entity);
+            }
+        } catch (Exception $e) {
+            return $this->result->error($e, $entity);
         }
-
-        $result = $this->pdo->perform(
-            'DELETE FROM blog WHERE id = :id',
-            array('id' => $blog->id)
-        );
-
-        if ($result) {
-            return new Status\Deleted($blog->id);
-        }
-
-        return false;
     }
 }

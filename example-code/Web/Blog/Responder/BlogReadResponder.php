@@ -1,6 +1,8 @@
 <?php
 namespace Blog\Responder;
 
+use Domain\Result;
+
 class BlogReadResponder extends AbstractBlogResponder
 {
     protected $available = array(
@@ -8,12 +10,17 @@ class BlogReadResponder extends AbstractBlogResponder
         'application/json' => '.json'
     );
 
-    public function __invoke()
-    {
-        if ($this->isFound('blog') && $this->isAcceptable()) {
-            $this->renderView('read');
-        }
+    protected $result_method = array(
+        Result::STATUS_FOUND => 'found',
+        Result::STATUS_NOT_FOUND => 'notFound'
+    );
 
-        return $this->response;
+    protected function found()
+    {
+        if ($$this->negotiateMediaType()) {
+            $this->renderView('read', array(
+                'blog' => $this->result->getSubject()
+            ));
+        }
     }
 }

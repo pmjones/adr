@@ -1,6 +1,8 @@
 <?php
 namespace Blog\Responder;
 
+use Domain\Result;
+
 class BlogBrowseResponder extends AbstractBlogResponder
 {
     protected $available = array(
@@ -8,12 +10,17 @@ class BlogBrowseResponder extends AbstractBlogResponder
         'application/json' => '.json'
     );
 
-    public function __invoke()
-    {
-        if ($this->isFound('collection') && $this->isAcceptable()) {
-            $this->renderView('browse');
-        }
+    protected $result_method = array(
+        Result::STATUS_FOUND => 'found',
+        Result::STATUS_NOT_FOUND => 'notFound',
+    );
 
-        return $this->response;
+    protected function found()
+    {
+        if ($this->negotiateMediaType()) {
+            $this->renderView('browse', array(
+                'collection' => $this->result->getSubject()
+            ));
+        }
     }
 }

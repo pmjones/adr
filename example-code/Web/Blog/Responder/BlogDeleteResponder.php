@@ -1,28 +1,29 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Status;
+use Domain\Result;
 
 class BlogDeleteResponder extends AbstractBlogResponder
 {
-    public function __invoke()
-    {
-        if ($this->isFound('status') && $this->isDeleted()) {
-            $this->response->setStatus(200);
-            $this->renderView('delete-success');
-        }
+    protected $result_method = array(
+        Result::STATUS_NOT_FOUND => 'notFound',
+        Result::STATUS_DELETED => 'deleted',
+        Result::STATUS_NOT_DELETED => 'notDeleted',
+        Result::STATUS_ERROR => 'error',
+    );
 
-        return $this->response;
+    protected function deleted()
+    {
+        $this->renderView('delete-success', array(
+            'blog' => $this->result->getSubject(),
+        ));
     }
 
-    protected function isDeleted()
+    protected function notDeleted()
     {
-        if ($this->data->status instanceof Status\Deleted) {
-            return true;
-        }
-
         $this->response->setStatus(500);
-        $this->renderView('delete-failure');
-        return false;
+        $this->renderView('delete-failure', array(
+            'blog' => $this->result->getSubject(),
+        ));
     }
 }

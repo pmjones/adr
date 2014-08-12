@@ -2,9 +2,10 @@
 
 <?= $this->ul()->items($this->blog->getMessages())->get(); ?>
 
-<?= $this->render('_form', array(
-    '_method' => 'PATCH',
-    '_action' => '/blog/edit',
-    '_submit' => 'Update',
-    '_blog' => $this->blog,
-)); ?>
+<?= $this->render(
+    '_form',
+    'PATCH',
+    '/blog/edit',
+    'Update',
+    $this->blog
+); ?>

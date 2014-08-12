@@ -21,10 +21,9 @@ class BlogAddAction
         $this->responder = $responder;
     }
 
-    public function __invoke($id)
+    public function __invoke()
     {
-        $data = $this->request->post->get('blog');
-        $this->responder->blog = $this->domain->create($data);
+        $this->responder->setResult($this->domain->newEntity());
         return $this->responder->__invoke();
     }
 }

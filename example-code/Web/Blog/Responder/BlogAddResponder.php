@@ -1,25 +1,18 @@
 <?php
 namespace Blog\Responder;
 
-class BlogReadResponder extends AbstractBlogResponder
+use Domain\Result;
+
+class BlogAddResponder extends AbstractBlogResponder
 {
-    public function __invoke()
+    protected $result_method = array(
+        Result::STATUS_NEW_INSTANCE => 'display',
+    );
+
+    protected function display(Result $result)
     {
-        if (! $this->created()) {
-            $this->renderView('add');
-        }
-
-        return $this->response;
-    }
-
-    protected function created()
-    {
-        if (isset($this->data->blog->id)) {
-            $id = $this->data->blog->id;
-            $this->response->redirect->created("/blog/read/{$id}");
-            return true;
-        }
-
-        return false;
+        $this->renderView('add', array(
+            'blog' => $this->result->getSubject()
+        ));
     }
 }
