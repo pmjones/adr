@@ -49,7 +49,7 @@ class BlogService
     public function newPost(array $data)
     {
         $entity = $this->factory->newEntity($data);
-        return $this->result->newInstance($entity);
+        return $this->result->newEntity($entity);
     }
 
     public function create(array $data)

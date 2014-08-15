@@ -31,14 +31,16 @@ abstract class AbstractResponder
 
     protected function init()
     {
-        // empty by default
+        if (! isset($this->result_method['Domain\Result\Error'])) {
+            $this->result_method['Domain\Result\Error'] = 'error';
+        }
     }
 
     public function __invoke()
     {
-        $status = $this->result->getStatus();
-        $method = isset($this->result_method[$status])
-                ? $this->result_method[$status]
+        $class = get_class($this->result);
+        $method = isset($this->result_method[$class])
+                ? $this->result_method[$class]
                 : 'notRecognized';
         $this->$method();
         return $this->response;
@@ -93,9 +95,15 @@ abstract class AbstractResponder
         $this->response->content->set($this->view->__invoke());
     }
 
+    protected function notFound()
+    {
+        $this->response->status->set(404);
+    }
+
     protected function error()
     {
+        $e = $this->result->getException();
         $this->response->setStatus('500');
-        $this->response->setBody($this->getInfo()->getMessage());
+        $this->response->setBody($e->getMessage());
     }
 }

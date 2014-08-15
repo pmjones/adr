@@ -6,19 +6,18 @@ use Domain\Result;
 class BlogCreateResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
-        Result::STATUS_CREATED => 'created',
-        Result::STATUS_NOT_CREATED => 'notCreated',
-        Result::STATUS_NOT_VALID => 'notValid',
-        Result::STATUS_ERROR => 'error',
+        'Domain\Result\Created' => 'created',
+        'Domain\Result\NotCreated' => 'notCreated',
+        'Domain\Result\NotValid' => 'notValid',
     );
 
-    protected function created($result)
+    protected function created()
     {
         $subject = $this->result->getSubject();
         $this->response->redirect->created("/blog/read/{$subject->id}");
     }
 
-    protected function notValid($result)
+    protected function notValid()
     {
         $this->response->setStatus('422');
         $this->renderView('add', array(

@@ -6,10 +6,9 @@ use Domain\Result;
 class BlogDeleteResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
-        Result::STATUS_NOT_FOUND => 'notFound',
-        Result::STATUS_DELETED => 'deleted',
-        Result::STATUS_NOT_DELETED => 'notDeleted',
-        Result::STATUS_ERROR => 'error',
+        'Domain\Result\NotFound' => 'notFound',
+        'Domain\Result\Deleted' => 'deleted',
+        'Domain\Result\NotDeleted' => 'notDeleted',
     );
 
     protected function deleted()

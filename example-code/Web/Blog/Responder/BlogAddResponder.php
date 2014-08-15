@@ -6,10 +6,10 @@ use Domain\Result;
 class BlogAddResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
-        Result::STATUS_NEW_INSTANCE => 'display',
+        'Domain\Result\NewEntity' => 'display',
     );
 
-    protected function display(Result $result)
+    protected function display()
     {
         $this->renderView('add', array(
             'blog' => $this->result->getSubject()

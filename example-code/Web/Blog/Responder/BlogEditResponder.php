@@ -6,8 +6,8 @@ use Domain\Result;
 class BlogEditResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
-        Result::STATUS_FOUND => 'found',
-        Result::STATUS_NOT_FOUND => 'notFound'
+        'Domain\Result\Found' => 'found',
+        'Domain\Result\NotFound' => 'notFound',
     );
 
     public function found()

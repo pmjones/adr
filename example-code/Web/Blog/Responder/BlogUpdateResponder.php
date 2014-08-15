@@ -6,24 +6,25 @@ use Domain\Result;
 class BlogUpdateResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
-        Result::STATUS_NOT_FOUND => 'notFound',
-        Result::STATUS_NOT_VALID => 'notValid',
-        Result::STATUS_UPDATED => 'updated',
-        Result::STATUS_NOT_UPDATED => 'notUpdated',
+        'Domain\Result\NotFound' => 'notFound',
+        'Domain\Result\NotValid' => 'notValid',
+        'Domain\Result\Updated' => 'updated',
+        'Domain\Result\NotUpdated' => 'notUpdated',
     );
 
-    protected function notValid($result)
+    protected function notValid()
     {
         $this->response->setStatus('422');
         return $this->renderView('edit', array(
-            'blog' => $result->getSubject()
+            'blog' => $this->result->getSubject(),
+            'messages' => $this->result->getMessages(),
         ));
     }
 
     protected function updated()
     {
         return $this->renderView('edit', array(
-            'blog' => $result->getSubject()
+            'blog' => $this->result->getSubject()
         ));
     }
 
@@ -31,7 +32,7 @@ class BlogUpdateResponder extends AbstractBlogResponder
     {
         $this->response->setStatus('500');
         return $this->renderView('edit', array(
-            'blog' => $result->getSubject();
+            'blog' => $this->result->getSubject();
         ));
     }
 }

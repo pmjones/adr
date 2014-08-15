@@ -7,7 +7,9 @@ abstract class AbstractBlogResponder extends AbstractResponder
 {
     protected function init()
     {
-        $view_names = array(
+        parent::init();
+
+        $name_vars = array(
             'browse' => array(),
             'browse.json' => array(),
             'read' => array(),
@@ -16,23 +18,17 @@ abstract class AbstractBlogResponder extends AbstractResponder
             'add' => array(),
             'delete-failure' => array(),
             'delete-success' => array(),
-            '_form' => 'blog',
-            '_intro',
+            '_form' => array('method', 'action', 'submit', 'blog'),
+            '_intro' => array('blog'),
         );
 
         $view_registry = $this->view->getViewRegistry();
-        foreach ($view_names as $view_name => $view_vars) {
+        foreach ($name_vars as $name => $vars) {
             $view_registry->set(
-                $view_name,
-                __DIR__ . "/views/{$view_name}.php",
-                $view_vars
+                $name,
+                __DIR__ . "/views/{$name}.php",
+                $vars
             );
         }
     }
-
-    protected function notFound($result)
-    {
-        $this->response->status->set(404);
-    }
-
 }
