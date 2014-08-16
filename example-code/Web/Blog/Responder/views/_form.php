@@ -1,4 +1,4 @@
-<?= $this->ul()->items($this->blog->getMessages()) ?>
+<?php // = $this->ul()->items($this->blog->getMessages()) ?>
 
 <?= $this->form(array(
     'method' => $this->method,
@@ -32,6 +32,20 @@
                     'type' => 'textarea',
                     'name' => 'blog[body]',
                     'value' => $this->blog->body,
+                    'attribs' => array(
+                        'rows' => 5,
+                        'cols' => 40
+                    )
+                ));
+            ?></td>
+        </tr>
+        <tr>
+            <td>Author</td>
+            <td><?=
+                $this->input(array(
+                    'type' => 'text',
+                    'name' => 'blog[author]',
+                    'value' => $this->blog->author,
                 ));
             ?></td>
         </tr>
@@ -39,9 +53,11 @@
             <td colspan="2"><?=
                 $this->input(array(
                     'type' => 'submit',
+                    'name' => 'submit',
                     'value' => $this->submit,
                 ));
             ?></td>
         </tr>
     </table>
 <?= $this->tag('/form') ?>
+<p><?= $this->a("/blog", 'Back'); ?></p>

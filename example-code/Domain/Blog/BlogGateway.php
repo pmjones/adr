@@ -28,7 +28,7 @@ class BlogGateway
         $limit = (int) $paging;
         $offset = ($page - 1) * $limit;
         $rows = $this->pdo->fetchAll(
-            "SELECT * FROM blog LIMIT $limit OFFSET $offset"
+            "SELECT * FROM blog ORDER BY id DESC LIMIT $limit OFFSET $offset"
         );
         if ($rows) {
             return $this->factory->newCollection($rows);
