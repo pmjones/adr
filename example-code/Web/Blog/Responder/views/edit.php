@@ -4,8 +4,10 @@
 
 <?= $this->render(
     '_form',
-    'PATCH',
-    '/blog/edit',
-    'Update',
-    $this->blog
+    array(
+        'method' => 'PATCH',
+        'action' => '/blog/edit',
+        'submit' => 'Update',
+        'blog' => $this->blog
+    )
 ); ?>

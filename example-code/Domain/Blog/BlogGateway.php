@@ -1,7 +1,7 @@
 <?php
 namespace Domain\Blog;
 
-use Aura\Sql\ExtendedPdo
+use Aura\Sql\ExtendedPdo;
 
 class BlogGateway
 {

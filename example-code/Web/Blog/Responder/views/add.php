@@ -2,8 +2,10 @@
 
 <?= $this->render(
     '_form',
-    'POST',
-    '/blog/add',
-    'Create',
-    $this->blog
+    array(
+        'method' => 'POST',
+        'action' => '/blog/add',
+        'submit' => 'Create',
+        'blog' => $this->blog
+    )
 ); ?>

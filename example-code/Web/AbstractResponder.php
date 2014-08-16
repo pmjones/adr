@@ -102,8 +102,8 @@ abstract class AbstractResponder
 
     protected function error()
     {
-        $e = $this->result->getException();
-        $this->response->setStatus('500');
-        $this->response->setBody($e->getMessage());
+        $e = $this->result->get('exception');
+        $this->response->status->set('500');
+        $this->response->content->set($e->getMessage());
     }
 }
