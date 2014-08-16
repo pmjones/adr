@@ -83,7 +83,7 @@ abstract class AbstractResponder
         return true;
     }
 
-    protected function renderView($view)
+    protected function renderView($view, $layout = null)
     {
         $content_type = $this->response->content->getType();
         if ($content_type) {
@@ -91,6 +91,7 @@ abstract class AbstractResponder
         }
 
         $this->view->setView($view);
+        $this->view->setLayout($layout);
         $this->view->addData($this->result->get());
         $this->response->content->set($this->view->__invoke());
     }
