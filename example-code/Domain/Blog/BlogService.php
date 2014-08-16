@@ -34,7 +34,9 @@ class BlogService
             }
         } catch (Exception $e) {
             return $this->result->error(array(
-                'exception' => $e
+                'exception' => $e,
+                'page' => $page,
+                'paging' => $paging,
             ));
         }
     }
@@ -42,10 +44,10 @@ class BlogService
     public function fetchPost($id)
     {
         try {
-            $entity = $this->gateway->fetchOneById($id);
-            if ($entity) {
+            $blog = $this->gateway->fetchOneById($id);
+            if ($blog) {
                 return $this->result->found(array(
-                    'blog' => $entity
+                    'blog' => $blog
                 ));
             }
             return $this->result->notFound(array(
@@ -53,26 +55,26 @@ class BlogService
             ));
         } catch (Exception $e) {
             return $this->result->error(array(
-                'exception' => $e
+                'exception' => $e,
+                'id' => $id,
             ));
         }
     }
 
     public function newPost(array $data)
     {
-        $entity = $this->factory->newEntity($data);
         return $this->result->newEntity(array(
-            'blog' => $entity
+            'blog' => $this->factory->newEntity($data)
         ));
     }
 
     public function create(array $data)
     {
         try {
-            $entity = $this->gateway->create($data);
-            if ($entity) {
+            $blog = $this->gateway->create($data);
+            if ($blog) {
                 return $this->result->created(array(
-                    'blog' => $entity
+                    'blog' => $blog
                 ));
             } else {
                 return new $this->result->notCreated(array(
@@ -81,7 +83,8 @@ class BlogService
             }
         } catch (Exception $e) {
             return $this->result->error(array(
-                'exception' => $e
+                'exception' => $e,
+                'data' => $data,
             ));
         }
     }
@@ -89,30 +92,32 @@ class BlogService
     public function update($id, array $data)
     {
         try {
-            $entity = $this->gateway->fetchOneById($id);
-            if (! $entity) {
+            $blog = $this->gateway->fetchOneById($id);
+            if (! $blog) {
                 return $this->result->notFound(array(
                     'id' => $id
                 ));
             }
 
             unset($data['id']);
-            $entity->setData($data);
-            $updated = $this->gateway->update($entity);
+            $blog->setData($data);
+            $updated = $this->gateway->update($blog);
 
             if ($updated) {
                 return $this->result->updated(array(
-                    'blog' => $entity,
+                    'blog' => $blog,
                 ));
             } else {
                 return $this->result->notUpdated(array(
-                    'blog' => $entity,
+                    'blog' => $blog,
                 ));
             }
 
         } catch (Exception $e) {
             return $this->result->error(array(
-                'exception' => $e
+                'exception' => $e,
+                'id' => $id,
+                'data' => $data,
             ));
         }
     }
@@ -120,26 +125,27 @@ class BlogService
     public function delete($id)
     {
         try {
-            $entity = $this->gateway->fetchOneById($id);
-            if (! $entity) {
+            $blog = $this->gateway->fetchOneById($id);
+            if (! $blog) {
                 return $this->result->notFound(array(
                     'id' => $id
                 ));
             }
 
-            $deleted = $this->gateway->delete($entity);
+            $deleted = $this->gateway->delete($blog);
             if ($deleted) {
                 return $this->result->deleted(array(
-                    'blog' => $entity,
+                    'blog' => $blog,
                 ));
             } else {
                 return $this->result->notDeleted(array(
-                    'blog' => $entity,
+                    'blog' => $blog,
                 ));
             }
         } catch (Exception $e) {
             return $this->result->error(array(
-                'exception' => $e
+                'exception' => $e,
+                'blog' => $blog,
             ));
         }
     }
