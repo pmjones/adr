@@ -1,6 +1,8 @@
 <?php
 namespace Domain\Blog;
 
+use Aura\Sql\ExtendedPdo;
+
 class BlogGateway
 {
     public function __construct(ExtendedPdo $pdo, BlogFactory $factory)
@@ -26,7 +28,7 @@ class BlogGateway
         $limit = (int) $paging;
         $offset = ($page - 1) * $limit;
         $rows = $this->pdo->fetchAll(
-            "SELECT * FROM blog LIMIT $limit OFFSET $offset"
+            "SELECT * FROM blog ORDER BY id DESC LIMIT $limit OFFSET $offset"
         );
         if ($rows) {
             return $this->factory->newCollection($rows);

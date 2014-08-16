@@ -1,7 +1,7 @@
 <?php
 namespace Domain\Blog;
 
-use Domain\ResultFactory;
+use Domain\Result\ResultFactory;
 use Exception;
 
 class BlogService

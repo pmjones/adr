@@ -1,5 +1,5 @@
 <?php
-namespace Blog\Responder;
+namespace Web\Blog\Responder;
 
 class BlogReadResponder extends AbstractBlogResponder
 {
@@ -15,7 +15,7 @@ class BlogReadResponder extends AbstractBlogResponder
 
     protected function found()
     {
-        if ($$this->negotiateMediaType()) {
+        if ($this->negotiateMediaType()) {
             $this->renderView('read');
         }
     }

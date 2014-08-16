@@ -3,7 +3,7 @@ namespace Domain\Result;
 
 abstract class AbstractResult implements ResultInterface
 {
-    protected array $result;
+    protected $result = array();
 
     public function __construct(array $result)
     {

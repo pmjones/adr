@@ -5,7 +5,8 @@
     "require": {
         "aura/view": "2.0.*@dev",
         "aura/web": "2.0.*@dev",
-        "aura/html": "2.0.*@dev"
+        "aura/html": "2.0.*@dev",
+        "aura/sql": "2.0.1"
     },
     "license": "BSD-2-Clause",
     "authors": [

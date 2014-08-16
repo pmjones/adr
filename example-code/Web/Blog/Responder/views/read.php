@@ -6,3 +6,4 @@
 <div class="blog-body">
 <?= $this->blog->body // raw ?>
 </div>
+<p><?= $this->a("/blog", 'Back'); ?> | <?= $this->a("/blog/edit/{$this->blog->id}", 'Edit'); ?> | <?= $this->a("/blog/delete/{$this->blog->id}", 'Delete'); ?></p>

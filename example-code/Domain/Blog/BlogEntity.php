@@ -9,6 +9,8 @@ class BlogEntity
     public $intro;
     public $body;
 
+    protected $messages = array();
+
     public function __construct($data = array())
     {
         $this->setData($data);
@@ -26,6 +28,17 @@ class BlogEntity
     public function getData()
     {
         $properties = get_object_vars($this);
+        unset($properties['messages']);
         return $properties;
+    }
+
+    public function setMessages($messages)
+    {
+        $this->messages = $messages;
+    }
+
+    public function getMessages()
+    {
+        return $this->messages;
     }
 }
