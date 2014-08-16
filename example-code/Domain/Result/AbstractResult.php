@@ -1,17 +1,23 @@
 <?php
 namespace Domain\Result;
 
-abstract class AbstractResult
+abstract class AbstractResult implements ResultInterface
 {
-    protected $subject;
+    protected array $result;
 
-    public function __construct($subject = null)
+    public function __construct(array $result)
     {
-        $this->subject = $subject;
+        $this->result = $result;
     }
 
-    public function getSubject()
+    public function get($key = null)
     {
-        return $this->subject;
+        if ($key === null) {
+            return $this->result;
+        }
+
+        if (isset($this->result[$key])) {
+            return $this->result[$key];
+        }
     }
 }

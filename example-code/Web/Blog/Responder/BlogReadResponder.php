@@ -1,8 +1,6 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Result;
-
 class BlogReadResponder extends AbstractBlogResponder
 {
     protected $available = array(
@@ -18,9 +16,7 @@ class BlogReadResponder extends AbstractBlogResponder
     protected function found()
     {
         if ($$this->negotiateMediaType()) {
-            $this->renderView('read', array(
-                'blog' => $this->result->getSubject()
-            ));
+            $this->renderView('read');
         }
     }
 }

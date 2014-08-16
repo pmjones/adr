@@ -1,8 +1,6 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Result;
-
 class BlogEditResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
@@ -12,8 +10,6 @@ class BlogEditResponder extends AbstractBlogResponder
 
     public function found()
     {
-        return $this->renderView('edit', array(
-            'blog' => $this->result->getSubject()
-        ));
+        return $this->renderView('edit');
     }
 }

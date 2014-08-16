@@ -1,8 +1,6 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Result;
-
 class BlogDeleteResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
@@ -13,16 +11,12 @@ class BlogDeleteResponder extends AbstractBlogResponder
 
     protected function deleted()
     {
-        $this->renderView('delete-success', array(
-            'blog' => $this->result->getSubject(),
-        ));
+        $this->renderView('delete-success');
     }
 
     protected function notDeleted()
     {
         $this->response->setStatus(500);
-        $this->renderView('delete-failure', array(
-            'blog' => $this->result->getSubject(),
-        ));
+        $this->renderView('delete-failure');
     }
 }

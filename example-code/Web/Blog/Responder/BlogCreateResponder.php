@@ -1,8 +1,6 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Result;
-
 class BlogCreateResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
@@ -13,25 +11,19 @@ class BlogCreateResponder extends AbstractBlogResponder
 
     protected function created()
     {
-        $subject = $this->result->getSubject();
-        $this->response->redirect->created("/blog/read/{$subject->id}");
+        $blog = $this->result->get('blog');
+        $this->response->redirect->created("/blog/read/{$blog->id}");
     }
 
     protected function notValid()
     {
         $this->response->setStatus('422');
-        $this->renderView('add', array(
-            'blog' => $this->result->getSubject(),
-            'messages' => $this->result->getInfo(),
-        ));
+        $this->renderView('add');
     }
 
     protected function notCreated()
     {
         $this->response->setStatus('500');
-        $this->renderView('add', array(
-            'blog' => $this->result->getSubject(),
-            'messages' => $this->result->getInfo(),
-        ));
+        $this->renderView('add');
     }
 }

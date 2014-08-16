@@ -4,7 +4,7 @@ namespace Web;
 use Aura\View\View;
 use Aura\Web\Response;
 use Aura\Web\Request\Accept;
-use Domain\Result;
+use Domain\Result\ResultInterface;
 
 abstract class AbstractResponder
 {
@@ -51,7 +51,7 @@ abstract class AbstractResponder
         $this->accept = $accept;
     }
 
-    public function setResult(Result $result)
+    public function setResult(ResultInterface $result)
     {
         $this->result = $result;
     }
@@ -83,7 +83,7 @@ abstract class AbstractResponder
         return true;
     }
 
-    protected function renderView($view, array $data = array())
+    protected function renderView($view)
     {
         $content_type = $this->response->content->getType();
         if ($content_type) {
@@ -91,7 +91,7 @@ abstract class AbstractResponder
         }
 
         $this->view->setView($view);
-        $this->view->addData($data);
+        $this->view->addData($this->result->get());
         $this->response->content->set($this->view->__invoke());
     }
 

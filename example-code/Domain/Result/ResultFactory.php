@@ -3,63 +3,63 @@ namespace Domain\Result;
 
 class ResultFactory
 {
-    public function newEntity($subject)
+    public function newEntity(array $result)
     {
-        return new NewEntity($subject);
+        return new NewEntity($result);
     }
 
-    public function found($subject)
+    public function found(array $result)
     {
-        return new Found($subject);
+        return new Found($result);
     }
 
-    public function notFound($subject)
+    public function notFound(array $result)
     {
-        return new NotFound($subject);
+        return new NotFound($result);
     }
 
-    public function valid($subject)
+    public function valid(array $result)
     {
-        return new Valid($subject);
+        return new Valid($result);
     }
 
-    public function notValid($subject, $messages)
+    public function notValid(array $result)
     {
-        return new NotValid($subject, $messages);
+        return new NotValid($result);
     }
 
-    public function created($subject)
+    public function created(array $result)
     {
-        return new Created($subject);
+        return new Created($result);
     }
 
-    public function notCreated($subject)
+    public function notCreated(array $result)
     {
-        return new NotCreated($subject);
+        return new NotCreated($result);
     }
 
-    public function updated($subject)
+    public function updated(array $result)
     {
-        return new Updated($subject);
+        return new Updated($result);
     }
 
-    public function notUpdated($subject)
+    public function notUpdated(array $result)
     {
-        return new NotUpdated($subject);
+        return new NotUpdated($result);
     }
 
-    public function deleted($subject)
+    public function deleted(array $result)
     {
-        return new Deleted($subject);
+        return new Deleted($result);
     }
 
-    public function notDeleted($subject)
+    public function notDeleted(array $result)
     {
-        return new NotDeleted($subject);
+        return new NotDeleted($result);
     }
 
-    public function error($exception, $subject = null)
+    public function error(array $result)
     {
-        return new Error($exception, $subject);
+        return new Error($result);
     }
 }

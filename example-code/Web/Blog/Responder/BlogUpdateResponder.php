@@ -1,8 +1,6 @@
 <?php
 namespace Blog\Responder;
 
-use Domain\Result;
-
 class BlogUpdateResponder extends AbstractBlogResponder
 {
     protected $result_method = array(
@@ -15,24 +13,17 @@ class BlogUpdateResponder extends AbstractBlogResponder
     protected function notValid()
     {
         $this->response->setStatus('422');
-        return $this->renderView('edit', array(
-            'blog' => $this->result->getSubject(),
-            'messages' => $this->result->getMessages(),
-        ));
+        return $this->renderView('edit');
     }
 
     protected function updated()
     {
-        return $this->renderView('edit', array(
-            'blog' => $this->result->getSubject()
-        ));
+        return $this->renderView('edit');
     }
 
     protected function notUpdated()
     {
         $this->response->setStatus('500');
-        return $this->renderView('edit', array(
-            'blog' => $this->result->getSubject();
-        ));
+        return $this->renderView('edit');
     }
 }
