@@ -19,5 +19,7 @@ abstract class AbstractResult implements ResultInterface
         if (isset($this->result[$key])) {
             return $this->result[$key];
         }
+
+        return null;
     }
 }
