@@ -23,7 +23,8 @@ class BlogAddAction
 
     public function __invoke()
     {
-        $this->responder->setResult($this->domain->newEntity());
+        $result = $this->domain->newPost();
+        $this->responder->setResult($result);
         return $this->responder->__invoke();
     }
 }

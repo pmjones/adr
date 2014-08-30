@@ -23,7 +23,7 @@ class BlogFilter
         $this->messages = array();
 
         $this->blog->id = (int) $this->blog->id;
-        if (! $blog->id) {
+        if (! $this->blog->id) {
             $this->messages['id'];
         }
 
