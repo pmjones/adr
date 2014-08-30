@@ -33,7 +33,7 @@ class BlogGateway
         }
     }
 
-    public function create(array $data)
+    public function create(BlogEntity $entity)
     {
         $affected = $this->pdo->perform(
             'INSERT INTO blog (
@@ -47,18 +47,18 @@ class BlogGateway
                 :intro,
                 :body
             )',
-            $data
+            $entity->getData()
         );
 
         if ($affected) {
-            $id = $this->pdo->lastInsertId();
-            return $this->fetchOneById($id);
+            $blog->id = $this->pdo->lastInsertId();
         }
+
+        return (bool) $affected;
     }
 
     public function update(BlogEntity $entity)
     {
-        $data = $entity->getData();
         $affected = $this->pdo->perform(
             'UPDATE blog
             SET
@@ -67,7 +67,7 @@ class BlogGateway
                 intro = :intro,
                 body = :body
             WHERE id = :id',
-            $data
+            $entity->getData()
         );
         return (bool) $affected;
     }

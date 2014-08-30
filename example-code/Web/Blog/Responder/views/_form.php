@@ -1,4 +1,6 @@
-<?= $this->ul()->items($blog->getMessages()) ?>
+<?php if (isset($this->messages)) {
+    echo $this->ul()->items($this->messages);
+} ?>
 
 <?= $this->form(array(
     'method' => $method,
@@ -11,7 +13,7 @@
                 $this->input(array(
                     'type' => 'text',
                     'name' => 'blog[title]',
-                    'value' => $blog->title,
+                    'value' => $this->blog->title,
                 ));
             ?></td>
         </tr>
@@ -21,7 +23,7 @@
                 $this->input(array(
                     'type' => 'text',
                     'name' => 'blog[intro]',
-                    'value' => $blog->intro,
+                    'value' => $this->blog->intro,
                 ));
             ?></td>
         </tr>
@@ -31,7 +33,7 @@
                 $this->input(array(
                     'type' => 'textarea',
                     'name' => 'blog[body]',
-                    'value' => $blog->body,
+                    'value' => $this->blog->body,
                 ));
             ?></td>
         </tr>

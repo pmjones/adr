@@ -9,25 +9,24 @@ abstract class AbstractBlogResponder extends AbstractResponder
     {
         parent::init();
 
-        $name_vars = array(
-            'browse' => array(),
-            'browse.json' => array(),
-            'read' => array(),
-            'read.json' => array(),
-            'edit' => array(),
-            'add' => array(),
-            'delete-failure' => array(),
-            'delete-success' => array(),
-            '_form' => array('method', 'action', 'submit', 'blog'),
-            '_intro' => array('blog'),
+        $view_names = array(
+            'browse',
+            'browse.json',
+            'read',
+            'read.json',
+            'edit',
+            'add',
+            'delete-failure',
+            'delete-success',
+            '_form',
+            '_intro',
         );
 
         $view_registry = $this->view->getViewRegistry();
-        foreach ($name_vars as $name => $vars) {
+        foreach ($names as $name) {
             $view_registry->set(
                 $name,
-                __DIR__ . "/views/{$name}.php",
-                $vars
+                __DIR__ . "/views/{$name}.php"
             );
         }
     }
