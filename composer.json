@@ -1,7 +1,7 @@
 {
-    "name": "pmjones/mvc-refinement",
+    "name": "pmjones/adr",
     "description": "An attempt to refine MVC for a web-specific environment.",
-    "homepage": "https://github.com/pmjones/mvc-refinement",
+    "homepage": "https://github.com/pmjones/adr",
     "require": {
         "aura/view": "2.0.*@dev",
         "aura/web": "2.0.*@dev",
