@@ -1,215 +1,170 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-us">
 
   <head>
-    <meta charset='utf-8'>
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Action-Domain-Responder: a web-specific refinement of Model-View-Controller.">
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
 
-    <title>Action-Domain-Responder</title>
-  </head>
+  <title> Action-Domain-Responder : A web-specific refinement of Model-View-Controller</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/poole.css">
+  <link rel="stylesheet" href="css/syntax.css">
+  <link rel="stylesheet" href="css/lanyon.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Serif:400,400italic,700|PT+Sans:400">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="apple-touch-icon-144-precomposed.png">
+  <link rel="shortcut icon" href="favicon.ico">
+</head>
+
 
   <body>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/pmjones/adr">View on GitHub</a>
+    <!-- Target for toggling the sidebar `.sidebar-checkbox` is for regular
+     styles, `#sidebar-checkbox` for behavior. -->
+<input class="sidebar-checkbox" id="sidebar-checkbox" type="checkbox">
 
-          <h1 id="project_title">Action-Domain-Responder</h1>
-          <h2 id="project_tagline">A web-specific refinement of Model-View-Controller.</h2>
+<!-- Toggleable sidebar -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-item">
+    <p>A web-specific refinement of Model-View-Controller by <a href="https://twitter.com/pmjones" target="_blank">@pmjones</a>.</p>
+  </div>
 
-        </header>
-    </div>
+  <nav class="sidebar-nav">
+    <a class="sidebar-nav-item active" href="/">Home</a>
+    <a class="sidebar-nav-item" href="https://github.com/pmjones/adr">Fork me</a>
+  </nav>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
+  <div class="sidebar-item">
+    <p>
+      &copy; 2014. All rights reserved.
+    </p>
+  </div>
+</div>
 
-<h3>
-<a name="user-content-purpose" class="anchor" href="#purpose" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
 
+    <!-- Wrap is the content to shift when toggling the sidebar. We wrap the
+         content to avoid any CSS collisions with our real content. -->
+    <div class="wrap">
+      <div class="masthead">
+        <div class="container">
+          <h3 class="masthead-title">
+            <a href="/" title="Home">ADR</a>
+            <small>Action-Domain-Responder</small>
+          </h3>
+        </div>
+      </div>
+
+      <div class="container content">
+        <div class="posts">
+
+  <div class="post">
+<h2 id="a-web-specific-refinement-of-model-view-controller-">A web-specific refinement of Model-View-Controller.</h2>
+<h3 id="purpose">Purpose</h3>
 <p>Organizes a single interaction between a web client and a web application into three distinct roles.</p>
-
-<p><a href="adr.png" target="_blank"><img src="adr.png" alt="ADR" style="max-width:100%;"></a></p>
-
-<h3>
-<a name="user-content-background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
-
+<p><a href="adr.png"><img src="adr.png" alt="ADR"></a></p>
+<h3 id="background">Background</h3>
 <p>The term MVC has experienced some <a href="http://martinfowler.com/bliki/SemanticDiffusion.html">semantic diffusion</a> from its original meaning, especially in a web context. (See <a href="http://vimeo.com/40968850">this video from Stefan Priebsch</a> for a more extensive discussion.) To resolve this diffusion, the <em>Action-Domain-Responder</em> pattern description is offered as a web-specific refinement of the MVC pattern.</p>
-
 <p>I think ADR more closely fits what we actually do in web development on a daily basis. For example, this pattern is partly revealed by how we generally do web routing and dispatch. We generally route and dispatch <em>not</em> to a controller class per se, but to a particular action method within a controller class.</p>
-
 <p>It is also partly revealed by the fact that we commonly think of the template as the <em>View</em>, when in a web context it may be more accurate to say that the HTTP response is the <em>View</em>.  As such, I think ADR may represent a better separation of concerns than MVC does in a web context.</p>
-
-<h3>
-<a name="user-content-components" class="anchor" href="#components" aria-hidden="true"><span class="octicon octicon-link"></span></a>Components</h3>
-
+<h3 id="components">Components</h3>
 <p><em>Action</em> is the logic that connects the <em>Domain</em> and <em>Responder</em>. It uses the request input to interact with the <em>Domain</em>, and passes the <em>Domain</em> output to the <em>Responder</em>.</p>
-
 <p><em>Domain</em> is the logic to manipulate the domain, session, application, and environment data, modifying state and persistence as needed.</p>
-
 <p><em>Responder</em> is the logic to build an HTTP response or response description. It deals with body content, templates and views, headers and cookies, status codes, and so on.</p>
-
-<h3>
-<a name="user-content-collaborations" class="anchor" href="#collaborations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collaborations</h3>
-
+<h3 id="collaborations">Collaborations</h3>
 <ol>
-<li><p>The web handler receives a client request and dispatches it to an <em>Action</em>.</p></li>
-<li><p>The <em>Action</em> interacts with the <em>Domain</em>.</p></li>
-<li><p>The <em>Action</em> feeds data to the <em>Responder</em>. (N.b.: This may include results from the <em>Domain</em> interaction, data from the client request, and so on.)</p></li>
-<li><p>The <em>Responder</em> builds a response using the data fed to it by the <em>Action</em>.</p></li>
-<li><p>The web handler sends the response back to the client.</p></li>
-</ol><h3>
-<a name="user-content-comparison-to-mvc-model-view-controller" class="anchor" href="#comparison-to-mvc-model-view-controller" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparison to MVC (Model-View-Controller)</h3>
-
+<li><p>The web handler receives a client request and dispatches it to an <em>Action</em>.</p>
+</li>
+<li><p>The <em>Action</em> interacts with the <em>Domain</em>.</p>
+</li>
+<li><p>The <em>Action</em> feeds data to the <em>Responder</em>. (N.b.: This may include results from the <em>Domain</em> interaction, data from the client request, and so on.)</p>
+</li>
+<li><p>The <em>Responder</em> builds a response using the data fed to it by the <em>Action</em>.</p>
+</li>
+<li><p>The web handler sends the response back to the client.</p>
+</li>
+</ol>
+<h3 id="comparison-to-mvc-model-view-controller-">Comparison to MVC (Model-View-Controller)</h3>
 <p>The dominant pattern describing web interactions is <em>Model-View-Controller</em>. Is <em>Action-Domain-Responder</em> really just <em>Model-View-Controller</em> in drag?  We can see that the ADR terms map very neatly to MVC terms:</p>
-
-<pre><code>Model      &lt;--&gt; Domain
-View       &lt;--&gt; Responder
-Controller &lt;--&gt; Action
-</code></pre>
-
-<p>The two seem very similar. How are they different?</p>
-
+<pre><code>Model      <--> Domain
+View       <--> Responder
+Controller <--> Action
+</code></pre><p>The two seem very similar. How are they different?</p>
 <p>Overall, we can see from Fowler in his <a href="http://martinfowler.com/eaaDev/uiArchs.html">GUI Architectures</a> essay that "there's not just one view and controller, you have a view-controller pair for each element of the screen, each of the controls and the screen as a whole." This is the primary element of semantic diffusion when applying MVC to web applications.</p>
-
 <p>Here are some more comparisons of the individual elements in MVC vs ADR.</p>
-
-<h4>
-<a name="user-content-model-vs-domain" class="anchor" href="#model-vs-domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<em>Model</em> vs <em>Domain</em>
-</h4>
-
+<h4 id="_model_-vs-_domain_"><em>Model</em> vs <em>Domain</em></h4>
 <p>I can think of no significant differences here, other than that the <em>Responder</em> does not interact with the <em>Domain</em> in meaningful ways. The <em>Responder</em> might use <em>Domain</em> objects like entities and collections, but only for presentation purposes; it does not modify the <em>Domain</em> or feed information back to the <em>Domain</em> as described under MVC.</p>
-
-<h4>
-<a name="user-content-controller-vs-action" class="anchor" href="#controller-vs-action" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<em>Controller</em> vs <em>Action</em>
-</h4>
-
+<h4 id="_controller_-vs-_action_"><em>Controller</em> vs <em>Action</em></h4>
 <p>In common usage, most <em>Controller</em> classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframeworkcom">Slim</a>).</p>
-
 <p>In an ADR architecture, a single <em>Action</em> is the main purpose of a class or closure. Each <em>Action</em> would be represented by a individual class or closure.</p>
-
 <p>The <em>Action</em> interacts with the <em>Domain</em> in the same way a <em>Controller</em> interacts with a <em>Model</em>, but does not interact with a <em>View</em> or template system. It sets data on the <em>Responder</em> and hands over control to it.</p>
-
-<h4>
-<a name="user-content-view-vs-responder" class="anchor" href="#view-vs-responder" aria-hidden="true"><span class="octicon octicon-link"></span></a>
-<em>View</em> vs <em>Responder</em>
-</h4>
-
+<h4 id="_view_-vs-_responder_"><em>View</em> vs <em>Responder</em></h4>
 <p>In an MVC architecture, a <em>Controller</em> method will usually generate body content via a <em>View</em> (e.g. a <em>Template View</em> or a <em>Two Step View</em>). The <em>Controller</em> then injects the generated body content into the response.  The <em>Controller</em> action method will manipulate the response directly to set any needed headers.</p>
-
 <p>Some <em>Controller</em> action methods may present alternative content-types for the same domain data. Because these alternatives may not be consistent over all the different methods, this leads to the presentation logic being somewhat different in each method, each with its own preconditions.</p>
-
 <p>In an ADR architecture, each <em>Action</em> has a separate corresponding <em>Responder</em>. When the <em>Action</em> is done with the <em>Domain</em>, it delivers any needed <em>Domain</em> data to the <em>Responder</em> and then hands off to the <em>Responder</em> completely. The <em>Responder</em> is entirely in charge of setting headers, picking content types, rendering templates, and so on.</p>
-
 <p>Note that a <em>Responder</em> may incorporate a <em>Template View</em>, <em>Two Step View</em>, <em>Transform View</em>, or any other kind of <em>View</em> system. Note also that a generic <em>Responder</em> may be used by more than one <em>Action</em>. The point is that the <em>Action</em> leaves all header and content work to the <em>Responder</em>, not that there must be a different <em>Responder</em> for each different <em>View</em>.</p>
-
-<h3>
-<a name="user-content-comparisons-to-other-patterns" class="anchor" href="#comparisons-to-other-patterns" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparisons to Other Patterns</h3>
-
+<h3 id="comparisons-to-other-patterns">Comparisons to Other Patterns</h3>
 <p>These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to MVC. See also <a href="http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/">the pattern discussion from Derek Greer at LosTechies</a>.</p>
-
-<h4>
-<a name="user-content-ebi-entity-boundary-interactor" class="anchor" href="#ebi-entity-boundary-interactor" aria-hidden="true"><span class="octicon octicon-link"></span></a>EBI (Entity-Boundary-Interactor)</h4>
-
+<h4 id="ebi-entity-boundary-interactor-">EBI (Entity-Boundary-Interactor)</h4>
 <p><a href="http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html">EBI</a> appears to go by several synonyms: ports and adapters, hexagonal architecture, and <a href="http://www.cs.sjsu.edu/%7Epearce/modules/patterns/enterprise/ecb/ecb.htm">ECB</a> (Entity-Control-Boundary). It is further described as part of a <a href="http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html">Clean Architecture</a> by Robert Martin.</p>
-
 <p>EBI is in part an alternative to MVC where the core application elements and behaviors, represented by <em>Interactor</em> and <em>Entity</em> objects, are separated from the incoming and outgoing data streams by a <em>Boundary</em>. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so that the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as "use cases" and "roles".</p>
-
 <p>I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patterns. If the above description is accurate, it appears that ADR maps only roughly to EBI:</p>
-
 <ul>
-<li><p>the ADR <em>Action</em> and <em>Responder</em> elements may represent a web-specific EBI <em>Boundary</em></p></li>
-<li><p>the ADR <em>Domain</em> element may represent an EBI <em>Interactor</em> element, encapsulating or otherwise hiding the EBI <em>Entity</em> elements from the ADR <em>Action</em>.</p></li>
-</ul><p>Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the <em>Action</em> as a "port" through which an EBI <em>Boundary</em> is invoked as part of the ADR <em>Domain</em>. Finally, the <em>Responder</em> could be seen as an "adapter" back through which the application data is returned.</p>
-
+<li>the ADR <em>Action</em> and <em>Responder</em> elements may represent a web-specific EBI <em>Boundary</em></li>
+<li>the ADR <em>Domain</em> element may represent an EBI <em>Interactor</em> element, encapsulating or otherwise hiding the EBI <em>Entity</em> elements from the ADR <em>Action</em>.</li>
+</ul>
+<p>Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the <em>Action</em> as a "port" through which an EBI <em>Boundary</em> is invoked as part of the ADR <em>Domain</em>. Finally, the <em>Responder</em> could be seen as an "adapter" back through which the application data is returned.</p>
 <p>Regardless, it does not appear that ADR is a direct replacement for EBI. It seems more likely that they are complements to each other.</p>
-
-<h4>
-<a name="user-content-dci-data-context-interaction" class="anchor" href="#dci-data-context-interaction" aria-hidden="true"><span class="octicon octicon-link"></span></a>DCI (Data-Context-Interaction)</h4>
-
+<h4 id="dci-data-context-interaction-">DCI (Data-Context-Interaction)</h4>
 <p><a href="https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction">DCI is described as a complement to MVC</a>, not a replacement for MVC. I think it is fair to call it a complement to ADR as well.</p>
-
-<h4>
-<a name="user-content-mvp-model-view-presenter" class="anchor" href="#mvp-model-view-presenter" aria-hidden="true"><span class="octicon octicon-link"></span></a>MVP (Model-View-Presenter)</h4>
-
+<h4 id="mvp-model-view-presenter-">MVP (Model-View-Presenter)</h4>
 <p><a href="http://www.martinfowler.com/eaaDev/ModelViewPresenter.html">MVP has been retired</a> in favor of <a href="http://www.martinfowler.com/eaaDev/SupervisingPresenter.html"><em>Supervising Controller</em></a> and <a href="http://www.martinfowler.com/eaaDev/PassiveScreen.html"><em>Passive View</em></a>. At first this seems like a candidate match for ADR, especially in that the <em>Passive View</em> and the <em>Model</em> have no dependencies on each other as noted on the <em>Passive View</em> page. From Fowler's narrative:</p>
-
 <blockquote>
 <p>Supervising Controller uses a controller both to handle input response but also to manipulate the view to handle more complex view logic ...</p>
-
-<p>A Passive View handles this by reducing the behavior of the UI components to the absolute minimum by using a controller that not just handles responses to user events, but also does all the updating of the view. This allows testing to be focused on the controller with little risk of problems in the view.</p>
-</blockquote>
-
+<pre><code>A Passive View handles this by reducing the behavior of the UI components to the absolute minimum by using a controller that not just handles responses to user events, but also does all the updating of the view. This allows testing to be focused on the controller with little risk of problems in the view.
+</code></pre></blockquote>
 <p>Let us examine a little more closely:</p>
-
 <ul>
-<li><p><em>Model</em> and the <em>Domain</em> map closely, as they do in MVC.</p></li>
-<li><p><em>Passive View</em> does not map well to either <em>Action</em> or <em>Responder</em>; it might better be regarded as the response that gets returned to the client.</p></li>
-<li><p><em>Supervising Controller</em> might map to <em>Responder</em>, in that it "manipulate[s] the view to handle more complex view logic". However, <em>Responder</em> is not responsible for interacting with the <em>Domain</em>, and it does not receive the client input, so does not seem to be a good fit for <em>Supervising Controller</em>.</p></li>
-<li><p>Alternatively, <em>Supervising Controller</em> might map to <em>Action</em>, but the <em>Action</em> is not responsible for manipulating the view (i.e. the response).</p></li>
-</ul><p>In all, this seems a case of close-but-not-quite.</p>
-
-<h4>
-<a name="user-content-mvvm-model-view-viewmodel" class="anchor" href="#mvvm-model-view-viewmodel" aria-hidden="true"><span class="octicon octicon-link"></span></a>MVVM (Model-View-ViewModel)</h4>
-
+<li><em>Model</em> and the <em>Domain</em> map closely, as they do in MVC.</li>
+<li><em>Passive View</em> does not map well to either <em>Action</em> or <em>Responder</em>; it might better be regarded as the response that gets returned to the client.</li>
+<li><em>Supervising Controller</em> might map to <em>Responder</em>, in that it "manipulate[s] the view to handle more complex view logic". However, <em>Responder</em> is not responsible for interacting with the <em>Domain</em>, and it does not receive the client input, so does not seem to be a good fit for <em>Supervising Controller</em>.</li>
+<li>Alternatively, <em>Supervising Controller</em> might map to <em>Action</em>, but the <em>Action</em> is not responsible for manipulating the view (i.e. the response).</li>
+</ul>
+<p>In all, this seems a case of close-but-not-quite.</p>
+<h4 id="mvvm-model-view-viewmodel-">MVVM (Model-View-ViewModel)</h4>
 <p><a href="https://en.wikipedia.org/wiki/Model_View_ViewModel">MVVM</a> seems to map only incompletely to ADR. The <em>Model</em> in MVVM maps closely to the <em>Model</em> in MVC and the <em>Domain</em> in ADR. Similarly, the <em>View</em> in MVVM maps closely to the <em>View</em> in MVC and the <em>Responder</em> in ADR.</p>
-
 <p>However, the <em>ViewModel</em> does not map well to a <em>Controller</em> in MVC or an <em>Action</em> in ADR. Because ADR is a refinement of MVC, it seems reasonable to think that comparisons between MVVM and MVC would apply equally well to ADR.</p>
-
 <p>For an extended description of those differences, please see these articles from <a href="http://joel.inpointform.net/software-development/mvvm-vs-mvp-vs-mvc-the-differences-explained/">Joel Wenzel</a>, <a href="http://www.codeproject.com/Articles/228214/Understanding-Basics-of-UI-Design-Pattern-MVC-MVP">Avtar Singh Sohi</a>, <a href="http://www.rachelappel.com/comparing-the-mvc-and-mvvm-patterns-along-with-their-respective-viewmodels">Rachel Appel</a>, and <a href="https://nirajrules.wordpress.com/2009/07/18/mvc-vs-mvp-vs-mvvm/">Niraj Bhatt</a>.</p>
-
 <p>(In email discussions with an interested party, I was informed that MVVM is just like MVC, but with an added <em>ViewModel</em> to intermediate between the <em>View</em> and <em>Model</em>. If this is true, then a <em>ViewModel</em> is just as useful in ADR as it would be in MVC.)</p>
-
-<h4>
-<a name="user-content-pac-presentation-abstraction-control" class="anchor" href="#pac-presentation-abstraction-control" aria-hidden="true"><span class="octicon octicon-link"></span></a>PAC (Presentation-Abstraction-Control)</h4>
-
+<h4 id="pac-presentation-abstraction-control-">PAC (Presentation-Abstraction-Control)</h4>
 <p><a href="https://en.wikipedia.org/wiki/Presentation-abstraction-control">From Wikipedia</a>:</p>
-
 <blockquote>
 <p>PAC is used as a hierarchical structure of agents, each consisting of a triad of presentation, abstraction and control parts. The agents (or triads) communicate with each other only through the control part of each triad. It also differs from MVC in that within each triad, it completely insulates the presentation (view in MVC) and the abstraction (model in MVC). This provides the option to separately multithread the model and view which can give the user experience of very short program start times, as the user interface (presentation) can be shown before the abstraction has fully initialized.</p>
 </blockquote>
-
 <p>This does not seem to fit the description of ADR very well.</p>
-
-<h4>
-<a name="user-content-rmr-resource-method-representation" class="anchor" href="#rmr-resource-method-representation" aria-hidden="true"><span class="octicon octicon-link"></span></a>RMR (Resource-Method-Representation)</h4>
-
+<h4 id="rmr-resource-method-representation-">RMR (Resource-Method-Representation)</h4>
 <p>I had not heard of <a href="http://www.peej.co.uk/articles/rmr-architecture.html">RMR</a> before it was pointed out to me by <a href="http://www.reddit.com/r/PHP/comments/24s8yn/actiondomainresponse_a_tentative_mvc_refinement/cha8jo1">ircmaxell on Reddit</a>.</p>
-
 <p>ADR and RMR seem very similar, and seem to map well to each other:</p>
-
-<pre><code>Resource       &lt;--&gt; Domain
-Method         &lt;--&gt; Action
-Representation &lt;--&gt; Responder
+<pre><code class="lang-bash">Resource       <--> Domain
+Method         <--> Action
+Representation <--> Responder
 </code></pre>
-
 <p>However, some nuances of RMR make me think they are still somewhat different from each other. For example:</p>
-
 <blockquote>
 <p>So in an OO language, a HTTP resource can be thought of as an object with private member variables and a number of public methods that correspond to the standard HTTP methods. From an MVC point of view, a resource can be thought of as a model with a bit of controller thrown in.</p>
 </blockquote>
-
 <p>To me, this seems like mixing concerns just a bit too much. I'd rather see a cleaner separation of the domain model from the action being applied to the domain.</p>
-
 <blockquote>
 <p>So the representation is like a view in MVC, we give it a resource object and tell it to serialize the data into it's output format.</p>
 </blockquote>
-
 <p>There seems to be no allowance for other kinds of HTTP responses, such as "Not Found".  That kind of response is clearly not a representation of the requested resource.</p>
-
 <p>Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a <em>Resource</em> and an action one can perform on it are cleanly separated into a <em>Domain</em> and an <em>Action</em>, and where the <em>Representation</em> (i.e., the building of the response) is handled by a <em>Responder</em>.</p>
-
-<h4>
-<a name="user-content-models-operations-views-events-move" class="anchor" href="#models-operations-views-events-move" aria-hidden="true"><span class="octicon octicon-link"></span></a>Models-Operations-Views-Events (MOVE)</h4>
-
+<h4 id="models-operations-views-events-move-">Models-Operations-Views-Events (MOVE)</h4>
 <p>From <a href="http://cirw.in/blog/time-to-move-on">the originating site</a>:</p>
-
 <blockquote>
 <ul>
 <li>Models encapsulate everything that your application knows.</li>
@@ -218,32 +173,19 @@ Representation &lt;--&gt; Responder
 <li>Events are used to join all these components together safely.</li>
 </ul>
 </blockquote>
-
 <p>This is an interesting pattern in itelf. The idea of <em>Models</em> and <em>Operations</em> seems to map well to Domain-Driven Design idioms.</p>
-
 <p>However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:</p>
-
 <blockquote>
 <p>Listening on events is what gives MOVE (and MVC) the inversion of control that you need to allow models to update views without the models being directly aware of which views they are updating.</p>
 </blockquote>
-
 <p>In ADR, the <em>Domain</em> and the <em>Responder</em> do not "update each other". The <em>Domain</em> work is completed and passed to the <em>Responder</em> for it to present to the client.</p>
-
-<h4>
-<a name="user-content-separated-presentation" class="anchor" href="#separated-presentation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Separated Presentation</h4>
-
+<h4 id="separated-presentation">Separated Presentation</h4>
 <p>There are hints of ADR, espeically the <em>Responder</em> element, in <a href="http://martinfowler.com/eaaDev/SeparatedPresentation.html">Separated Presentation</a>. Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentation, not a specific approach to doing so.</p>
-
-<h3>
-<a name="user-content-examples-of-mvc-vs-adr" class="anchor" href="#examples-of-mvc-vs-adr" aria-hidden="true"><span class="octicon octicon-link"></span></a>Examples of MVC vs ADR</h3>
-
-<h4>
-<a name="user-content-mvc-starting-point" class="anchor" href="#mvc-starting-point" aria-hidden="true"><span class="octicon octicon-link"></span></a>MVC Starting Point</h4>
-
+<h3 id="examples-of-mvc-vs-adr">Examples of MVC vs ADR</h3>
+<h4 id="mvc-starting-point">MVC Starting Point</h4>
 <p>An MVC directory structure for a naive blogging system might look like the following. Note that <code>index</code> and <code>read</code> present an alternative JSON type, and the comments template is a "partial" that also presents an alternative JSON type.</p>
-
-<pre><code>controllers/
-    BlogController.php # index(), create(), read(), update(), delete()
+<pre><code class="lang-php">controllers/
+    BlogController.php <span class="hljs-comment"># index(), create(), read(), update(), delete()</span>
 models/
     BlogModel.php
 views/
@@ -258,11 +200,9 @@ views/
         _comments.html.php
         _comments.json.php
 </code></pre>
-
 <p>Here's another type of MVC directory structure:</p>
-
-<pre><code>Blog/
-    BlogController.php  # index(), create(), read(), update(), delete()
+<pre><code class="lang-php">Blog/
+    BlogController.php  <span class="hljs-comment"># index(), create(), read(), update(), delete()</span>
     BlogModel.php
     views/
         index.html.php
@@ -275,80 +215,73 @@ views/
         _comments.html.php
         _comments.json.php
 </code></pre>
-
 <p>A typical <em>Controller</em> class in MVC might look something like the following. Note that there are multiple actions within the <em>Controller</em> class, and that
 the action method deals with the response headers.</p>
+<pre><code class="lang-php"><span class="hljs-preprocessor"><?php</span>
+<span class="hljs-keyword">use</span> <span class="hljs-title">Framework</span>\<span class="hljs-title">Controller</span>;
 
-<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="k">use</span> <span class="nx">Framework\Controller</span><span class="p">;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlogController</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Controller</span>
+{</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">create</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment">// is this a POST request?</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$this</span>->request->isPost()) {
 
-<span class="k">class</span> <span class="nc">BlogController</span> <span class="k">extends</span> <span class="nx">Controller</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">create</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// is this a POST request?</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isPost</span><span class="p">())</span> <span class="p">{</span>
+            <span class="hljs-comment">// retain incoming data</span>
+            <span class="hljs-variable">$data</span> = <span class="hljs-variable">$this</span>->request->getPost(<span class="hljs-string">'blog'</span>);
 
-            <span class="c1">// retain incoming data</span>
-            <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
+            <span class="hljs-comment">// create a blog post instance</span>
+            <span class="hljs-variable">$blog</span> = <span class="hljs-variable">$this</span>->blog_model->newInstance(<span class="hljs-variable">$data</span>);
 
-            <span class="c1">// create a blog post instance</span>
-            <span class="nv">$blog</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blog_model</span><span class="o">-&gt;</span><span class="na">newInstance</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+            <span class="hljs-comment">// is the new instance valid?</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-variable">$blog</span>->isValid()) {
+                <span class="hljs-comment">// yes, save and redirect to editing</span>
+                <span class="hljs-variable">$blog</span>->save();
+                <span class="hljs-variable">$this</span>->response->redirect(<span class="hljs-string">'/blog/edit/{$blog->id}'</span>);
+                <span class="hljs-keyword">return</span>;
+            } <span class="hljs-keyword">else</span> {
+                <span class="hljs-comment">// no, show the "create" form with the blog instance</span>
+                <span class="hljs-variable">$this</span>->response->setContent(<span class="hljs-variable">$this</span>->view->render(
+                    <span class="hljs-string">'create.html.php'</span>,
+                    <span class="hljs-keyword">array</span>(<span class="hljs-string">'blog'</span> => <span class="hljs-variable">$blog</span>),
+                ));
+                <span class="hljs-keyword">return</span>;
+            }
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// not a POST request, show the "create" form with defaults</span>
+            <span class="hljs-variable">$this</span>->response->setContent(<span class="hljs-variable">$this</span>->view->render(
+                <span class="hljs-string">'create.html.php'</span>,
+                <span class="hljs-keyword">array</span>(<span class="hljs-string">'blog'</span> => <span class="hljs-variable">$this</span>->blog_model->getDefault())
+            ));
+        }
+    }
 
-            <span class="c1">// is the new instance valid?</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$blog</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
-                <span class="c1">// yes, save and redirect to editing</span>
-                <span class="nv">$blog</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">();</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">redirect</span><span class="p">(</span><span class="s1">'/blog/edit/{$blog-&gt;id}'</span><span class="p">);</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-                <span class="c1">// no, show the "create" form with the blog instance</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
-                    <span class="s1">'create.html.php'</span><span class="p">,</span>
-                    <span class="k">array</span><span class="p">(</span><span class="s1">'blog'</span> <span class="o">=&gt;</span> <span class="nv">$blog</span><span class="p">),</span>
-                <span class="p">));</span>
-                <span class="k">return</span><span class="p">;</span>
-            <span class="p">}</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// not a POST request, show the "create" form with defaults</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
-                <span class="s1">'create.html.php'</span><span class="p">,</span>
-                <span class="k">array</span><span class="p">(</span><span class="s1">'blog'</span> <span class="o">=&gt;</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blog_model</span><span class="o">-&gt;</span><span class="na">getDefault</span><span class="p">())</span>
-            <span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">index</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment">// ...</span>
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">index</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">read</span><span class="hljs-params">(<span class="hljs-variable">$id</span>)</span>
+    {</span>
+        <span class="hljs-comment">// ...</span>
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">read</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">update</span><span class="hljs-params">(<span class="hljs-variable">$id</span>)</span>
+    {</span>
+        <span class="hljs-comment">// ...</span>
+    }
 
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">update</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">delete</span><span class="p">(</span><span class="nv">$id</span><span class="p">)</span>
-    <span class="p">{</span>
-        <span class="c1">// ...</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</pre></div>
-
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-variable">$id</span>)</span>
+    {</span>
+        <span class="hljs-comment">// ...</span>
+    }
+}
+<span class="hljs-preprocessor">?></span>
+</code></pre>
 <p>The <code>create()</code> logic could be reduced somewhat by moving even more of the model interactions into a <em>Service Layer</em>, but the point remains that the <em>Controller</em> typically sets the response headers and content.</p>
-
-<h4>
-<a name="user-content-adr-revision" class="anchor" href="#adr-revision" aria-hidden="true"><span class="octicon octicon-link"></span></a>ADR Revision</h4>
-
+<h4 id="adr-revision">ADR Revision</h4>
 <p>In comparison, an ADR directory structure might instead look like this. Note how each <em>Action</em> has a corresponding <em>Responder</em>.</p>
-
-<pre><code>Blog/
+<pre><code class="lang-php">Blog/
     Action/
         BlogIndexAction.php
         BlogCreateAction.php
@@ -356,7 +289,7 @@ the action method deals with the response headers.</p>
         BlogUpdateAction.php
         BlogDeleteAction.php
     Domain/
-        # Model, Gateway, Mapper, Entity, Collection, Service, etc.
+        <span class="hljs-comment"># Model, Gateway, Mapper, Entity, Collection, Service, etc.</span>
     Responder/
         BlogIndexResponder.php
         BlogCreateResponder.php
@@ -375,167 +308,127 @@ the action method deals with the response headers.</p>
             read.json.php
             _comments.json.php
 </code></pre>
-
 <p>The <em>Action</em> and <em>Responder</em> class pair corresponding to the above <em>Controller</em> <code>create()</code> example might look like this:</p>
+<pre><code class="lang-php"><span class="hljs-preprocessor"><?php</span>
+<span class="hljs-keyword">use</span> <span class="hljs-title">Framework</span>\<span class="hljs-title">Action</span>;
 
-<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="k">use</span> <span class="nx">Framework\Action</span><span class="p">;</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlogCreateAction</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Action</span>
+{</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment">// is this a POST request?</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$this</span>->request->isPost()) {
 
-<span class="k">class</span> <span class="nc">BlogCreateAction</span> <span class="k">extends</span> <span class="nx">Action</span>
-<span class="p">{</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__invoke</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// is this a POST request?</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">isPost</span><span class="p">())</span> <span class="p">{</span>
+            <span class="hljs-comment">// yes, retain incoming data</span>
+            <span class="hljs-variable">$data</span> = <span class="hljs-variable">$this</span>->request->getPost(<span class="hljs-string">'blog'</span>);
 
-            <span class="c1">// yes, retain incoming data</span>
-            <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">request</span><span class="o">-&gt;</span><span class="na">getPost</span><span class="p">(</span><span class="s1">'blog'</span><span class="p">);</span>
+            <span class="hljs-comment">// create a blog post instance</span>
+            <span class="hljs-variable">$blog</span> = <span class="hljs-variable">$this</span>->blog_model->newInstance(<span class="hljs-variable">$data</span>);
 
-            <span class="c1">// create a blog post instance</span>
-            <span class="nv">$blog</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blog_model</span><span class="o">-&gt;</span><span class="na">newInstance</span><span class="p">(</span><span class="nv">$data</span><span class="p">);</span>
+            <span class="hljs-comment">// is the new instance valid?</span>
+            <span class="hljs-keyword">if</span> (<span class="hljs-variable">$blog</span>->isValid()) {
+                <span class="hljs-variable">$blog</span>->save();
+            }
 
-            <span class="c1">// is the new instance valid?</span>
-            <span class="k">if</span> <span class="p">(</span><span class="nv">$blog</span><span class="o">-&gt;</span><span class="na">isValid</span><span class="p">())</span> <span class="p">{</span>
-                <span class="nv">$blog</span><span class="o">-&gt;</span><span class="na">save</span><span class="p">();</span>
-            <span class="p">}</span>
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// not a POST request, use default values</span>
+            <span class="hljs-variable">$blog</span> = <span class="hljs-variable">$this</span>->blog_model->getDefault();
+        }
 
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// not a POST request, use default values</span>
-            <span class="nv">$blog</span> <span class="o">=</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">blog_model</span><span class="o">-&gt;</span><span class="na">getDefault</span><span class="p">();</span>
-        <span class="p">}</span>
+        <span class="hljs-comment">// set data into the response</span>
+        <span class="hljs-variable">$this</span>->responder->setData(<span class="hljs-keyword">array</span>(<span class="hljs-string">'blog'</span> => <span class="hljs-variable">$blog</span>));
+        <span class="hljs-variable">$this</span>->responder->__invoke();
+    }
+}
+<span class="hljs-preprocessor">?></span>
+</code></pre>
+<pre><code class="lang-php"><span class="hljs-preprocessor"><?php</span>
+<span class="hljs-keyword">use</span> <span class="hljs-title">Framework</span>\<span class="hljs-title">Responder</span>;
 
-        <span class="c1">// set data into the response</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">responder</span><span class="o">-&gt;</span><span class="na">setData</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s1">'blog'</span> <span class="o">=&gt;</span> <span class="nv">$blog</span><span class="p">));</span>
-        <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">responder</span><span class="o">-&gt;</span><span class="na">__invoke</span><span class="p">();</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</pre></div>
-
-<div class="highlight highlight-php"><pre><span class="o">&lt;?</span><span class="nx">php</span>
-<span class="k">use</span> <span class="nx">Framework\Responder</span><span class="p">;</span>
-
-<span class="k">class</span> <span class="nc">BlogCreateResponder</span> <span class="k">extends</span> <span class="nx">Responder</span>
-<span class="p">{</span>
-    <span class="c1">// $this-&gt;response is the actual response object, or a response descriptor</span>
-    <span class="c1">// $this-&gt;view is a view or template system</span>
-    <span class="k">public</span> <span class="k">function</span> <span class="nf">__invoke</span><span class="p">()</span>
-    <span class="p">{</span>
-        <span class="c1">// is there an ID on the blog instance?</span>
-        <span class="k">if</span> <span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span><span class="o">-&gt;</span><span class="na">blog</span><span class="o">-&gt;</span><span class="na">id</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">// yes, which means it was saved already.</span>
-            <span class="c1">// redirect to editing.</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setRedirect</span><span class="p">(</span><span class="s1">'/blog/edit/{$blog-&gt;id}'</span><span class="p">);</span>
-        <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">// no, which means it has not been saved yet.</span>
-            <span class="c1">// show the creation form with the current response data.</span>
-            <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">response</span><span class="o">-&gt;</span><span class="na">setContent</span><span class="p">(</span><span class="nv">$this</span><span class="o">-&gt;</span><span class="na">view</span><span class="o">-&gt;</span><span class="na">render</span><span class="p">(</span>
-                <span class="s1">'create.html.php'</span><span class="p">,</span>
-                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">data</span>
-            <span class="p">));</span>
-        <span class="p">}</span>
-    <span class="p">}</span>
-<span class="p">}</span>
-<span class="cp">?&gt;</span><span class="x"></span>
-</pre></div>
-
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BlogCreateResponder</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Responder</span>
+{</span>
+    <span class="hljs-comment">// $this->response is the actual response object, or a response descriptor</span>
+    <span class="hljs-comment">// $this->view is a view or template system</span>
+    <span class="hljs-keyword">public</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">__invoke</span><span class="hljs-params">()</span>
+    {</span>
+        <span class="hljs-comment">// is there an ID on the blog instance?</span>
+        <span class="hljs-keyword">if</span> (<span class="hljs-variable">$this</span>->data->blog->id) {
+            <span class="hljs-comment">// yes, which means it was saved already.</span>
+            <span class="hljs-comment">// redirect to editing.</span>
+            <span class="hljs-variable">$this</span>->response->setRedirect(<span class="hljs-string">'/blog/edit/{$blog->id}'</span>);
+        } <span class="hljs-keyword">else</span> {
+            <span class="hljs-comment">// no, which means it has not been saved yet.</span>
+            <span class="hljs-comment">// show the creation form with the current response data.</span>
+            <span class="hljs-variable">$this</span>->response->setContent(<span class="hljs-variable">$this</span>->view->render(
+                <span class="hljs-string">'create.html.php'</span>,
+                <span class="hljs-variable">$this</span>->data
+            ));
+        }
+    }
+}
+<span class="hljs-preprocessor">?></span>
+</code></pre>
 <p>Again, we can see numerous refactoring opportunities here, especially in the domain model work. The point is that the <em>Action</em> does not perform any  <em>Responder</em> work at all. That work is handled entirely by the <em>Responder</em> logic.</p>
-
 <p>You can review an extended set of sample ADR code <a href="https://github.com/pmjones/adr/blob/master/example-code">here</a>.</p>
-
-<h3>
-<a name="user-content-commentary" class="anchor" href="#commentary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Commentary</h3>
-
-<h4>
-<a name="user-content-request-omission" class="anchor" href="#request-omission" aria-hidden="true"><span class="octicon octicon-link"></span></a>Request Omission</h4>
-
+<h3 id="commentary">Commentary</h3>
+<h4 id="request-omission">Request Omission</h4>
 <p>A common critique so far has been that there is no "HTTP request" element present in the pattern.  An earlier version of this document included a request under the title "Request-Action-Domain-Response". However, on further research into MVC and other related architectural patterns, I noticed that none of them define an input element. To stay in line with precedent, this pattern omits the incoming HTTP request.</p>
-
-<h4>
-<a name="user-content-front-controller-omission" class="anchor" href="#front-controller-omission" aria-hidden="true"><span class="octicon octicon-link"></span></a>Front Controller Omission</h4>
-
+<h4 id="front-controller-omission">Front Controller Omission</h4>
 <p>This pattern concentrates on the refinement of <em>Model-View-Controller</em>, and not on the entirety of web applications. Therefore, it intentionally omits some elements commonly found in web applications, particularly anything related to a <em>Front Controller</em>.</p>
-
 <p>The ADR pattern does not describe a routing or dispatching element, nor how the <em>Action</em> and <em>Responder</em> relate to a dispatcher. Routing and dispatching are more properly the purview of <em>Front Controller</em>, and there are many ways for the <em>Action</em>, <em>Responder</em>, and any <em>Front Controller</em> mechanism to interact:</p>
-
 <ul>
-<li><p>the <em>Action</em> may invoke the <em>Responder</em> directly, which then returns a response;</p></li>
-<li><p>the <em>Responder</em> and response may be shared with a <em>Front Controller</em> so that it can invoke them directly;</p></li>
-<li><p>the <em>Action</em> may return a <em>Responder</em>, which is then invoked to return a response, which is then invoked to send itself;</p></li>
-<li><p>and so on.</p></li>
-</ul><p>The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a <em>Front Controller</em>. Note that pre-filter or request-validation logic may or may not bypass the <em>Action</em> to invoke the <em>Responder</em> directly, or it may deliver a response of its own, or it may invoke a separate <em>Action</em> as a result of its logic, and so on. Likewise, the invoked <em>Action</em> may have its own set of pre-condition checks that cause it to invoke the <em>Responder</em> without ever interacting with the <em>Domain</em>. Reasons for these short-circuiting behaviors may include:</p>
-
+<li><p>the <em>Action</em> may invoke the <em>Responder</em> directly, which then returns a response;</p>
+</li>
+<li><p>the <em>Responder</em> and response may be shared with a <em>Front Controller</em> so that it can invoke them directly;</p>
+</li>
+<li><p>the <em>Action</em> may return a <em>Responder</em>, which is then invoked to return a response, which is then invoked to send itself;</p>
+</li>
+<li><p>and so on.</p>
+</li>
+</ul>
+<p>The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a <em>Front Controller</em>. Note that pre-filter or request-validation logic may or may not bypass the <em>Action</em> to invoke the <em>Responder</em> directly, or it may deliver a response of its own, or it may invoke a separate <em>Action</em> as a result of its logic, and so on. Likewise, the invoked <em>Action</em> may have its own set of pre-condition checks that cause it to invoke the <em>Responder</em> without ever interacting with the <em>Domain</em>. Reasons for these short-circuiting behaviors may include:</p>
 <ul>
-<li><p>HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested <em>Action</em>, the <em>Front Controller</em> may return an error response instead of dispatching to the requested <em>Action</em>.</p></li>
-<li><p>Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an <em>Action</em> in the first place, or to interact with the <em>Domain</em> while in an <em>Action</em>.</p></li>
-<li><p>Authorization. Access-control systems may deny the client's request for the given <em>Action</em>, or cause the <em>Action</em> to bypass interactions with <em>Domain</em>, and possibly return a response of their own.</p></li>
-<li><p>Content negotiation. The <em>Front Controller</em>, <em>Action</em>, or other intermediary layers may negotiate the various <code>Accept</code> headers in the client request. Unsuccessful negotiation may pre-empt <em>Action</em> or <em>Domain</em> behaviors, and/or result in an early-exit response.</p></li>
-<li><p>Content validation. If the incoming request data is malformed in some way, the <em>Action</em> might not interact with the <em>Domain</em> at all and move directly to interacting with a <em>Responder</em> to send an error response.</p></li>
-</ul><h4>
-<a name="user-content-alternative-formulations" class="anchor" href="#alternative-formulations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alternative Formulations</h4>
-
+<li><p>HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested <em>Action</em>, the <em>Front Controller</em> may return an error response instead of dispatching to the requested <em>Action</em>.</p>
+</li>
+<li><p>Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an <em>Action</em> in the first place, or to interact with the <em>Domain</em> while in an <em>Action</em>.</p>
+</li>
+<li><p>Authorization. Access-control systems may deny the client's request for the given <em>Action</em>, or cause the <em>Action</em> to bypass interactions with <em>Domain</em>, and possibly return a response of their own.</p>
+</li>
+<li><p>Content negotiation. The <em>Front Controller</em>, <em>Action</em>, or other intermediary layers may negotiate the various <code>Accept</code> headers in the client request. Unsuccessful negotiation may pre-empt <em>Action</em> or <em>Domain</em> behaviors, and/or result in an early-exit response.</p>
+</li>
+<li><p>Content validation. If the incoming request data is malformed in some way, the <em>Action</em> might not interact with the <em>Domain</em> at all and move directly to interacting with a <em>Responder</em> to send an error response.</p>
+</li>
+</ul>
+<h4 id="alternative-formulations">Alternative Formulations</h4>
 <p>This pattern may be better formulated as variations on <em>Controller</em> and <em>View</em> from <em>Model-View-Controller</em> instead of a pattern of its own.</p>
-
 <p>That is, it may be that <em>Action</em> is a variation similar to <em>Page Controller</em>, and thus better termed an <em>Action Controller</em>. It would thereby fit into the <em>Controller</em> portion of MVC.  (Indeed, the formal description for <em>Page Controller</em> says that it represents a "page or action.")</p>
-
 <p>Likewise, it may be that <em>Responder</em> is a variation similar to <em>Template View</em> or <em>Transform View</em>, and thus better termed a <em>Response View</em>. It would thereby fit into the <em>View</em> portion of MVC.</p>
-
 <p>Having said that, I believe those alternative formulations are probably not as good of a description of web-based interactions as is ADR. This is mostly because of the implicit interactions between <em>Model</em> and <em>View</em> in MVC.  In MVC, the <em>View</em> updates the <em>Model</em>. In ADR, the <em>Responder</em> does not update the <em>Domain</em>.</p>
-
-<h4>
-<a name="user-content-ambiguous-domain" class="anchor" href="#ambiguous-domain" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ambiguous Domain</h4>
-
+<h4 id="ambiguous-domain">Ambiguous Domain</h4>
 <p><em>Domain</em> covers a lot: not just the business domain, but environment and application state as well. It might be better to call this a <em>Model</em>, but that too is somewhat ambiguous.</p>
-
 <p>Additionally, it may be that the <em>Action</em> should pass a <a href="http://martinfowler.com/eaaDev/PresentationModel.html"><em>Presentation Model</em></a> to the <em>Responder</em> instead of <em>Domain</em> data. But then, maybe the <em>Domain</em> service layer used by the <em>Action</em> returns a <em>Presentation Model</em> that encapsulates application state.</p>
-
 <p>Regardless, recall that ADR is presented as a refinement to MVC. Thus, ADR has only as much to say about the <em>Domain</em> as MVC has to say about the <em>Model</em>.</p>
-
-<h4>
-<a name="user-content-expanding-actions" class="anchor" href="#expanding-actions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Expanding Actions</h4>
-
+<h4 id="expanding-actions">Expanding Actions</h4>
 <p>One commenter noted that the <em>Action</em> element might be interpreted to allow for different logic based on the incoming request. For example, he noted that readers might expand a single <em>Action</em> to cover different HTTP methods, and put the logic for the different HTTP methods into the same <em>Action</em>.</p>
-
 <p>While I believe the pattern implies that each <em>Action</em> should do only one thing, that implication rising from the <a href="#controller-vs-action"><em>Controller</em> vs <em>Action</em></a> and <a href="#rmr-resource-method-representation">RMR vs ADR</a> comparisons, I will state it more explicitly here: the idea is that each <em>Action</em> should express one, and only one, action in response to the incoming request.</p>
-
-<h4>
-<a name="user-content-a-replacement-for-not-refinement-of-mvc" class="anchor" href="#a-replacement-for-not-refinement-of-mvc" aria-hidden="true"><span class="octicon octicon-link"></span></a>A Replacement For, Not Refinement Of, MVC</h4>
-
+<h4 id="a-replacement-for-not-refinement-of-mvc">A Replacement For, Not Refinement Of, MVC</h4>
 <p>Nate Abele opines that the ADR pattern should be a <em>replacement</em> for MVC, one that applies to server-side applications:</p>
-
 <blockquote>
 <p>I will say that the more I learn about MVC, the more I think it has little to nothing to do with server-side web applications. ... I think the biggest upshot of your ADR idea is that it provides us a clean break from what I have come to understand is a bad abstraction. My advice would be to avoid defining ADR in terms of MVC except where absolutely necessary.</p>
 </blockquote>
-
 <p>Via <a href="http://paul-m-jones.com/archives/5993#comment-42425">http://paul-m-jones.com/archives/5993#comment-42425</a>.</p>
-
-<h4>
-<a name="user-content-other-commentary" class="anchor" href="#other-commentary" aria-hidden="true"><span class="octicon octicon-link"></span></a>Other Commentary</h4>
-
+<h4 id="other-commentary">Other Commentary</h4>
 <p>The original blog post that led to this offering is at <a href="http://paul-m-jones.com/archives/5970">http://paul-m-jones.com/archives/5970</a>.</p>
-
 <p>Stephan Hochdörfer responded to that offering at <a href="http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes">http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes</a>; follow-up discussion appears at <a href="http://paul-m-jones.com/archives/5987">http://paul-m-jones.com/archives/5987</a> and <a href="http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochd%C3%B6rfer_and_actiondomainresponder">http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder</a>.</p>
-
 <p>Jon Leighton writes about a "Focused Controller" that maps well to the <em>Action</em> element in ADR at <a href="http://www.jonathanleighton.com/articles/2012/explaining-focused-controller">http://www.jonathanleighton.com/articles/2012/explaining-focused-controller</a>.</p>
-
 <p>A follow-up post regarding <em>View</em> vs <em>Responder</em> is at <a href="http://paul-m-jones.com/archives/5993">http://paul-m-jones.com/archives/5993</a> with Reddit commentary at <a href="http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/">http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/</a> and <a href="http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/">http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/</a>.</p>
-
 <p>Akihito Koritama offers these notes: <a href="https://koriym.github.io/blog/2014/06/08/action-domain-responder/">https://koriym.github.io/blog/2014/06/08/action-domain-responder/</a></p>
-
-<h3>
-<a name="user-content-benefits-and-drawbacks" class="anchor" href="#benefits-and-drawbacks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Benefits and Drawbacks</h3>
-
+<h3 id="benefits-and-drawbacks">Benefits and Drawbacks</h3>
 <p>One benefit overall is that the pattern more closely describes the day-to-day work of web interactions. A request comes in and gets dispatched to an action; the action interacts with the domain, and then builds a response. The response work, including both headers and content, is cleanly separated from the action work.</p>
-
 <p>One drawback is that we end up with more classes in the application. Not only does each <em>Action</em> go in its own class, each <em>Responder</em> also goes in its own class.</p>
-
 <p>This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or shallower inheritance hierachies. It may also lead to better testability of the <em>Action</em> separate from the <em>Responder</em>. These will play themselves out differently in different systems.  Others have noted that "many classes" may be more easily manageable via IDEs and editors than "fewer classes but more methods" since class lookups are frequently easier than method lookups.</p>
-
-<h3>
-<a name="user-content-acknowledgements" class="anchor" href="#acknowledgements" aria-hidden="true"><span class="octicon octicon-link"></span></a>Acknowledgements</h3>
-
+<h3 id="acknowledgements">Acknowledgements</h3>
 <p>My thanks to the many people who have helped refine this offering, whether through questions, comments, criticism, or commendation. In no particular order, these include:</p>
-
 <ul>
 <li>Matthew Weier O'Phinney</li>
 <li>Hari KT</li>
@@ -546,21 +439,14 @@ the action method deals with the response headers.</p>
 <li>Beau Simensen</li>
 </ul>
 
+  </div>
 
+</div>
 
-
-      </section>
+      </div>
     </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">ADR is maintained by <a href="https://github.com/pmjones">pmjones</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-
+    <label for="sidebar-checkbox" class="sidebar-toggle"></label>
 
   </body>
 </html>
