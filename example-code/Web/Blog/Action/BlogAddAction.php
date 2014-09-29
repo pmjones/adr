@@ -23,8 +23,8 @@ class BlogAddAction
 
     public function __invoke()
     {
-        $result = $this->domain->newPost();
-        $this->responder->setResult($result);
+        $payload = $this->domain->newPost();
+        $this->responder->setPayload($payload);
         return $this->responder->__invoke();
     }
 }

@@ -23,8 +23,8 @@ class BlogEditAction
 
     public function __invoke($id)
     {
-        $result = $this->domain->fetchPost($id);
-        $this->responder->setResult($result);
+        $payload = $this->domain->fetchPost($id);
+        $this->responder->setPayload($payload);
         return $this->responder->__invoke();
     }
 }

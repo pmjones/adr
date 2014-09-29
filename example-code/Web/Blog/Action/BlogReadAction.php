@@ -23,8 +23,8 @@ class BlogReadAction
 
     public function __invoke($id)
     {
-        $result = $this->domain->fetchPost($id);
-        $this->responder->setResult($result);
+        $payload = $this->domain->fetchPost($id);
+        $this->responder->setPayload($payload);
         $this->responder->setAccept($this->request->accept);
         return $this->responder->__invoke();
     }

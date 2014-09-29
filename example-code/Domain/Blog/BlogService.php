@@ -1,7 +1,7 @@
 <?php
 namespace Domain\Blog;
 
-use Domain\ResultFactory;
+use Domain\PayloadFactory;
 use Exception;
 
 class BlogService
@@ -9,18 +9,18 @@ class BlogService
     protected $filter;
     protected $gateway;
     protected $factory;
-    protected $result;
+    protected $payload;
 
     public function __construct(
         BlogFilter $filter,
         BlogGateway $gateway,
         BlogFactory $factory,
-        ResultFactory $result
+        PayloadFactory $payload
     ) {
         $this->filter = $filter;
         $this->gateway = $gateway;
         $this->factory = $factory;
-        $this->result = $result;
+        $this->payload = $payload;
     }
 
     public function fetchPage($page = 1, $paging = 10)
@@ -29,18 +29,18 @@ class BlogService
 
             $collection = $this->gateway->fetchAllByPage($page, $paging);
             if (! $collection) {
-                return $this->result->notFound(array(
+                return $this->payload->notFound(array(
                     'collection' => $collection,
                 ));
             }
 
-            return $this->result->found(array(
+            return $this->payload->found(array(
                 'collection' => $collection,
             ));
 
         } catch (Exception $e) {
 
-            return $this->result->error(array(
+            return $this->payload->error(array(
                 'exception' => $e,
                 'page' => $page,
                 'paging' => $paging,
@@ -55,18 +55,18 @@ class BlogService
 
             $blog = $this->gateway->fetchOneById($id);
             if (! $blog) {
-                return $this->result->notFound(array(
+                return $this->payload->notFound(array(
                     'id' => $id
                 ));
             }
 
-            return $this->result->found(array(
+            return $this->payload->found(array(
                 'blog' => $blog
             ));
 
         } catch (Exception $e) {
 
-            return $this->result->error(array(
+            return $this->payload->error(array(
                 'exception' => $e,
                 'id' => $id,
             ));
@@ -76,7 +76,7 @@ class BlogService
 
     public function newPost(array $data)
     {
-        return $this->result->newEntity(array(
+        return $this->payload->newEntity(array(
             'blog' => $this->factory->newEntity($data)
         ));
     }
@@ -90,7 +90,7 @@ class BlogService
 
             // validate the entity
             if (! $this->filter->forInsert($blog)) {
-                return $this->result->notValid(array(
+                return $this->payload->notValid(array(
                     'blog' => $blog,
                     'messages' => $this->filter->getMessages()
                 ));
@@ -98,19 +98,19 @@ class BlogService
 
             // insert the entity
             if (! $this->gateway->create($blog)) {
-                return new $this->result->notCreated(array(
+                return new $this->payload->notCreated(array(
                     'blog' => $blog,
                 ));
             }
 
             // success
-            return $this->result->created(array(
+            return $this->payload->created(array(
                 'blog' => $blog,
             ));
 
         } catch (Exception $e) {
 
-            return $this->result->error(array(
+            return $this->payload->error(array(
                 'exception' => $e,
                 'data' => $data,
             ));
@@ -125,7 +125,7 @@ class BlogService
             // fetch the entity
             $blog = $this->gateway->fetchOneById($id);
             if (! $blog) {
-                return $this->result->notFound(array(
+                return $this->payload->notFound(array(
                     'id' => $id
                 ));
             }
@@ -136,7 +136,7 @@ class BlogService
 
             // validate the entity
             if (! $this->filter->forUpdate($blog)) {
-                return $this->result->notValid(array(
+                return $this->payload->notValid(array(
                     'blog' => $blog,
                     'messages' => $this->filter->getMessages()
                 ));
@@ -144,19 +144,19 @@ class BlogService
 
             // update the entity
             if (! $this->gateway->update($blog)) {
-                return $this->result->notUpdated(array(
+                return $this->payload->notUpdated(array(
                     'blog' => $blog,
                 ));
             }
 
             // success
-            return $this->result->updated(array(
+            return $this->payload->updated(array(
                 'blog' => $blog,
             ));
 
         } catch (Exception $e) {
 
-            return $this->result->error(array(
+            return $this->payload->error(array(
                 'exception' => $e,
                 'id' => $id,
                 'data' => $data,
@@ -172,26 +172,26 @@ class BlogService
             // fetch the entity
             $blog = $this->gateway->fetchOneById($id);
             if (! $blog) {
-                return $this->result->notFound(array(
+                return $this->payload->notFound(array(
                     'id' => $id
                 ));
             }
 
             // delete the entity
             if (! $this->gateway->delete($blog)) {
-                return $this->result->notDeleted(array(
+                return $this->payload->notDeleted(array(
                     'blog' => $blog,
                 ));
             }
 
             // success
-            return $this->result->deleted(array(
+            return $this->payload->deleted(array(
                 'blog' => $blog,
             ));
 
         } catch (Exception $e) {
 
-            return $this->result->error(array(
+            return $this->payload->error(array(
                 'exception' => $e,
                 'blog' => $blog,
             ));

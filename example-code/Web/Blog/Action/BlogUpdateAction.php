@@ -24,8 +24,8 @@ class BlogUpdateAction
     public function __invoke($id)
     {
         $data = $this->request->post->get('blog');
-        $result = $this->domain->updateById($id, $data);
-        $this->responder->setResult($result);
+        $payload = $this->domain->updateById($id, $data);
+        $this->responder->setPayload($payload);
         return $this->responder->__invoke();
     }
 }

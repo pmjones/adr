@@ -3,15 +3,15 @@ namespace Blog\Responder;
 
 class BlogCreateResponder extends AbstractBlogResponder
 {
-    protected $result_method = array(
-        'Domain\Result\Created' => 'created',
-        'Domain\Result\NotCreated' => 'notCreated',
-        'Domain\Result\NotValid' => 'notValid',
+    protected $payload_method = array(
+        'Domain\Payload\Created' => 'created',
+        'Domain\Payload\NotCreated' => 'notCreated',
+        'Domain\Payload\NotValid' => 'notValid',
     );
 
     protected function created()
     {
-        $blog = $this->result->get('blog');
+        $blog = $this->payload->get('blog');
         $this->response->redirect->created("/blog/read/{$blog->id}");
     }
 

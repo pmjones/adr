@@ -3,9 +3,9 @@ namespace Blog\Responder;
 
 class BlogEditResponder extends AbstractBlogResponder
 {
-    protected $result_method = array(
-        'Domain\Result\Found' => 'found',
-        'Domain\Result\NotFound' => 'notFound',
+    protected $payload_method = array(
+        'Domain\Payload\Found' => 'found',
+        'Domain\Payload\NotFound' => 'notFound',
     );
 
     public function found()

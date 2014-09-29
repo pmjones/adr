@@ -24,8 +24,8 @@ class BlogCreateAction
     public function __invoke()
     {
         $data = $this->request->post->get('blog');
-        $result = $this->domain->create($data);
-        $this->responder->setResult($result);
+        $payload = $this->domain->create($data);
+        $this->responder->setPayload($payload);
         return $this->responder->__invoke();
     }
 }

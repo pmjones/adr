@@ -23,8 +23,8 @@ class BlogDeleteAction
 
     public function __invoke($id)
     {
-        $result = $this->domain->delete($id)
-        $this->responder->setResult($result);
+        $payload = $this->domain->delete($id)
+        $this->responder->setPayload($payload);
         return $this->responder->__invoke();
     }
 }

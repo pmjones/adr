@@ -3,11 +3,11 @@ namespace Blog\Responder;
 
 class BlogUpdateResponder extends AbstractBlogResponder
 {
-    protected $result_method = array(
-        'Domain\Result\NotFound' => 'notFound',
-        'Domain\Result\NotValid' => 'notValid',
-        'Domain\Result\Updated' => 'updated',
-        'Domain\Result\NotUpdated' => 'notUpdated',
+    protected $payload_method = array(
+        'Domain\Payload\NotFound' => 'notFound',
+        'Domain\Payload\NotValid' => 'notValid',
+        'Domain\Payload\Updated' => 'updated',
+        'Domain\Payload\NotUpdated' => 'notUpdated',
     );
 
     protected function notValid()

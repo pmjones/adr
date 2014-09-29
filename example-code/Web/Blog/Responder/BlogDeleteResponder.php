@@ -3,10 +3,10 @@ namespace Blog\Responder;
 
 class BlogDeleteResponder extends AbstractBlogResponder
 {
-    protected $result_method = array(
-        'Domain\Result\NotFound' => 'notFound',
-        'Domain\Result\Deleted' => 'deleted',
-        'Domain\Result\NotDeleted' => 'notDeleted',
+    protected $payload_method = array(
+        'Domain\Payload\NotFound' => 'notFound',
+        'Domain\Payload\Deleted' => 'deleted',
+        'Domain\Payload\NotDeleted' => 'notDeleted',
     );
 
     protected function deleted()

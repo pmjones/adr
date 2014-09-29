@@ -3,8 +3,8 @@ namespace Blog\Responder;
 
 class BlogAddResponder extends AbstractBlogResponder
 {
-    protected $result_method = array(
-        'Domain\Result\NewEntity' => 'display',
+    protected $payload_method = array(
+        'Domain\Payload\NewEntity' => 'display',
     );
 
     protected function display()

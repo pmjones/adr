@@ -25,8 +25,8 @@ class BlogBrowseAction
     {
         $page = $this->request->query->get('page', 1);
         $paging = $this->request->query->get('paging', 10);
-        $result = $this->domain->fetchPage($page, $paging);
-        $this->responder->setResult($result);
+        $payload = $this->domain->fetchPage($page, $paging);
+        $this->responder->setPayload($payload);
         $this->responder->setAccept($this->request->accept);
         return $this->responder->__invoke();
     }
