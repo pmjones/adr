@@ -23,7 +23,7 @@ abstract class AbstractBlogResponder extends AbstractResponder
         );
 
         $view_registry = $this->view->getViewRegistry();
-        foreach ($names as $name) {
+        foreach ($view_names as $name) {
             $view_registry->set(
                 $name,
                 __DIR__ . "/views/{$name}.php"
