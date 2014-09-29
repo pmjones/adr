@@ -3,7 +3,7 @@ namespace Web;
 
 use Aura\View\View;
 use Aura\Web\Response;
-use Aura\Web\Request\Accept;
+use Aura\Accept\Accept;
 use Domain\Payload\PayloadInterface;
 
 abstract class AbstractResponder
@@ -21,9 +21,11 @@ abstract class AbstractResponder
     protected $view;
 
     public function __construct(
+        Accept $accept,
         Response $response,
         View $view
     ) {
+        $this->accept = $accept;
         $this->response = $response;
         $this->view = $view;
         $this->init();
@@ -46,11 +48,6 @@ abstract class AbstractResponder
         return $this->response;
     }
 
-    public function setAccept(Accept $accept)
-    {
-        $this->accept = $accept;
-    }
-
     public function setPayload(PayloadInterface $payload)
     {
         $this->payload = $payload;
@@ -71,7 +68,7 @@ abstract class AbstractResponder
         }
 
         $available = array_keys($this->available);
-        $media = $this->accept->media->negotiate($available);
+        $media = $this->accept->negotiateMedia($available);
         if (! $media) {
             $this->response->status->set(406);
             $this->response->content->setType('text/plain');
@@ -79,7 +76,7 @@ abstract class AbstractResponder
             return false;
         }
 
-        $this->response->content->setType($media->available->getValue());
+        $this->response->content->setType($media->getValue());
         return true;
     }
 
