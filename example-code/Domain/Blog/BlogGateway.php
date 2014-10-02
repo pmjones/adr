@@ -51,7 +51,7 @@ class BlogGateway
         );
 
         if ($affected) {
-            $blog->id = $this->pdo->lastInsertId();
+            $entity->id = $this->pdo->lastInsertId();
         }
 
         return (bool) $affected;
