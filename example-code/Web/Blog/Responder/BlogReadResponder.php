@@ -15,7 +15,7 @@ class BlogReadResponder extends AbstractBlogResponder
 
     protected function found()
     {
-        if ($$this->negotiateMediaType()) {
+        if ($this->negotiateMediaType()) {
             $this->renderView('read');
         }
     }
