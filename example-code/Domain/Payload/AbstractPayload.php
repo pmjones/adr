@@ -3,7 +3,7 @@ namespace Domain\Payload;
 
 abstract class AbstractPayload implements PayloadInterface
 {
-    protected array $payload;
+    protected $payload = array();
 
     public function __construct(array $payload)
     {
