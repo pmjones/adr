@@ -56,8 +56,8 @@ abstract class AbstractResponder
     protected function notRecognized()
     {
         $domain_status = $this->payload->get('status');
-        $this->response->setStatus('500');
-        $this->response->setBody("Unknown domain payload status: '$domain_status'");
+        $this->response->status->set(500);
+        $this->response->content->set("Unknown domain payload status: '$domain_status'");
         return $this->response;
     }
 
@@ -95,12 +95,13 @@ abstract class AbstractResponder
     protected function notFound()
     {
         $this->response->status->set(404);
+        $this->response->content->set("<html><head><title>404 Not found</title></head><body>404 Not found</body></html>");
     }
 
     protected function error()
     {
         $e = $this->payload->get('exception');
-        $this->response->setStatus('500');
-        $this->response->setBody($e->getMessage());
+        $this->response->status->set(500);
+        $this->response->content->set($e->getMessage());
     }
 }
