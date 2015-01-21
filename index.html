@@ -31,14 +31,14 @@
 <h3>
 <a name="user-content-purpose" class="anchor" href="#purpose" aria-hidden="true"><span class="octicon octicon-link"></span></a>Purpose</h3>
 
-<p>Organizes a single interaction between a web client and a web application into three distinct roles.</p>
+<p>Organizes a single user interface interaction between a web client and a web application into three distinct roles.</p>
 
 <p><a href="adr.png" target="_blank"><img src="adr.png" alt="ADR" style="max-width:100%;"></a></p>
 
 <h3>
 <a name="user-content-background" class="anchor" href="#background" aria-hidden="true"><span class="octicon octicon-link"></span></a>Background</h3>
 
-<p>The term MVC has experienced some <a href="http://martinfowler.com/bliki/SemanticDiffusion.html">semantic diffusion</a> from its original meaning, especially in a web context. (See <a href="http://vimeo.com/40968850">this video from Stefan Priebsch</a> for a more extensive discussion.) To resolve this diffusion, the <em>Action-Domain-Responder</em> pattern description is offered as a web-specific refinement of the MVC pattern.</p>
+<p>The term MVC has experienced some <a href="http://martinfowler.com/bliki/SemanticDiffusion.html">semantic diffusion</a> from its original meaning, especially in a web context. (See <a href="http://vimeo.com/40968850">this video from Stefan Priebsch</a> for a more extensive discussion.) To resolve this diffusion, the <em>Action-Domain-Responder</em> pattern description is offered as a web-specific refinement of the MVC user interface pattern.</p>
 
 <p>I think ADR more closely fits what we actually do in web development on a daily basis. For example, this pattern is partly revealed by how we generally do web routing and dispatch. We generally route and dispatch <em>not</em> to a controller class per se, but to a particular action method within a controller class.</p>
 
@@ -90,9 +90,9 @@ Controller &lt;--&gt; Action
 <em>Controller</em> vs <em>Action</em>
 </h4>
 
-<p>In common usage, most <em>Controller</em> classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframeworkcom">Slim</a>).</p>
+<p>In common usage, most <em>Controller</em> classes in an MVC system contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframeworkcom">Slim</a>).</p>
 
-<p>In an ADR architecture, a single <em>Action</em> is the main purpose of a class or closure. Each <em>Action</em> would be represented by a individual class or closure.</p>
+<p>In an ADR system, a single <em>Action</em> is the main purpose of a class or closure. Each <em>Action</em> would be represented by a individual class or closure.</p>
 
 <p>The <em>Action</em> interacts with the <em>Domain</em> in the same way a <em>Controller</em> interacts with a <em>Model</em>, but does not interact with a <em>View</em> or template system. It sets data on the <em>Responder</em> and hands over control to it.</p>
 
@@ -101,11 +101,11 @@ Controller &lt;--&gt; Action
 <em>View</em> vs <em>Responder</em>
 </h4>
 
-<p>In an MVC architecture, a <em>Controller</em> method will usually generate body content via a <em>View</em> (e.g. a <em>Template View</em> or a <em>Two Step View</em>). The <em>Controller</em> then injects the generated body content into the response.  The <em>Controller</em> action method will manipulate the response directly to set any needed headers.</p>
+<p>In an MVC system, a <em>Controller</em> method will usually generate body content via a <em>View</em> (e.g. a <em>Template View</em> or a <em>Two Step View</em>). The <em>Controller</em> then injects the generated body content into the response.  The <em>Controller</em> action method will manipulate the response directly to set any needed headers.</p>
 
 <p>Some <em>Controller</em> action methods may present alternative content-types for the same domain data. Because these alternatives may not be consistent over all the different methods, this leads to the presentation logic being somewhat different in each method, each with its own preconditions.</p>
 
-<p>In an ADR architecture, each <em>Action</em> has a separate corresponding <em>Responder</em>. When the <em>Action</em> is done with the <em>Domain</em>, it delivers any needed <em>Domain</em> data to the <em>Responder</em> and then hands off to the <em>Responder</em> completely. The <em>Responder</em> is entirely in charge of setting headers, picking content types, rendering templates, and so on.</p>
+<p>In an ADR system, each <em>Action</em> has a separate corresponding <em>Responder</em>. When the <em>Action</em> is done with the <em>Domain</em>, it delivers any needed <em>Domain</em> data to the <em>Responder</em> and then hands off to the <em>Responder</em> completely. The <em>Responder</em> is entirely in charge of setting headers, picking content types, rendering templates, and so on.</p>
 
 <p>Note that a <em>Responder</em> may incorporate a <em>Template View</em>, <em>Two Step View</em>, <em>Transform View</em>, or any other kind of <em>View</em> system. Note also that a generic <em>Responder</em> may be used by more than one <em>Action</em>. The point is that the <em>Action</em> leaves all header and content work to the <em>Responder</em>, not that there must be a different <em>Responder</em> for each different <em>View</em>.</p>
 
