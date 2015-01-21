@@ -2,13 +2,13 @@
 
 ## Purpose
 
-Organizes a single interaction between a web client and a web application into three distinct roles.
+Organizes a single user interface interaction between a web client and a web application into three distinct roles.
 
 ![ADR](adr.png)
 
 ## Background
 
-The term MVC has experienced some [semantic diffusion](http://martinfowler.com/bliki/SemanticDiffusion.html) from its original meaning, especially in a web context. (See [this video from Stefan Priebsch](http://vimeo.com/40968850) for a more extensive discussion.) To resolve this diffusion, the _Action-Domain-Responder_ pattern description is offered as a web-specific refinement of the MVC pattern.
+The term MVC has experienced some [semantic diffusion](http://martinfowler.com/bliki/SemanticDiffusion.html) from its original meaning, especially in a web context. (See [this video from Stefan Priebsch](http://vimeo.com/40968850) for a more extensive discussion.) To resolve this diffusion, the _Action-Domain-Responder_ pattern description is offered as a web-specific refinement of the MVC user interface pattern.
 
 I think ADR more closely fits what we actually do in web development on a daily basis. For example, this pattern is partly revealed by how we generally do web routing and dispatch. We generally route and dispatch *not* to a controller class per se, but to a particular action method within a controller class.
 
@@ -54,19 +54,19 @@ I can think of no significant differences here, other than that the _Responder_ 
 
 ### _Controller_ vs _Action_
 
-In common usage, most _Controller_ classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same _Controller_, the _Controller_ ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each _Controller_ is an individual closure or invokable object, mapping more closely to a single _Action_ (cf. [Slim](http://slimframeworkcom)).
+In common usage, most _Controller_ classes in an MVC system contain several methods corresponding to different actions. Because these differing action methods reside in the same _Controller_, the _Controller_ ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each _Controller_ is an individual closure or invokable object, mapping more closely to a single _Action_ (cf. [Slim](http://slimframeworkcom)).
 
-In an ADR architecture, a single _Action_ is the main purpose of a class or closure. Each _Action_ would be represented by a individual class or closure.
+In an ADR system, a single _Action_ is the main purpose of a class or closure. Each _Action_ would be represented by a individual class or closure.
 
 The _Action_ interacts with the _Domain_ in the same way a _Controller_ interacts with a _Model_, but does not interact with a _View_ or template system. It sets data on the _Responder_ and hands over control to it.
 
 ### _View_ vs _Responder_
 
-In an MVC architecture, a _Controller_ method will usually generate body content via a _View_ (e.g. a _Template View_ or a _Two Step View_). The _Controller_ then injects the generated body content into the response.  The _Controller_ action method will manipulate the response directly to set any needed headers.
+In an MVC system, a _Controller_ method will usually generate body content via a _View_ (e.g. a _Template View_ or a _Two Step View_). The _Controller_ then injects the generated body content into the response.  The _Controller_ action method will manipulate the response directly to set any needed headers.
 
 Some _Controller_ action methods may present alternative content-types for the same domain data. Because these alternatives may not be consistent over all the different methods, this leads to the presentation logic being somewhat different in each method, each with its own preconditions.
 
-In an ADR architecture, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering templates, and so on.
+In an ADR system, each _Action_ has a separate corresponding _Responder_. When the _Action_ is done with the _Domain_, it delivers any needed _Domain_ data to the _Responder_ and then hands off to the _Responder_ completely. The _Responder_ is entirely in charge of setting headers, picking content types, rendering templates, and so on.
 
 Note that a _Responder_ may incorporate a _Template View_, _Two Step View_, _Transform View_, or any other kind of _View_ system. Note also that a generic _Responder_ may be used by more than one _Action_. The point is that the _Action_ leaves all header and content work to the _Responder_, not that there must be a different _Responder_ for each different _View_.
 
