@@ -67,7 +67,7 @@ Controller &lt;--&gt; Action
 <a name="user-content-controller-vs-action" class="anchor" href="#controller-vs-action"><span class="octicon octicon-link"></span></a><em>Controller</em> vs <em>Action</em>
 </h4>
 
-<p>In common usage, most <em>Controller</em> classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframeworkcom">Slim</a>).</p>
+<p>In common usage, most <em>Controller</em> classes in an MVC architecture contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://www.slimframework.com">Slim</a>).</p>
 
 <p>In an ADR architecture, a single <em>Action</em> is the main purpose of a class or closure. Multiple <em>Action</em>s would be represented by multiple classes.</p>
 
