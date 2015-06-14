@@ -1,7 +1,7 @@
 <?php
 namespace Blog\Responder;
 
-use AbstractResponder;
+use Web\AbstractResponder;
 
 abstract class AbstractBlogResponder extends AbstractResponder
 {
