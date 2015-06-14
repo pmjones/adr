@@ -4,4 +4,4 @@
     'method' => 'PATCH',
     'action' => '/blog/edit',
     'submit' => 'Update',
-); ?>
+)); ?>
