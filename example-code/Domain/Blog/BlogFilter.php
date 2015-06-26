@@ -4,7 +4,8 @@ namespace Domain\Blog;
 class BlogFilter
 {
     protected $messages = array();
-
+    protected $blog;
+    
     public function getMessages()
     {
         return $this->messages;
@@ -14,7 +15,7 @@ class BlogFilter
     {
         $this->blog = $blog;
         $this->messages = array();
-        return $this->basic($blog);
+        return $this->basic();
     }
 
     public function forUpdate(BlogEntity $blog)
@@ -27,7 +28,7 @@ class BlogFilter
             $this->messages['id'];
         }
 
-        return $this->basic($blog);
+        return $this->basic();
     }
 
     protected function basic()
