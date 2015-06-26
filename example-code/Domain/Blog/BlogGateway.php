@@ -1,6 +1,8 @@
 <?php
 namespace Domain\Blog;
 
+use Aura\Sql\ExtendedPdo;
+
 class BlogGateway
 {
     public function __construct(ExtendedPdo $pdo, BlogFactory $factory)
