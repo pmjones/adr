@@ -57,11 +57,11 @@
 <a name="user-content-collaborations" class="anchor" href="#collaborations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Collaborations</h3>
 
 <ol>
-<li><p>The web handler receives a client request and dispatches it to an <em>Action</em>.</p></li>
-<li><p>The <em>Action</em> interacts with the <em>Domain</em>.</p></li>
-<li><p>The <em>Action</em> feeds data to the <em>Responder</em>. (N.b.: This may include results from the <em>Domain</em> interaction, data from the client request, and so on.)</p></li>
-<li><p>The <em>Responder</em> builds a response using the data fed to it by the <em>Action</em>.</p></li>
-<li><p>The web handler sends the response back to the client.</p></li>
+<li>The web handler receives a client request and dispatches it to an <em>Action</em>.</li>
+<li>The <em>Action</em> interacts with the <em>Domain</em>.</li>
+<li>The <em>Action</em> feeds data to the <em>Responder</em>. (N.b.: This may include results from the <em>Domain</em> interaction, data from the client request, and so on.)</li>
+<li>The <em>Responder</em> builds a response using the data fed to it by the <em>Action</em>.</li>
+<li>The web handler sends the response back to the client.</li>
 </ol><h3>
 <a name="user-content-comparison-to-mvc-model-view-controller" class="anchor" href="#comparison-to-mvc-model-view-controller" aria-hidden="true"><span class="octicon octicon-link"></span></a>Comparison to MVC (Model-View-Controller)</h3>
 
@@ -90,7 +90,7 @@ Controller &lt;--&gt; Action
 <em>Controller</em> vs <em>Action</em>
 </h4>
 
-<p>In common usage, most <em>Controller</em> classes in an MVC system contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframeworkcom">Slim</a>).</p>
+<p>In common usage, most <em>Controller</em> classes in an MVC system contain several methods corresponding to different actions. Because these differing action methods reside in the same <em>Controller</em>, the <em>Controller</em> ends up needing additional wrapper logic to deal with each method properly, such as pre- and post-action hooks.  A notable exception here is in micro-frameworks, where each <em>Controller</em> is an individual closure or invokable object, mapping more closely to a single <em>Action</em> (cf. <a href="http://slimframework.com">Slim</a>).</p>
 
 <p>In an ADR system, a single <em>Action</em> is the main purpose of a class or closure. Each <em>Action</em> would be represented by a individual class or closure.</p>
 
@@ -124,9 +124,11 @@ Controller &lt;--&gt; Action
 <p>I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading that EBI may better describe domain interactions rather than MVC architectural patterns. If the above description is accurate, it appears that ADR maps only roughly to EBI:</p>
 
 <ul>
-<li><p>the ADR <em>Action</em> and <em>Responder</em> elements may represent a web-specific EBI <em>Boundary</em></p></li>
-<li><p>the ADR <em>Domain</em> element may represent an EBI <em>Interactor</em> element, encapsulating or otherwise hiding the EBI <em>Entity</em> elements from the ADR <em>Action</em>.</p></li>
-</ul><p>Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the <em>Action</em> as a "port" through which an EBI <em>Boundary</em> is invoked as part of the ADR <em>Domain</em>. Finally, the <em>Responder</em> could be seen as an "adapter" back through which the application data is returned.</p>
+<li>the ADR <em>Action</em> and <em>Responder</em> elements may represent a web-specific EBI <em>Boundary</em></li>
+<li>the ADR <em>Domain</em> element may represent an EBI <em>Interactor</em> element, encapsulating or otherwise hiding the EBI <em>Entity</em> elements from the ADR <em>Action</em>.</li>
+</ul>
+
+<p>Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the <em>Action</em> as a "port" through which an EBI <em>Boundary</em> is invoked as part of the ADR <em>Domain</em>. Finally, the <em>Responder</em> could be seen as an "adapter" back through which the application data is returned.</p>
 
 <p>Regardless, it does not appear that ADR is a direct replacement for EBI. It seems more likely that they are complements to each other.</p>
 
@@ -149,11 +151,13 @@ Controller &lt;--&gt; Action
 <p>Let us examine a little more closely:</p>
 
 <ul>
-<li><p><em>Model</em> and the <em>Domain</em> map closely, as they do in MVC.</p></li>
-<li><p><em>Passive View</em> does not map well to either <em>Action</em> or <em>Responder</em>; it might better be regarded as the response that gets returned to the client.</p></li>
-<li><p><em>Supervising Controller</em> might map to <em>Responder</em>, in that it "manipulate[s] the view to handle more complex view logic". However, <em>Responder</em> is not responsible for interacting with the <em>Domain</em>, and it does not receive the client input, so does not seem to be a good fit for <em>Supervising Controller</em>.</p></li>
-<li><p>Alternatively, <em>Supervising Controller</em> might map to <em>Action</em>, but the <em>Action</em> is not responsible for manipulating the view (i.e. the response).</p></li>
-</ul><p>In all, this seems a case of close-but-not-quite.</p>
+<li><em>Model</em> and the <em>Domain</em> map closely, as they do in MVC.</li>
+<li><em>Passive View</em> does not map well to either <em>Action</em> or <em>Responder</em>; it might better be regarded as the response that gets returned to the client.</li>
+<li><em>Supervising Controller</em> might map to <em>Responder</em>, in that it "manipulate[s] the view to handle more complex view logic". However, <em>Responder</em> is not responsible for interacting with the <em>Domain</em>, and it does not receive the client input, so does not seem to be a good fit for <em>Supervising Controller</em>.</li>
+<li>Alternatively, <em>Supervising Controller</em> might map to <em>Action</em>, but the <em>Action</em> is not responsible for manipulating the view (i.e. the response).</li>
+</ul>
+
+<p>In all, this seems a case of close-but-not-quite.</p>
 
 <h4>
 <a name="user-content-mvvm-model-view-viewmodel" class="anchor" href="#mvvm-model-view-viewmodel" aria-hidden="true"><span class="octicon octicon-link"></span></a>MVVM (Model-View-ViewModel)</h4>
@@ -459,18 +463,20 @@ the action method deals with the response headers.</p>
 <p>The ADR pattern does not describe a routing or dispatching element, nor how the <em>Action</em> and <em>Responder</em> relate to a dispatcher. Routing and dispatching are more properly the purview of <em>Front Controller</em>, and there are many ways for the <em>Action</em>, <em>Responder</em>, and any <em>Front Controller</em> mechanism to interact:</p>
 
 <ul>
-<li><p>the <em>Action</em> may invoke the <em>Responder</em> directly, which then returns a response;</p></li>
-<li><p>the <em>Responder</em> and response may be shared with a <em>Front Controller</em> so that it can invoke them directly;</p></li>
-<li><p>the <em>Action</em> may return a <em>Responder</em>, which is then invoked to return a response, which is then invoked to send itself;</p></li>
-<li><p>and so on.</p></li>
-</ul><p>The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a <em>Front Controller</em>. Note that pre-filter or request-validation logic may or may not bypass the <em>Action</em> to invoke the <em>Responder</em> directly, or it may deliver a response of its own, or it may invoke a separate <em>Action</em> as a result of its logic, and so on. Likewise, the invoked <em>Action</em> may have its own set of pre-condition checks that cause it to invoke the <em>Responder</em> without ever interacting with the <em>Domain</em>. Reasons for these short-circuiting behaviors may include:</p>
+<li>the <em>Action</em> may invoke the <em>Responder</em> directly, which then returns a response;</li>
+<li>the <em>Responder</em> and response may be shared with a <em>Front Controller</em> so that it can invoke them directly;</li>
+<li>the <em>Action</em> may return a <em>Responder</em>, which is then invoked to return a response, which is then invoked to send itself;</li>
+<li>and so on.</li>
+</ul>
+
+<p>The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a <em>Front Controller</em>. Note that pre-filter or request-validation logic may or may not bypass the <em>Action</em> to invoke the <em>Responder</em> directly, or it may deliver a response of its own, or it may invoke a separate <em>Action</em> as a result of its logic, and so on. Likewise, the invoked <em>Action</em> may have its own set of pre-condition checks that cause it to invoke the <em>Responder</em> without ever interacting with the <em>Domain</em>. Reasons for these short-circuiting behaviors may include:</p>
 
 <ul>
-<li><p>HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested <em>Action</em>, the <em>Front Controller</em> may return an error response instead of dispatching to the requested <em>Action</em>.</p></li>
-<li><p>Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an <em>Action</em> in the first place, or to interact with the <em>Domain</em> while in an <em>Action</em>.</p></li>
-<li><p>Authorization. Access-control systems may deny the client's request for the given <em>Action</em>, or cause the <em>Action</em> to bypass interactions with <em>Domain</em>, and possibly return a response of their own.</p></li>
-<li><p>Content negotiation. The <em>Front Controller</em>, <em>Action</em>, or other intermediary layers may negotiate the various <code>Accept</code> headers in the client request. Unsuccessful negotiation may pre-empt <em>Action</em> or <em>Domain</em> behaviors, and/or result in an early-exit response.</p></li>
-<li><p>Content validation. If the incoming request data is malformed in some way, the <em>Action</em> might not interact with the <em>Domain</em> at all and move directly to interacting with a <em>Responder</em> to send an error response.</p></li>
+<li>HTTP method negotiation. If the routing system does not map the requested HTTP method to the requested <em>Action</em>, the <em>Front Controller</em> may return an error response instead of dispatching to the requested <em>Action</em>.</li>
+<li>Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an <em>Action</em> in the first place, or to interact with the <em>Domain</em> while in an <em>Action</em>.</li>
+<li>Authorization. Access-control systems may deny the client's request for the given <em>Action</em>, or cause the <em>Action</em> to bypass interactions with <em>Domain</em>, and possibly return a response of their own.</li>
+<li>Content negotiation. The <em>Front Controller</em>, <em>Action</em>, or other intermediary layers may negotiate the various <code>Accept</code> headers in the client request. Unsuccessful negotiation may pre-empt <em>Action</em> or <em>Domain</em> behaviors, and/or result in an early-exit response.</li>
+<li>Content validation. If the incoming request data is malformed in some way, the <em>Action</em> might not interact with the <em>Domain</em> at all and move directly to interacting with a <em>Responder</em> to send an error response.</li>
 </ul><h4>
 <a name="user-content-alternative-formulations" class="anchor" href="#alternative-formulations" aria-hidden="true"><span class="octicon octicon-link"></span></a>Alternative Formulations</h4>
 
