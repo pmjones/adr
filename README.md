@@ -28,7 +28,7 @@ _Responder_ is the presentation logic to build an HTTP Response from the HTTP Re
 
 - [MVC-VS-ADR.md](./MVC-VS-ADR.md)
 - [COMPARISONS.md](./COMPARISONS.md)
-- [EXAMPLES.md](./EXAMPLES.md)
+- [REFACTORING.md](./REFACTORING.md)
 - [IMPLEMENTATION.md](./IMPLEMENTATION.md)
 - [PREVIOUS.md](./PREVIOUS.md)
 - [TRADEOFFS.md](./TRADEOFFS.md)
