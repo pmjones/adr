@@ -99,6 +99,22 @@ However, I do not think MOVE is a close fit for ADR, specifically because of thi
 
 In ADR, the _Domain_ and the _Responder_ do not "update each other". The _Domain_ work is completed and passed to the _Responder_ for it to present to the client.
 
+### Model-View-Adapter
+
+Adapter aka Mediating Controller
+
+https://web.archive.org/web/20160413130113/https://www.palantir.com/2009/04/model-view-adapter/
+
+https://stefanoborini.gitbooks.io/modelviewcontroller/content/02_mvc_variations/variations_on_the_triad/10_model_view_adapter.html (cf the Web MVC section for a Tanks-like description of how the collborations work, though it is stil HTML centric from the original concentration on GUI screen elements.)
+
+https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93adapter
+
+Again, a GUI pattern, not a Request/Response pattern.
+
+Very similar in that it disconnects the model from the view, but still works by notification events. In ADR it is more direct.
+
+(SIDE NOTE: Noticing that the UI entry point in MVC is generally through the View: it is what receives the mouse click, etc. In ADR, the Action is the entry point.)
+
 ### Separated Presentation
 
 There are hints of ADR, espeically the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Although the article is well worth reading, Separated Presentation sounds more like a meta-pattern that describes the general concern of separating data from presentation, not a specific approach to doing so.

@@ -24,60 +24,84 @@ _Responder_ is the presentation logic to build an HTTP Response from the HTTP Re
 
 1. The _Action_ returns the HTTP Response to the web handler sends the HTTP Response.
 
-Notes:
+## Further Reading
 
-- The web handler may pass control directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed.
+- [MVC-VS-ADR.md](./MVC-VS-ADR.md)
+- [COMPARISONS.md](./COMPARISONS.md)
+- [EXAMPLES.md](./EXAMPLES.md)
+- [IMPLEMENTATION.md](./IMPLEMENTATION.md)
+- [PREVIOUS.md](./PREVIOUS.md)
+- [TRADEOFFS.md](./TRADEOFFS.md)
 
-- The web handler may modify the HTTP Request before dispatching it to the _Action_; likewise, it may modify the HTTP Response returned by the _Action_.
+## Discussions/Mentions
 
-## Supporting Elements
+(Not all of it positive.)
 
-The ADR pattern is a user interface alternative to MVC. Neither ADR nor MVC are entire application architectures themselves. This section describes other components, collaborations, and patterns that might be used in conjunction with ADR within an application architecture.
+- [How should errors be handled in ADR?](https://www.reddit.com/r/PHP/comments/6yd366/how_should_errors_be_handled_in_adr_pattern/)
 
-### HTTP Request and Response
+- [Am I understanding ADR correctly?](https://www.reddit.com/r/PHP/comments/790ejb/am_i_understanding_adr_correctly/)
 
-Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Request and Response elements is presumed as a sine qua non.
+- [Is it possible to short-circuit the domain and go straight from input to responder?](https://github.com/arbiterphp/Arbiter.Arbiter/issues/8)
 
-## Front Controller
+- [Implementaing ADR in Laravel](http://martinbean.co.uk/blog/2016/10/20/implementing-adr-in-laravel/)
 
-The ADR pattern does not describe a routing, dispatching, or middleware element. Those elements are more properly the purview of _Front Controller_.  When it comes to ADR, a_Front Controller_ may, among other things:
+- [Goodbye Controllers, Hello Request Handlers](https://jenssegers.com/85/goodbye-controllers-hello-request-handlers)
 
-- Inspect and/or modify the HTTP Request URL with a router
+- [OOP API Responders](http://ryantablada.com/post/oop-api-responders)
 
-- Dispatch the HTTP Request to an Action, and receive back the HTTP Response.
+- [What are Repositories, Services, and Actions/Controllers?](https://softwareengineering.stackexchange.com/questions/337274/what-are-repositories-services-and-actions-controllers)
 
-- Dispatch the HTTP Request directly to a Responder, and receive back the HTTP Response.
+- [PHP framework for ADR (Action Domain Responder) Pattern?](https://softwarerecs.stackexchange.com/questions/19189/php-framework-for-adr-action-domain-responder-pattern)
 
-- Bypass any ADR subsystem entirely in favor of some other subsystem; for example:
+- [Action-Domain-Response for Symfony 3 or 4?](https://github.com/symfony/symfony/issues/11594)
 
-    - when routing fails due to URL path or HTTP method mismatches
-    - when the requested content-type is not available.
-    - when authentication credentials or session identifiers are not present
+- https://dunglas.fr/2016/01/dunglasactionbundle-symfony-controllers-redesigned/
 
-- Pass the HTTP Request and Response through one or more layers of middleware.
+- [Let go of "Action Methods"](https://matthiasnoback.nl/2014/06/framework-independent-controllers-part-3/)
 
+- [Should request and action be decoupled, so that an action can be fired off from anywhere (e.g. CLI or web)?](https://github.com/pmjones/adr/issues/50)
 
-## Presentation
+- <https://www.entropywins.wtf/blog/2016/11/24/implementing-the-clean-architecture/>, and <http://paul-m-jones.com/archives/6535> as a followup
 
-    Template View
-    Two Step View
+- [Does the Action know about HTTP?](https://www.reddit.com/r/PHP/comments/5x6m7z/random_thoughts_on_the_state_of_php_mvc/deg1a1b/?sort=old)
 
-## Domain Logic
+- [Redditor 'deleted' argues at length against the Response as 'View'](https://www.reddit.com/r/PHP/comments/6tw6jr/the_micro_framework_as_user_interface_framework/dloslkh/)
 
-    Domain Payload
+- [THOUGHTS ON WORDPRESS AND THE MVC PATTERN](https://carlalexander.ca/thoughts-wordpress-and-mvc-pattern/) ("ADR: Rethinking MVC for the web"), cf. [Reddit](https://www.reddit.com/r/PHP/comments/36vj01/wordpress_mvc_and_actiondomainresponder/)
 
-## Authentication and Authorization
+- [Model View Controller, can you help me grasp this concept? ](https://www.reddit.com/r/PHP/comments/2q6uki/model_view_controller_can_you_help_me_grasp_this/)
 
-Authorization
+- [MVC vs. ADR and what it means to web-aware projects/languages](https://www.reddit.com/r/PHP/comments/27psgs/mvc_vs_adr_and_what_it_means_to_webaware/)
 
+- [Action-Domain-Responder](https://www.reddit.com/r/PHP/comments/26ogvj/actiondomainresponder/)
+
+- http://www.darrenmothersele.com/blog/2017/03/28/php-middleware/
+
+## Sightings
+
+[API Platform](https://api-platform.com/docs/core/operations/)
+
+https://github.com/woohoolabs/harmony (Invokable controllers)
+
+http://hanamirb.org/guides/1.0/actions/overview/ ("In a Hanami application, an action is an object, while a controller is a Ruby module that groups them.")
+
+Equip (nee Spark)
+
+Radar
+
+Adroit
+
+- http://spartan-php.iuliann.ro
+
+## Supporting
+
+- https://web.archive.org/web/20160324211929/http://aredridel.dinhe.net/2015/01/30/why-mvc-does-not-fit-the-web/
+
+- https://web.archive.org/web/20160324213254/http://aredridel.dinhe.net/2015/10/31/why-mvc-does-not-fit-the-browser/
+
+- https://www.reddit.com/r/webdev/comments/4d07l8/is_this_mvc/d1mq3yl/
 
 ## Commentary
-
-### Front Controller Omission
-
-The ADR pattern does not describe any pre-filter or request-validation elements, especially those that may be part of a _Front Controller_. Note that pre-filter or request-validation logic may or may not bypass the _Action_ to invoke the _Responder_ directly, or it may deliver a response of its own, or it may invoke a separate _Action_ as a result of its logic, and so on. Reasons for these short-circuiting behaviors may include:
-
-### Other Commentary
 
 The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
 
