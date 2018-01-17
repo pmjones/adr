@@ -13,6 +13,7 @@ How to use Model-View-Controller (MVC)](https://web.archive.org/web/201505180959
 
 Model 2:
 
+- [Understanding JavaServer Pages Model 2 architecture: Exploring the MVC design pattern}(https://www.javaworld.com/article/2076557/java-web-development/understanding-javaserver-pages-model-2-architecture.html)
 - https://en.wikipedia.org/wiki/Apache_Struts_1
 - https://en.wikipedia.org/wiki/Apache_Struts_2
 - [MVC, Model 2, Java WebApps, (and callcc, why not) ](http://kasparov.skife.org/blog/2004/11/05/)
@@ -39,4 +40,3 @@ Less:
 
 - [MVC Is Not An Application Architecture](https://vimeo.com/40968850)
 - [Is This MVC?](https://www.reddit.com/r/webdev/comments/4d07l8/is_this_mvc/d1mq3yl/)
-
