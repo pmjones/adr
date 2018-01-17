@@ -141,28 +141,26 @@ An earlier draft of this pattern noted, "the _Action_ may return a _Responder_, 
 
 ### ACTION WORK
 
-savage: What does the action do? E.g. what are it’s defined responsibilities in ADR?
+q: What does the action do? E.g. what are it’s defined responsibilities in ADR?
 
-pmjones: Marshals input, sends input to domain, gets back domain result, passes that result to responder. Essentially logic-less.
+a: Marshals input, sends input to domain, gets back domain result, passes that result to responder. Essentially logic-less.
 
-savage: So basically handles the incoming request, and any domain exceptions to produce a reasonable response.
+q: So basically handles the incoming request, and any domain exceptions to produce a reasonable response.
 
-pmjones: no, the action does not handle exception. domain exceptions should be caught by the domain.
+a: no, the action does not handle exception. domain exceptions should be caught by the domain.
 
-savage: So, something I’ve been thinking about is the need for generic request object that doesn’t follow HTTP. To make actions useful for CLI implementations as well as web.
+q: So, something I’ve been thinking about is the need for generic request object that doesn’t follow HTTP. To make actions useful for CLI implementations as well as web.
 
-pmjones: i think that's a mis-direction -- MVC and ADR are *user interface* patterns. by definition, you'll need a different "thing" for a different user interface. what you want is a *domain* that works will in multiple user interfaces
+a: i think that's a mis-direction -- MVC and ADR are *user interface* patterns. by definition, you'll need a different "thing" for a different user interface. what you want is a *domain* that works will in multiple user interfaces
 
-savage: Whereas for the CLI you would simply use the domain directly.
+q: Whereas for the CLI you would simply use the domain directly.
 
-pmjones: no, in CLI your command would read the CLI input, then pass that input to the domain; then get back the output from the domain and present it ont he CLI
+a: no, in CLI your command would read the CLI input, then pass that input to the domain; then get back the output from the domain and present it ont he CLI
 
-savage: Right, makes sense. What about JSON/XML APIS? can you use ADR for that?
+q: Right, makes sense. What about JSON/XML APIS? can you use ADR for that?
 
-pmjones: sure, the Responder translates the Domain payload to JSON or whatever
+a: sure, the Responder translates the Domain payload to JSON or whatever
 
-savage: Ok, so basically the user interface is “the web” Versus “the CLI”
+q: Ok, so basically the user interface is “the web” Versus “the CLI”
 
-pmjones: HTTP, yeah
-
-savage: You need to write a book. :-P
+a: HTTP, yeah
