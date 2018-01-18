@@ -1,8 +1,8 @@
-## Comparisons to Other Patterns
+# Comparisons to Other Patterns
 
-These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to MVC. See also [the pattern discussion from Derek Greer at LosTechies](http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/).
+These are some of the other patterns that are generally seen as refinements of, replacements for, or complements to _Model View Controller_. See also [the pattern discussion from Derek Greer at LosTechies](http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/). I present them here to distinguish them from _Action Domain Responder_.
 
-### EBI (Entity-Boundary-Interactor)
+## Entity Boundary Interactor
 
 [EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) appears to go by several synonyms: ports and adapters, hexagonal architecture, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
 
@@ -18,13 +18,33 @@ Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be 
 
 Regardless, it does not appear that ADR is a direct replacement for EBI. It seems more likely that they are complements to each other.
 
-### DCI (Data-Context-Interaction)
+## Data Context Interaction
 
 [DCI is described as a complement to MVC](https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction), not a replacement for MVC. I think it is fair to call it a complement to ADR as well.
 
-### MVP (Model-View-Presenter)
+### Model View Adapter
 
-[MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html). At first this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each other as noted on the _Passive View_ page. From Fowler's narrative:
+> N.b.: "Adapter" is also called "Mediating Controller".
+
+At first, MVA looks like it might be an exact fit for ADR. Via [Stefano Borini](https://stefanoborini.gitbooks.io/modelviewcontroller/content/02_mvc_variations/variations_on_the_triad/10_model_view_adapter.html):
+
+> Model-View-Adapter is a variation of the Triad where all communication between Model and View must flow through a Controller, instead of interacting directly as in a Traditional MVC Triad.
+
+This fits very well the idea of an _Action_ invoking a _Domain_ element, then passing the result to a _Responder_ for presentation.
+
+But then we find this:
+
+> The Controller becomes a communication hub, accepting change notifications from Model objects and UI events from the View.
+
+It appears MVA is still very much an in-memory GUI pattern dependent on a subject/observer system. Other articles on MVA reinforce this, both one by [Palantir](https://web.archive.org/web/20160413130113/https://www.palantir.com/2009/04/model-view-adapter/) and the one at [Wikipedia](https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93adapter).
+
+ADR, in contrast, is for request/response environments.
+
+## Model View Presenter
+
+> N.b.: [MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html).
+
+At first this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each other as noted on the _Passive View_ page. From Fowler's narrative:
 
 > Supervising Controller uses a controller both to handle input response but also to manipulate the view to handle more complex view logic ...
 >
@@ -42,7 +62,7 @@ Let us examine a little more closely:
 
 In all, this seems a case of close-but-not-quite.
 
-### MVVM (Model-View-ViewModel)
+### Model View ViewModel
 
 [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR. The _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
 
@@ -50,9 +70,26 @@ However, the _ViewModel_ does not map well to a _Controller_ in MVC or an _Actio
 
 For an extended description of those differences, please see these articles from [Joel Wenzel](http://joel.inpointform.net/software-development/mvvm-vs-mvp-vs-mvc-the-differences-explained/), [Avtar Singh Sohi](http://www.codeproject.com/Articles/228214/Understanding-Basics-of-UI-Design-Pattern-MVC-MVP), [Rachel Appel](http://www.rachelappel.com/comparing-the-mvc-and-mvvm-patterns-along-with-their-respective-viewmodels), and [Niraj Bhatt](https://nirajrules.wordpress.com/2009/07/18/mvc-vs-mvp-vs-mvvm/).
 
-(In email discussions with an interested party, I was informed that MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. If this is true, then a _ViewModel_ is just as useful in ADR as it would be in MVC.)
+(In email discussions with an interested party, I was informed that MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. If this is true, then a _ViewModel_ is just as useful in ADR as it would be in MVC. Perhaps this could considered a variation on _Domain Payload_ as used in ADR.)
 
-### PAC (Presentation-Abstraction-Control)
+### Models Operations Views Events
+
+From [the originating site](http://cirw.in/blog/time-to-move-on):
+
+> - Models encapsulate everything that your application knows.
+> - Operations encapsulate everything that your application does.
+> - Views mediate between your application and the user.
+> - Events are used to join all these components together safely.
+
+This is an interesting pattern in itelf. The idea of _Models_ and _Operations_ seems to map well to Domain-Driven Design idioms.
+
+However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:
+
+> Listening on events is what gives MOVE (and MVC) the inversion of control that you need to allow models to update views without the models being directly aware of which views they are updating.
+
+In ADR, the _Domain_ and the _Responder_ do not "update each other". The _Domain_ work is completed and passed to the _Responder_ for it to present to the client.
+
+## Presentation Abstraction Control
 
 [From Wikipedia](https://en.wikipedia.org/wiki/Presentation-abstraction-control):
 
@@ -60,7 +97,7 @@ For an extended description of those differences, please see these articles from
 
 This does not seem to fit the description of ADR very well.
 
-### RMR (Resource-Method-Representation)
+### Resource Method Representation
 
 I had not heard of [RMR](http://www.peej.co.uk/articles/rmr-architecture.html) before it was pointed out to me by [ircmaxell on Reddit](http://www.reddit.com/r/PHP/comments/24s8yn/actiondomainresponse_a_tentative_mvc_refinement/cha8jo1).
 
@@ -81,39 +118,6 @@ To me, this seems like mixing concerns just a bit too much. I'd rather see a cle
 There seems to be no allowance for other kinds of HTTP responses, such as "Not Found".  That kind of response is clearly not a representation of the requested resource.
 
 Having said all that, it may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into a _Domain_ and an _Action_, and where the _Representation_ (i.e., the building of the response) is handled by a _Responder_.
-
-### Models-Operations-Views-Events (MOVE)
-
-From [the originating site](http://cirw.in/blog/time-to-move-on):
-
-> - Models encapsulate everything that your application knows.
-> - Operations encapsulate everything that your application does.
-> - Views mediate between your application and the user.
-> - Events are used to join all these components together safely.
-
-This is an interesting pattern in itelf. The idea of _Models_ and _Operations_ seems to map well to Domain-Driven Design idioms.
-
-However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:
-
-> Listening on events is what gives MOVE (and MVC) the inversion of control that you need to allow models to update views without the models being directly aware of which views they are updating.
-
-In ADR, the _Domain_ and the _Responder_ do not "update each other". The _Domain_ work is completed and passed to the _Responder_ for it to present to the client.
-
-### Model-View-Adapter
-
-Adapter aka Mediating Controller
-
-https://web.archive.org/web/20160413130113/https://www.palantir.com/2009/04/model-view-adapter/
-
-https://stefanoborini.gitbooks.io/modelviewcontroller/content/02_mvc_variations/variations_on_the_triad/10_model_view_adapter.html (cf the Web MVC section for a Tanks-like description of how the collborations work, though it is stil HTML centric from the original concentration on GUI screen elements.)
-
-https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93adapter
-
-Again, a GUI pattern, not a Request/Response pattern.
-
-Very similar in that it disconnects the model from the view, but still works by notification events. In ADR it is more direct.
-
-(SIDE NOTE: Noticing that the UI entry point in MVC is generally through the View: it is what receives the mouse click, etc. In ADR, the Action is the entry point.)
 
 ### Separated Presentation
 

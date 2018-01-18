@@ -32,7 +32,7 @@ Mentions, discussions, and commentary regarding Action Domain Responder.
 
 - [Action-Domain-Response for Symfony 3 or 4?](https://github.com/symfony/symfony/issues/11594)
 
-- https://dunglas.fr/2016/01/dunglasactionbundle-symfony-controllers-redesigned/
+- [Symfony controllers, redesigned](https://dunglas.fr/2016/01/dunglasactionbundle-symfony-controllers-redesigned/)
 
 - [Let go of "Action Methods"](https://matthiasnoback.nl/2014/06/framework-independent-controllers-part-3/)
 
@@ -44,7 +44,7 @@ Mentions, discussions, and commentary regarding Action Domain Responder.
 
 - [Redditor 'deleted' argues at length against the Response as 'View'](https://www.reddit.com/r/PHP/comments/6tw6jr/the_micro_framework_as_user_interface_framework/dloslkh/)
 
-- [THOUGHTS ON WORDPRESS AND THE MVC PATTERN](https://carlalexander.ca/thoughts-wordpress-and-mvc-pattern/) ("ADR: Rethinking MVC for the web"), cf. [Reddit](https://www.reddit.com/r/PHP/comments/36vj01/wordpress_mvc_and_actiondomainresponder/)
+- [Thoughts On Wordpress And The MVC Pattern](https://carlalexander.ca/thoughts-wordpress-and-mvc-pattern/) ("ADR: Rethinking MVC for the web"), cf. [Reddit](https://www.reddit.com/r/PHP/comments/36vj01/wordpress_mvc_and_actiondomainresponder/)
 
 - [Model View Controller, can you help me grasp this concept? ](https://www.reddit.com/r/PHP/comments/2q6uki/model_view_controller_can_you_help_me_grasp_this/)
 
@@ -52,6 +52,14 @@ Mentions, discussions, and commentary regarding Action Domain Responder.
 
 - [Action-Domain-Responder](https://www.reddit.com/r/PHP/comments/26ogvj/actiondomainresponder/)
 
-- http://www.darrenmothersele.com/blog/2017/03/28/php-middleware/
+- [How to do Everything with PHP Middleware](http://www.darrenmothersele.com/blog/2017/03/28/php-middleware/)
 
 - [API Platform](https://api-platform.com/docs/core/operations/)
+
+- [Adroit](https://github.com/bitExpert/adroit): ADR/PSR-7 middleware.
+
+- [Equip](https://github.com/equip/framework): A PHP micro-framework using the ADR pattern.
+
+- [Radar](https://github.com/radarphp/Radar.Project): A PSR-7 compliant Action-Domain-Responder (ADR) system.
+
+- [Spartan](http://spartan-php.iuliann.ro): A PHP framework using ADR.

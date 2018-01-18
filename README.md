@@ -26,38 +26,27 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 
 ## Further Reading
 
-- [MVC-VS-ADR.md](./MVC-VS-ADR.md)
-- [COMPARISONS.md](./COMPARISONS.md)
-- [REFACTORING.md](./REFACTORING.md)
-- [IMPLEMENTATION.md](./IMPLEMENTATION.md)
-- [PREVIOUS.md](./PREVIOUS.md)
-- [TRADEOFFS.md](./TRADEOFFS.md)
-- [HISTORY.md](./HISTORY.md)
-- [MENTIONS.md](./MENTIONS.md)
+- [History of MVC and "Model 2"](./MVC-MODEL-2.md)
+- [Comparing "Model 2" MVC to ADR](./ADR.md)
+- [Comparing ADR to other patterns](./COMPARISONS.md)
+- [Objections to ADR](./OBJECTIONS.md)
+- [Refactoring from "Model 2" MVC to ADR](./REFACTORING.md)
+- [Tradeoffs in ADR](./TRADEOFFS.md)
+- [Implementation notes and advice](./IMPLEMENTATION.md)
+- [Short history of this offering](./HISTORY.md)
+- [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
 
-## Discussions/Mentions
-
-(Not all of it positive.)
-
-## Sightings
-
-Equip (nee Spark)
-
-Radar
-
-Adroit
-
-- http://spartan-php.iuliann.ro
+Example code resides in the `example` repository.
 
 ## Acknowledgements
 
-My thanks to the many people who have helped refine this offering, whether through questions, comments, criticism, or commendation. In no particular order, these include:
+My thanks to the many people who have helped refine this offering, whether through questions, comments, criticism, or commendation. These include:
 
-- Matthew Weier O'Phinney
-- Hari KT
-- Stephan Hochdörfer
 - Adam Culp
-- Dan Horrigan
-- Josh Lockhart
 - Beau Simensen
-- Nate Abele, for opining that ADR should be described as an alternative to (not merely a refinement of) MVC <http://paul-m-jones.com/archives/5993#comment-2597>
+- Dan Horrigan
+- Hari KT
+- Josh Lockhart
+- Matthew Weier O'Phinney
+- Nate Abele
+- Stephan Hochdörfer
