@@ -4,7 +4,7 @@ The dominant pattern name used to describe server-side web application interacti
 
 ## Model View Controller
 
-First, it is important to remember that MVC is not an application architecture in itself; it is a *user interface* pattern. That is, MVC is a pattern that is *used* in application architectures, but it is not *itself* an architecture. (Note that Martin Fowler's "Patterns of Enterprise Application Architecture" [categorizes MVC as a “Web Presentation Pattern”](http://martinfowler.com/eaaCatalog/) and not as an “Application Architecture” per se.
+First, it is important to remember that MVC is not an application architecture in itself; it is a *user interface* pattern. That is, MVC is a pattern that is *used* in application architectures, but it is not *itself* an architecture. (Note that Martin Fowler's "Patterns of Enterprise Application Architecture" [categorizes MVC as a “Web Presentation Pattern”](http://martinfowler.com/eaaCatalog/) and not as an “Application Architecture” per se.)
 
 As a user interface pattern, MVC was originally proposed in 1979 for client-side, in-memory, graphical user interfaces. This is obvious from even a cursory review of MVC literature and papers:
 
