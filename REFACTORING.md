@@ -517,4 +517,4 @@ class BlogCreateResponder
 }
 ```
 
-By using a _Domain Payload_, we can avoid having to inspect domain objects directly to determine how to present them, and instead check the status that the domain passed back explicitly. THis makes presentation logic easier to read and follow.
+By using a _Domain Payload_, we can avoid having to inspect domain objects directly to determine how to present them, and instead check the status that the domain passed back explicitly. This makes presentation logic easier to read and follow.
