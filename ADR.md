@@ -2,7 +2,7 @@
 
 _Action Domain Responder_ is offered as an alternative to the "Model 2" misappropriation (for server-side over-the-network request/response interfaces) of the original MVC user interface pattern (for client-side in-memory graphical user interfaces). ADR is a user interface pattern specifically intended for server-side applications operating in an over-the-network, request/response environment.
 
-It turns out that aligning expectations, and factoring concerns, away from the modern derivations of "Model 2" MVC toward _Action Domain Responder_ is not difficult. Here is one way of working through the change in approach.
+Aligning expectations, and factoring concerns, away from the modern derivations of "Model 2" MVC toward _Action Domain Responder_ is not difficult. Here is one way of working through the change in approach.
 
 ## _Model_ vs _Domain_
 

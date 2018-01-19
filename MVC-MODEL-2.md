@@ -1,4 +1,4 @@
-# "Model View Controller" and "Model 2"
+# _Model View Controller_ and "Model 2"
 
 The dominant pattern name used to describe server-side web application interactions is _Model View Controller_ (MVC). However, it turns out that what server-side developers have come to think of as "MVC" is not actually MVC at all.
 
