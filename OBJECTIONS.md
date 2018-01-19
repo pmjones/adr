@@ -2,7 +2,7 @@
 
 ## Applicability
 
-Adherents to MVC, knowing its origins as graphical user interface pattern, may rationalize its validity as a pattern on the web like so:
+Adherents to _Model View Controller_, knowing its origins as graphical user interface pattern, may rationalize its validity as a pattern on the web like so:
 
 - The _Controller_ exists on the client. The client receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client _Controller_ sends an HTTP Request "event" to the server when the user clicks a link, or a submits a form, etc.
 
@@ -32,13 +32,13 @@ In all, I believe it it better to make a clean break with the term MVC (with its
 
 ## Missing Components
 
-Some critics note that _Action Domain Responder_ is missing some elements.
+Some critics feel that _Action Domain Responder_ is missing some elements.
 
 ### HTTP Request and Response
 
 Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Request and Response elements is presumed as a sine qua non.
 
-## Front Controller
+### Front Controller
 
 The ADR pattern does not describe routing, dispatching, or other web handler elements. Those elements are more properly the purview of _Front Controller_.
 
