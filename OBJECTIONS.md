@@ -4,15 +4,17 @@
 
 Adherents to _Model View Controller_, knowing its origins as graphical user interface pattern, may rationalize its validity as a pattern on the web like so:
 
-- The _Controller_ exists on the client. The client receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client _Controller_ sends an HTTP Request "event" to the server when the user clicks a link, or a submits a form, etc.
+- The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client _Controller_ sends an HTTP Request "event" to the server when the user clicks a link, or a submits a form, etc.
 
-- The _Model_ exists on the server. When the client _Controller_ sends an HTTP Request "event" to the server, the client receives back the updated _Model_ data as an HTTP Response "event". This is like the GUI pattern as well, except that the client is interacting with remote, instead of local, resources encapsulating business logic.
+- The _Model_ exists on the server. When the client browser (as _Controller_) sends an HTTP Request "event" to the server, the client receives back the updated _Model_ data as an HTTP Response "event". This is like the GUI pattern as well, except that the client is interacting with remote, instead of local, resources encapsulating business logic.
 
-- The _View_ exists on the client. The client, receiving the updated _Model_ data in the form of an HTTP Response, re-renders its screen with the changes, either as an entirely new page or as changes to an existing page.
+- The _View_ exists on the client browser. The client browser (as _View_), receiving the updated _Model_ data in the form of an HTTP Response, re-renders its screen with the changes, either as an entirely new page or as changes to an existing page.
 
 While this might be a reasonable way to describe the user interface of the *client* side of the network interaction, it says nothing at all about the user interface on the *server* side of that interaction.
 
 _Action Domain Responder_ addresses specifically user interface components and collaborations on the server side.
+
+> N.b.: One correspondent suggests there is "an interesting proof that something is up with MVC in a web context" to be found when there is no browser involved, such as using `curl` or `wget` to interact with a server-side application that emits JSON response bodies. "The HTML message body is no more a user interface than a JSON message body -- both are simply serialization formats" as far as the server is concerned.
 
 ## Naming
 
