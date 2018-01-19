@@ -3,6 +3,7 @@
 My thanks to the many people who have helped refine this offering, whether through questions, comments, criticism, or commendation. These include:
 
 - Adam Culp
+- Andrew Shell
 - Beau Simensen
 - Dan Horrigan
 - Hari KT
