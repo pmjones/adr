@@ -1,6 +1,6 @@
 # Mentions
 
-Mentions, discussions, and commentary regarding _Action Domain Responder_.
+Mentions, discussions, and commentary regarding _Action Domain Responder_. (Linking here does not constitute endorsement, agreement, or correctness.)
 
 - The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
 
@@ -62,4 +62,34 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_.
 
 - [Radar](https://github.com/radarphp/Radar.Project): A PSR-7 compliant Action-Domain-Responder (ADR) system.
 
+- [Arbiter](https://github.com/arbiterphp/Arbiter.Arbiter): A PSR-7 Action system for Action-Domain-Responder.
+
 - [Spartan](http://spartan-php.iuliann.ro): A PHP framework using ADR.
+
+- <https://github.com/DeSmart/adr>: ADR package for DeSmart/laravel-vanilla.
+
+- [Adrenaline](https://github.com/bitExpert/adrenaline): A PSR-7 micro framework built on top of the Adroit middleware
+
+- <https://github.com/hiraeth-php/adr>: Acton-Domain-Responder baseline for the Hiraeth Nano-Framework
+
+- <https://github.com/somos/framework>
+
+- <https://github.com/ray-di/Ray.Adr>
+
+- <https://github.com/n1215/simple-adr>: A simple Action-Domain-Responder pattern example with no framework
+
+- <https://github.com/polusphp/polus-adr>
+
+- <https://github.com/mrjulio/rapture-adr>: Rapture PHP ADR component
+
+- <https://github.com/AurelienMo/AdrHelper>
+
+- <https://github.com/venta/framework>
+
+- <https://github.com/speckbein/Blubber-Framework>
+
+- [Voight-Kampff](https://github.com/jnjxp/jnjxp.vk): An ADR Authentication Module
+
+- <https://github.com/harborphp/action-responder>: Action and Responder implementations for the ADR Pattern.
+
+- <https://github.com/cadrephp/Cadre.CliAdr>: Command line ADR implementation
