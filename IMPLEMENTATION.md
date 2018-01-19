@@ -1,6 +1,6 @@
 # Implementation Notes
 
-_Action Domain Responder_ a user interface pattern. It is not an entire application architectures itself. With that in mind:
+_Action Domain Responder_ is a user interface pattern. It is not an entire application architecture in itself. With that in mind:
 
 This section describes other components, collaborations, and patterns that might be used in conjunction with ADR within an application architecture, along with notes and suggestions from ADR implementors.
 
