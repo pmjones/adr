@@ -12,7 +12,6 @@ The _Action_ is intentionally very spare. Any business logic should be handled i
 
 The only exception here is that the _Action_ may provide default values for user inputs when they are not present in the HTTP Request; this is easily handled via ternaries rather than if/then blocks.
 
-
 ### How To Pass The HTTP Request?
 
 The HTTP Request might be injected into the _Action_ constructor, or it might be passed as a method argument invoking the _Action_ logic. Each is a valid way to pass the HTTP Request, with its own tradeoffs.
@@ -53,7 +52,7 @@ Neither the _Action_ nor the _Responder_ care about the internal workings of the
 
 ADR is a *user interface* pattern. Anything that has to do with reading the HTTP request goes in the _Action_; anything that has to do with building the HTTP Response goes in the _Responder_.  Everything else, then, must go in the _Domain_.
 
-One easy heuristic to remember is this: "If it touches storage, it goes in the _Domain_." ("Storage" includes any external resource: database, cache, filesystem, network, etc.)
+One easy heuristic to remember is this: "If it touches storage, it goes in the _Domain_." ("Storage" includes any infrastructure or external resource: database, cache, filesystem, network, etc.)
 
 Now, what if the storage interaction is to retrieve only presentation values; for example, translations for template text, that require no business logic at all? It may be reasonable for the _Responder_ to retrieve such values itself.
 
@@ -103,7 +102,6 @@ Some presentations may have several different panels, content areas, or subsecti
 
 For a beginning example of how to do so, see [Solving The “Widget Problem” In ADR](http://paul-m-jones.com/archives/6760).
 
-
 ## Other Topics
 
 ### Content Negotiation
@@ -127,64 +125,60 @@ For one example of this, see the Radar framework, specifically:
 
 ### Sessions
 
-- doing sessions in an ADR system; specifically, the Domain and Responder
+Recall the above heuristic that "If it touches storage, it belongs in the _Domain_."  Sessions read and write from storage (whether disk, database, or cache). Therefore, all session work *should* be done in the _Domain_. To do so:
 
-This is not an ADR problem per se, but a "problem" with how PHP session functions combine request-reading, storage-interaction, and response-sending.  The "problem" appears when you start using Request/Response objects.
+- An _Action_ can read the incoming session ID (if any) and pass it as an input to the _Domain_.
+- The _Domain_ can then use that ID to read & write to a stored session (or create a new one), and later return the session ID and related data as part of its results, perhaps in a _Domain Payload_.
+- The _Responder_ can then read the session ID and data from the domain result and set a cookie based on it.
 
+However, some session implementations may be so thoroughly intertwined in a language or framework as to make them unsuitable for pure _Domain_ work. For example, the PHP session extension combines multiple concerns:
 
-http://paul-m-jones.com/archives/6310
+- `session_start()` reads the session ID from the incoming request data directly, then reads the `$_SESSION` superglobal data from storage itself. This combines the concerns of input collection and infrastructure interactions.
 
-http://paul-m-jones.com/archives/6585
+- `session_commit()` writes the `$_SESSION` superglobal data back to storage, and emits a cookie header directly to the outgoing response buffer. The combines the concerns of infrastructure interactions and presentations.
 
-https://www.futureproofphp.com/2017/05/02/best-way-handle-sessions-adr/
+These kinds of situations make it difficult to intercept the automatic input collection process with an HTTP Request object, the automatic output process with an HTTP Response object, and of course the infrastructure and domain logic concerns.
 
-https://github.com/juliangut/sessionware/tree/2.x
+This is not an ADR issue per se, but a "problem" with how PHP session functions combine request-reading, storage-interaction, and response-sending.  The "problem" appears when you start using Request/Response objects that are not hooked into automated PHP behaviors.
+
+As such, if you *can* find a way around it, you should. One way is to [disable some elements of automatic session handling while leaving others in place](http://paul-m-jones.com/archives/6310). Another may be to avoid automatic session handling entirely, in favor of a domain-logic-friendly solution such as [the one presented here](https://www.futureproofphp.com/2017/05/02/best-way-handle-sessions-adr/).
+
+Unfortunately, while there *ought* to a clean separation of input collection, reading and writing from storage, and output presentation, doing so might not be practical under some language and framework constraints. Session work might have to be done in way that is not as clean as we might prefer.
 
 ### Authentication
 
-- Authentication. The presence or absence of client credentials, and their validity, may curtail the need to dispatch to an _Action_ in the first place, or to interact with the _Domain_ while in an _Action_.
+As with sessions, authentication work *should* be done in the _Domain_, since it is likely to touch storage at some point. For example:
 
-How to do authentication? (Make an allowance for it happening in presentation, given PHP sessions; alternatively, avoid PHP sessions and separate concerns more rigorously.)
+- The _Action_ can collect credentials (including tokens or session IDs) from the HTTP Request and pass them to the _Domain_ as input.
 
-Where does authentication go? (Given "action or domain?" Tobias Gies answers says "action prob. ok")
+- The _Domain_ can interact with a storage system to check credentials for validity, expiration, and so on, and load up any user-specific data tied to those credentials.
 
-I think it may be that authentication goes in *infrastructure*, though domain activity may need to access that infrastructure. (Alternatively, it is a Shared Kernel element that works across multiple Domain elements.)
+- Based on authentication state, the _Domain_ may return early for anonymous or invalid users, or it may continue on to other domain logic, later returning the authentication state (or lack thereof) as part of its results, perhaps as part of a _Domain Payload_.
 
-How actually to *do* authentication?
+- The _Responder_ can then inspect user information in the domain results to present them appropriately.
 
-- Login: Action passes credentials, domain checks and starts a session with them, retains session ID, stops session, send session ID back to Action; Action passes Payload to Responder, Responder checks if a session ID is present, puts it into response as a cookie.
+#### Routing
 
-- Logout: Action calls domain, domain clears session, returns Payload; Action passes Paylod to responder, which unsets cookie in the response.
+If authentication work belongs in the _Domain_, how does one do routing? Often, developers will want to restrict some routes to authenticated users only. Does that mean the router, a user interface component, has to have access to the domain layer?
 
-- Resume: Action passes session ID from Request to domain; domain tries to start a session with that ID (and failure means early return), does its work, and returns Payload; Responder looks to see if session ID is present *and changed from Request ID*, then sends Payload ID if changed.
+The answer is "maybe not."  If the route condition is based on something like "Is the user authenticated at all, regardless of who it is?" then the answer is to check not for authentication, but for *anonymity*. That is, if the incoming HTTP Request has no credentials or tokens associated with it, then the request is anonymous, and can be routed appropriately. Authentication work involving reading and validating credentials can then be removed from the router and placed into the _Domain_.
 
-### Authorization
+#### Applicability
 
-Authorization. Access-control systems may deny the client's request for the given _Action_, or cause the _Action_ to bypass interactions with _Domain_, and possibly return a response of their own.
+There is a reasonable case to be made that, because authentication identitifies and managers a user interaction, it belongs in the user interface code. I am intuitively opposed to doing so, but it is a fair point of view.
 
+The problem then is, how is the user to be represented to the domain logic? We want to avoid the domain logic being dependent on a particular user interface component.
 
-### ACTION WORK
+One solution here is for the user-interface code to create a user component provided by the domain layer. The domain-layer user component can then be passed into the _Action_, whether as a constructor parameter, as an added HTTP Request parameter, or in some other way. The _Action_ can then treat the user component as input to the _Domain_, and everything proceeds from there.
 
-q: What does the action do? E.g. what are it’s defined responsibilities in ADR?
+While I can imagine problems with that approach, it may be that no other is possible, given the constraints of the user interface framework presenting the results of the _Domain_ work.
 
-a: Marshals input, sends input to domain, gets back domain result, passes that result to responder. Essentially logic-less.
+## Authorization
 
-q: So basically handles the incoming request, and any domain exceptions to produce a reasonable response.
+Whereas "authentication" identifies a user, "authorization" controls what that user is allowed to do. Authorization work *definitely* belongs in the _Domain_.
 
-a: no, the action does not handle exception. domain exceptions should be caught by the domain.
+As with authentication, how is one to do routing (a user interface concern) if the router cannot tell if the user may be dispatched to a particular route?  The answer is to realize that authorization is not over particular routes, but over particular _Domain_ functionality to which those routes lead. It might also be over functionality regarding a specific resource within the _Domain_, in which case the resource must be loaded (in part or in whole) by the _Domain_ as part of the authorization check.
 
-q: So, something I’ve been thinking about is the need for generic request object that doesn’t follow HTTP. To make actions useful for CLI implementations as well as web.
+Thus, it is the _Domain_ that should check if the user is allowed to perform a particular function; if so, the _Domain_ continues, but if not, the _Domain_ can report back appropriately. This keeps the _Domain_ as the proper authority over its behavior, instead of a user interface component.
 
-a: i think that's a mis-direction -- MVC and ADR are *user interface* patterns. by definition, you'll need a different "thing" for a different user interface. what you want is a *domain* that works will in multiple user interfaces
-
-q: Whereas for the CLI you would simply use the domain directly.
-
-a: no, in CLI your command would read the CLI input, then pass that input to the domain; then get back the output from the domain and present it ont he CLI
-
-q: Right, makes sense. What about JSON/XML APIS? can you use ADR for that?
-
-a: sure, the Responder translates the Domain payload to JSON or whatever
-
-q: Ok, so basically the user interface is “the web” Versus “the CLI”
-
-a: HTTP, yeah
+For an extended conversation about this, see <https://www.reddit.com/r/PHP/comments/64910c/laravel_auth_gates_and_user_roles/>.

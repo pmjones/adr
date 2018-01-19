@@ -35,5 +35,6 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 - [Implementation notes and advice](./IMPLEMENTATION.md)
 - [Short history of this offering](./HISTORY.md)
 - [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
+- [Acknowldgements](./ACKNOWLEDGEMENTS.md)
 
 Example code resides in the `example` repository.

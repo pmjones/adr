@@ -1,10 +1,10 @@
 # Mentions
 
-Mentions, discussions, and commentary regarding Action Domain Responder.
+Mentions, discussions, and commentary regarding _Action Domain Responder_.
 
 - The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
 
-- Stephan Hochdörfer responded to that offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; follow-up discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
+- Stephan Hochdörfer responded to the original ADR offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; follow-up discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
 
 - Jon Leighton writes about a "Focused Controller" that maps well to the _Action_ element in ADR at <http://www.jonathanleighton.com/articles/2012/explaining-focused-controller>.
 
@@ -20,7 +20,7 @@ Mentions, discussions, and commentary regarding Action Domain Responder.
 
 - [Is it possible to short-circuit the domain and go straight from input to responder?](https://github.com/arbiterphp/Arbiter.Arbiter/issues/8)
 
-- [Implementaing ADR in Laravel](http://martinbean.co.uk/blog/2016/10/20/implementing-adr-in-laravel/)
+- [Implementing ADR in Laravel](http://martinbean.co.uk/blog/2016/10/20/implementing-adr-in-laravel/)
 
 - [Goodbye Controllers, Hello Request Handlers](https://jenssegers.com/85/goodbye-controllers-hello-request-handlers)
 
