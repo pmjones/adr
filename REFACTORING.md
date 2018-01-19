@@ -265,7 +265,7 @@ class BlogService
 
     public function newInstance()
     {
-        return $this->model->newInstance($data);
+        return $this->model->newInstance();
     }
 
     public function create(array $data)
