@@ -208,7 +208,7 @@ class BlogCreateAction
         }
 
         // use the responder to build a response
-        return $this->responder->response($this->request, $blog);
+        return $this->responder->response($blog);
     }
 }
 ```
@@ -224,7 +224,7 @@ class BlogCreateResponder
         // ...
     }
 
-    public function response(Request $request, BlogModel $blog)
+    public function response(BlogModel $blog)
     {
         // is there an ID on the blog instance?
         if ($blog->id) {
@@ -302,7 +302,7 @@ class BlogCreateAction
             $blog = $this->domain->newInstance();
         }
 
-        return $this->responder->response($this->request, $blog);
+        return $this->responder->response($blog);
     }
 }
 ```
@@ -335,7 +335,7 @@ class BlogAddAction
     public function __invoke()
     {
         $blog = $this->domain->newInstance();
-        return $this->responder->response($this->request, $blog);
+        return $this->responder->response($blog);
     }
 }
 
@@ -353,7 +353,7 @@ class BlogCreateAction
     {
         $data = $this->request->getPost('blog');
         $blog = $this->domain->create($data);
-        return $this->responder->response($this->request, $blog);
+        return $this->responder->response($blog);
     }
 }
 ```
@@ -373,6 +373,8 @@ At this point we have fulfilled the ADR pattern of components and collaborations
 - the _Responder_ code handles all presentation logic.
 
 ## Introducing A Domain Payload
+
+> N.b.: A _Domain Payload_ can be complementary to ADR, but is not a required component of the pattern.
 
 Currently, the _Responder_ still has to inspect the _Domain_ results to figure out how to present those results. However, the _Domain_ already knows what the results mean. The _Responder_ should not have to do extra work to divine the meaning of the _Domain_ results; instead, the _Domain_ should communicate that status explicitly.
 
@@ -451,7 +453,7 @@ class BlogAddAction
     public function __invoke()
     {
         $payload = $this->domain->newInstance();
-        return $this->responder->response($this->request, $payload);
+        return $this->responder->response($payload);
     }
 }
 ```
@@ -472,7 +474,7 @@ class BlogCreateAction
     {
         $data = $this->request->getPost('blog');
         $payload = $this->domain->create($data);
-        return $this->responder->response($this->request, $payload);
+        return $this->responder->response($payload);
     }
 }
 ```
@@ -490,7 +492,7 @@ class BlogCreateResponder
         // ...
     }
 
-    public function response(Request $request, Payload $payload)
+    public function response(Payload $payload)
     {
         $blog = $payload->getResult()['blog'];
 
