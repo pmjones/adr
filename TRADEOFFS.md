@@ -1,4 +1,4 @@
-## Tradeoffs
+# Tradeoffs
 
 One benefit overall is that ADR more closely describes the current day-to-day practice and work of web interactions than "Model 2" MVC. A request comes in and gets dispatched to an action; the action interacts with the domain, and emits a response. The response work, including both headers and content, is cleanly separated from the input collection and the domain logic.
 
