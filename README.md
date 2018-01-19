@@ -32,6 +32,7 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 - [Objections to ADR](./OBJECTIONS.md)
 - [Refactoring from "Model 2" MVC to ADR](./REFACTORING.md)
 - [Tradeoffs in ADR](./TRADEOFFS.md)
+- [An example ADR codebase](https://github.com/pmjones/adr-example)
 - [Implementation notes and advice](./IMPLEMENTATION.md)
 - [Short history of this offering](./HISTORY.md)
 - [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
