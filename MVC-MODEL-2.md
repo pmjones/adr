@@ -51,7 +51,7 @@ That is not at all how a server-side over-the-network HTTP-oriented user interfa
 
 All of this is to say that MVC was never intended for server-side, over-the-network, HTTP Request/Response user interfaces.
 
-## Model 2
+## "Model 2"
 
 Any reference to MVC on the server side exists only because Sun Microsystems appropriated the components of _Model View Controller_ for their own applications, then subverted the purpose of and collaborations between those components. (For a well-written history of this, see [Interactive Application Architecture Patterns](https://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/), esp. "The Model-View-Controller Pattern for Web Applications.")
 
@@ -60,3 +60,9 @@ This appropriation and subversion was codified by Sun under the name "Model 2" a
 > Properly applied, the Model 2 architecture should result in the concentration of all of the processing logic in the hands of the controller servlet, with the JSP pages responsible only for the view or presentation.
 
 In other words, "Model 2" prescribes that business logic should reside in the _Controller_ -- a user interface component! While it may be true that this is *done* by a wide range of server-side developers, it is obviously a poor separation of concerns. The prescription is certainly not supported by the original MVC pattern description.
+
+## Moving Forward
+
+Since MVC (in its original GUI incarnation) is not suited to server-side applications, and "Model 2" misappropriates the term MVC in addition to prescribing a poor separation of concerns, what pattern (if any) can be applied to a server-side, over-the-network, request/responser user interface?
+
+The answer is [_Action Domain Responder_](./ADR.md).
