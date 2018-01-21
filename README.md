@@ -38,4 +38,4 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 - [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
 - [Acknowldgements](./ACKNOWLEDGEMENTS.md)
 
-Example code resides in the `example` repository.
+Example code resides in the [`example`](https://github.com/pmjones/adr-example) repository.
