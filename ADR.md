@@ -49,3 +49,7 @@ These limitations on the _Action_ make it a very simple bit of logic. It does on
 All other logic, including all forms of input validation, error handling, and so on, are therefore pushed out of the _Action_ and into the _Domain_ (for domain logic concerns) or the _Responder_ (for presentation logic concerns).
 
 In trivial cases, it may be acceptable to collect different _Action_ logic into a class as methods, provided that they keep the _Domain_ and _Responder_ separations in place.  Doing so may be considered a valid, but degenerate or inferior, implementation of the pattern.
+
+## Tradeoffs
+
+Of course, nothing comes with pros and cons. [What are the tradeoffs of the ADR pattern?](./TRADEOFFS.md)
