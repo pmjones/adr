@@ -52,4 +52,4 @@ In trivial cases, it may be acceptable to collect different _Action_ logic into 
 
 ## Tradeoffs
 
-Of course, nothing comes with pros and cons. [What are the tradeoffs of the ADR pattern?](./TRADEOFFS.md)
+Of course, everything comes with pros and cons. [What are the tradeoffs of the ADR pattern?](./TRADEOFFS.md)
