@@ -28,10 +28,9 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 
 - [_Model View Controller_ and "Model 2"](./MVC-MODEL-2.md)
 - [Comparing "Model 2" MVC to ADR](./ADR.md)
-- [Comparing ADR to other patterns](./COMPARISONS.md)
 - [Objections to ADR](./OBJECTIONS.md)
-- [Refactoring from "Model 2" MVC to ADR](./REFACTORING.md)
 - [Tradeoffs in ADR](./TRADEOFFS.md)
+- [Refactoring from "Model 2" MVC to ADR](./REFACTORING.md)
 - [Implementation notes and advice](./IMPLEMENTATION.md)
 - [Short history of this offering](./HISTORY.md)
 - [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
