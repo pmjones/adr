@@ -10,7 +10,7 @@ _Action_ is the logic to connect the _Domain_ and _Responder_. It invokes the _D
 
 _Domain_ is an entry point to the domain logic forming the core of the application, modifying state and persistence as needed. This may be a Transaction Script, Service Layer, Application Service, or something similar.
 
-_Responder_ is the presentation logic to build an HTTP Response from the data it receives from the _Action_. It deals with status codes, headers and cookies, content, formatting and transformation, templates and views,and so on.
+_Responder_ is the presentation logic to build an HTTP Response from the data it receives from the _Action_. It deals with status codes, headers and cookies, content, formatting and transformation, templates and views, and so on.
 
 ## Collaborations
 
