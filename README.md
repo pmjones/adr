@@ -24,16 +24,21 @@ _Responder_ is the presentation logic to build an HTTP Response from the data it
 
 1. The _Action_ returns the HTTP Response to the web handler sends the HTTP Response.
 
-## Further Reading
+## Reading
 
 - [_Model View Controller_ and "Model 2"](./MVC-MODEL-2.md)
 - [Comparing "Model 2" MVC to ADR](./ADR.md)
 - [Tradeoffs in ADR](./TRADEOFFS.md)
 - [Objections to ADR](./OBJECTIONS.md)
+
+## Resources
+
 - [Refactoring from "Model 2" MVC to ADR](./REFACTORING.md)
 - [Implementation notes and advice](./IMPLEMENTATION.md)
-- [Short history of this offering](./HISTORY.md)
 - [ADR discussions, mentions, implementations, etc.](./MENTIONS.md)
-- [Acknowldgements](./ACKNOWLEDGEMENTS.md)
 
 Example code resides in the [`example`](https://github.com/pmjones/adr-example) repository.
+
+* * *
+
+You can read about the history of this pattern [here](./HISTORY.md), and you can find the acknowledgments [here](./ACKNOWLEDGEMENT.md).

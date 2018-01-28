@@ -25,3 +25,5 @@ class Api
 ```
 
 However, cases that start out simple may become complex later, whether gradually or suddenly. So, even simple cases might benefit from the cleaner separations of ADR as a hedge against the unknowns of the future.
+
+Besides these technical tradeoffs, there are some [criticisms and objections to the presentation of the _Action Domain Responder_ pattern itself](./OBJECTIONS.md).

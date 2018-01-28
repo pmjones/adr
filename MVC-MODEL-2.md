@@ -63,6 +63,6 @@ In other words, "Model 2" prescribes that business logic should reside in the _C
 
 ## Moving Forward
 
-Since MVC (in its original GUI incarnation) is not suited to server-side applications, and "Model 2" misappropriates the term MVC in addition to prescribing a poor separation of concerns, what pattern (if any) can be applied to a server-side, over-the-network, request/responser user interface?
+Since MVC (in its original GUI incarnation) is not suited to server-side applications, and "Model 2" misappropriates the term MVC in addition to prescribing an improper separation of concerns, what pattern (if any) can be applied to a server-side, over-the-network, request/responser user interface?
 
 The answer is [_Action Domain Responder_](./ADR.md).
