@@ -50,9 +50,9 @@ The ADR pattern does not describe routing, dispatching, or other web handler ele
 
 - inspect and/or modify the HTTP Request URL with a router
 
-- dispatch the HTTP Request to an Action, and receive back the HTTP Response.
+- dispatch the HTTP Request to an _Action_, and receive back the HTTP Response.
 
-- dispatch the HTTP Request directly to a Responder, and receive back the HTTP Response.
+- dispatch the HTTP Request directly to a _Responder_, and receive back the HTTP Response.
 
 - bypass any ADR subsystem entirely in favor of some other subsystem ...
 
