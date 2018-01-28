@@ -4,7 +4,7 @@
 
 Adherents to _Model View Controller_, knowing its origins as graphical user interface pattern, may rationalize its validity as a pattern on the web like so:
 
-- The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client _Controller_ sends an HTTP Request "event" to the server when the user clicks a link, or a submits a form, etc.
+- The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client browser (as _Controller_) sends an HTTP Request "event" to the server when the user clicks a link, or a submits a form, etc.
 
 - The _Model_ exists on the server. When the client browser (as _Controller_) sends an HTTP Request "event" to the server, the client receives back the updated _Model_ data as an HTTP Response "event". This is like the GUI pattern as well, except that the client is interacting with remote, instead of local, resources encapsulating business logic.
 
