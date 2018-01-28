@@ -42,9 +42,7 @@ Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Req
 
 ### Front Controller
 
-The ADR pattern does not describe routing, dispatching, or other web handler elements. Those elements are more properly the purview of _Front Controller_.
-
-When it comes to ADR, a _Front Controller_ might ...
+The ADR pattern does not describe routing, dispatching, or other web handler elements. Those elements are more properly the purview of [_Front Controller_](https://www.martinfowler.com/eaaCatalog/frontController.html). When it comes to ADR, a _Front Controller_ might ...
 
 - pass control directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed.
 
