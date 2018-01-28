@@ -10,7 +10,7 @@ Adherents to _Model View Controller_, knowing its origins as graphical user inte
 
 - The _View_ exists on the client browser. The client browser (as _View_), receiving the updated _Model_ data in the form of an HTTP Response, re-renders its screen with the changes, either as an entirely new page or as changes to an existing page.
 
-While this might be a reasonable way to describe the user interface of the **client** side of the network interaction, it says nothing at all about the user interface on the *server* side of that interaction.
+While this might be a reasonable way to describe the user interface of the **client** side of the network interaction, it says nothing at all about the user interface on the **server** side of that interaction.
 
 _Action Domain Responder_ addresses specifically the user interface components and collaborations that exist on the **server** side.
 
