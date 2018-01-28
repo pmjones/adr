@@ -44,21 +44,17 @@ Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Req
 
 The ADR pattern does not describe routing, dispatching, or other web handler elements. Those elements are more properly the purview of [_Front Controller_](https://www.martinfowler.com/eaaCatalog/frontController.html). When it comes to ADR, a _Front Controller_ might ...
 
-- pass control directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed.
+- inspect and/or modify the HTTP Request before dispatching it to the _Action_
 
-- modify the HTTP Request before dispatching it to the _Action_; likewise, it may modify the HTTP Response returned by the _Action_.
+- inspect and/or modify the HTTP Response returned by the _Action_
 
-- inspect and/or modify the HTTP Request URL with a router
-
-- dispatch the HTTP Request to an _Action_, and receive back the HTTP Response.
-
-- dispatch the HTTP Request directly to a _Responder_, and receive back the HTTP Response.
+- dispatch directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed
 
 - bypass any ADR subsystem entirely in favor of some other subsystem ...
 
-    - when routing fails due to URL path or HTTP method mismatches.
-    - when the requested content-type cannot be presented by a _Responder_.
-    - when authentication credentials or session identifiers are not present.
+    - when routing fails due to URL path, HTTP method, or other mismatches
+    - when the requested content-type cannot be presented by a _Responder_
+    - when authentication credentials or session identifiers are not present
 
 ... among other things.  This is to say that although _Action Domain Responder_ may be one part of the request/response user interface, it may not be the entirety of the user interface.
 
