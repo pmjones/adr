@@ -41,4 +41,4 @@ Example code resides in the [`example`](https://github.com/pmjones/adr-example) 
 
 * * *
 
-You can read about the history of this pattern [here](./HISTORY.md), and you can find the acknowledgments [here](./ACKNOWLEDGEMENT.md).
+You can read about the history of this pattern [here](./HISTORY.md), and you can find the acknowledgments [here](./ACKNOWLEDGEMENTS.md).
