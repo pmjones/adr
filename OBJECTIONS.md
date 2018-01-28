@@ -20,9 +20,9 @@ _Action Domain Responder_ addresses specifically the user interface components a
 
 Adherents to "Model 2" MVC may object that _Action Domain Responder_ could be described using variations on _Controller_ and _View_, instead of as a pattern of its own. For example:
 
-- It could be that an _Action_ is a variation similar to _Page Controller_, and thus better termed _Action Controller_ , [_Focused Controller_](http://www.jonathanleighton.com/articles/2012/explaining-focused-controller/), or [_Invokable Controller_](https://github.com/woohoolabs/harmony#using-invokable-controllers). It would thereby fit the _Controller_ component of "Model 2" MVC.  (Indeed, the formal description for _Page Controller_ says that it represents a "page or action.")
+- It could be that an _Action_ is a variation similar to [_Page Controller_](https://www.martinfowler.com/eaaCatalog/pageController.html), and thus better termed _Action Controller_ , [_Focused Controller_](http://www.jonathanleighton.com/articles/2012/explaining-focused-controller/), or [_Invokable Controller_](https://github.com/woohoolabs/harmony#using-invokable-controllers). It would thereby fit the _Controller_ component of "Model 2" MVC.  (Indeed, the formal description for _Page Controller_ says that it represents a "page or action.")
 
-- Likewise, it could be that _Responder_ is a variation similar to _Template View_ or _Transform View_, and thus better termed a _Response View_. It would thereby fit the _View_ portion of "Model 2" MVC.
+- Likewise, it could be that _Responder_ is a variation similar to [_Template View_](https://www.martinfowler.com/eaaCatalog/templateView.html) or [_Transform View_](https://www.martinfowler.com/eaaCatalog/transformView.html), and thus better termed a _Response View_. It would thereby fit the _View_ portion of "Model 2" MVC.
 
 Having said that, I believe those alternative formulations are not as good of a description of web-based interactions as ADR.
 
