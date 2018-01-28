@@ -10,9 +10,9 @@ Adherents to _Model View Controller_, knowing its origins as graphical user inte
 
 - The _View_ exists on the client browser. The client browser (as _View_), receiving the updated _Model_ data in the form of an HTTP Response, re-renders its screen with the changes, either as an entirely new page or as changes to an existing page.
 
-While this might be a reasonable way to describe the user interface of the *client* side of the network interaction, it says nothing at all about the user interface on the *server* side of that interaction.
+While this might be a reasonable way to describe the user interface of the **client** side of the network interaction, it says nothing at all about the user interface on the *server* side of that interaction.
 
-_Action Domain Responder_ addresses specifically user interface components and collaborations on the server side.
+_Action Domain Responder_ addresses specifically the user interface components and collaborations that exist on the **server** side.
 
 > N.b.: One correspondent suggests there is "an interesting proof that something is up with MVC in a web context" to be found when there is no browser involved, such as using `curl` or `wget` to interact with a server-side application that emits JSON response bodies. "The HTML message body is no more a user interface than a JSON message body -- both are simply serialization formats" as far as the server is concerned.
 
