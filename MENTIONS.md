@@ -93,3 +93,5 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_. (Link
 - <https://github.com/harborphp/action-responder>: Action and Responder implementations for the ADR Pattern.
 
 - <https://github.com/cadrephp/Cadre.CliAdr>: Command line ADR implementation
+
+- [Action-Domain-Responder with Slim](https://www.slimframework.com/docs/cookbook/action-domain-responder.html)
