@@ -126,11 +126,11 @@ In all, this seems a case of close-but-not-quite.
 
 [MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR. The _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
 
-However, the _ViewModel_ does not map well to a _Controller_ in MVC or an _Action_ in ADR. Because ADR is a refinement of MVC, it seems reasonable to think that comparisons between MVVM and MVC would apply equally well to ADR.
+However, the _ViewModel_ does not map well to a _Controller_ in MVC or an _Action_ in ADR. Because ADR is a refinement of MVC, it seems reasonable to think comparisons between MVVM and MVC would apply equally well to ADR.
 
 For an extended description of those differences, please see these articles from [Joel Wenzel](http://joel.inpointform.net/software-development/mvvm-vs-mvp-vs-mvc-the-differences-explained/), [Avtar Singh Sohi](http://www.codeproject.com/Articles/228214/Understanding-Basics-of-UI-Design-Pattern-MVC-MVP), [Rachel Appel](http://www.rachelappel.com/comparing-the-mvc-and-mvvm-patterns-along-with-their-respective-viewmodels), and [Niraj Bhatt](https://nirajrules.wordpress.com/2009/07/18/mvc-vs-mvp-vs-mvvm/).
 
-(In email discussions with an interested party, I was informed that MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. If this is true, then a _ViewModel_ is just as useful in ADR as it would be in MVC. Perhaps this could considered a variation on [_Domain Payload_](https://vaughnvernon.co/?page_id=40) as used in ADR.)
+In email discussions with an interested party, I was informed that MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. If this is true, then a _ViewModel_ is just as useful in ADR as it would be in MVC. Perhaps this could considered a variation on [_Domain Payload_](https://vaughnvernon.co/?page_id=40) as used in ADR.
 
 ### Models Operations Views Events
 
@@ -141,13 +141,13 @@ From [the originating site](http://cirw.in/blog/time-to-move-on):
 > - Views mediate between your application and the user.
 > - Events are used to join all these components together safely.
 
-This is an interesting pattern in itelf. The idea of _Models_ and _Operations_ seems to map well to Domain-Driven Design idioms.
+This is an interesting pattern in itself. The idea of _Models_ and _Operations_ seems to map well to Domain-Driven Design idioms.
 
 However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:
 
 > Listening on events is what gives MOVE (and MVC) the inversion of control that you need to allow models to update views without the models being directly aware of which views they are updating.
 
-In ADR, the _Domain_ and the _Responder_ do not "update each other". The _Domain_ work is completed and passed to the _Responder_ for it to present to the client.
+In ADR, the _Domain_ and the _Responder_ do not update each other. The _Domain_ work is completed and passed to the _Responder_ for it to present to the client.
 
 ### Presentation Abstraction Control
 
