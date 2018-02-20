@@ -104,9 +104,9 @@ class BlogController
 >
 > - The _Controller_ contains multiple action methods.
 >
-> - The _Controller_  sets the response headers directly, even though it hands off content-building control to a _Template View_. Since the entire HTTP response is being presented, setting headers in the _Controller_ represents a failure to properly separate presentation concerns.
+> - The _Controller_  sets the response headers directly, even though it hands off content-building control to a _Template View_. Since the entire HTTP response is being presented, setting headers in the _Controller_ represents a failure to separate presentation concerns properly.
 >
-> - The _Controller_ performs business logic on the _Model_, rather than handing off the business logic to a domain layer. This represents a failure to properly separate domain concerns.
+> - The _Controller_ performs business logic on the _Model_, rather than handing off the business logic to a domain layer. This represents a failure to accurately separate domain concerns.
 
 
 ## Refactoring to ADR
@@ -149,13 +149,13 @@ In comparison, an ADR directory structure refactored from the above MVC system m
 
 > Some notes:
 >
-> - We have extracted each action method from the _BlogController_ to its own _Action_ class in a namespace dedicated to a "web" user interface.
+> - We have extracted each action method from the _BlogController_ to its own _Action_ class in a namespace dedicated to a web user interface.
 >
 > - Each _Action_ has a corresponding _Responder_, into which all presentation work (i.e., response-building work) has been placed.
 >
 > - We have renamed `views/` to `templates/` and moved it to a different location.
 >
-> - While we might prefer to replace the ActiveRecord _BlogModel_ class with a data mapper (_BlogMapper_) that returns persistence model objects (_BlogRecord_), that is beyond the scope of this exercise. We will leave the ActiveRecord implementation as it is, though we have moved it into a namespace dedicated to the domain layer.
+> - While we might prefer to replace the ActiveRecord _BlogModel_ class with a data mapper (_BlogMapper_) which returns persistence model objects (_BlogRecord_), that is beyond the scope of this exercise. We will leave the ActiveRecord implementation as it is, though we have moved it into a namespace dedicated to the domain layer.
 
 ### ADR Logic
 
@@ -163,9 +163,9 @@ The refactoring goals are to:
 
 - separate presentation (response-building) logic from all other logic;
 - separate domain logic from all other logic;
-- remove all conditional logic from Actions (with the exception of ternaries for default input values)
+- remove all conditional logic from Actions (except ternaries for default input values).
 
-These goals complement each other and feed back on each other; they might or might not be acheived in isolation.
+These goals complement each other and feed back on each other; they might or might not be achieved in isolation.
 
 The following is one possible order of refactorings. Another set of changes, or a similar set but in a different order, might achieve the same goals.
 
@@ -246,13 +246,13 @@ class BlogCreateResponder
 }
 ```
 
-> Note that we use the PHP magic method `__invoke()` as the "main" method for action invocation; this could be any other method name we wanted to standardize on.
+> Note that we use the PHP magic method `__invoke()` as the main method for action invocation; this could be any other method name we wanted to standardize on.
 
-At this point we have successfully separated all presentation (response-building) work to the _Responder_.
+At this point, we have successfully separated all presentation (response-building) work to the _Responder_.
 
 #### Separate Domain Logic
 
-The _BlogCreateAction_ is still performing some business logic. We can refactor it to create a domain-layer _BlogService_ to handle that for us.
+The _BlogCreateAction_ is still performing some business logic. We can refactor it to create a domain-layer _BlogService_ to handle it for us.
 
 ```php
 <?php
@@ -316,9 +316,9 @@ At this point, all presentation (response-building) work is being handled in _Re
 The remaining logic in the _BlogCreateAction_ proceeds along two different paths:
 
 - one, to present the form for adding a new blog entry;
-- and another, to actually save the new blog entry.
+- and another, to save the new blog entry.
 
-We can extract one of the paths to a _BlogAddAction_, perhaps like so:
+We can extract one of the paths to a _BlogAddAction_, like so:
 
 ```php
 <?php
@@ -362,7 +362,7 @@ class BlogCreateAction
 >
 > - Both actions continue to use the same Responder and Domain classes.
 >
-> - We will need to modify the web handler (probably a router) to dispatch to one _BlogAddAction_ on GET, and _BlogCreateAction_ on POST.
+> - We need to modify the web handler (probably a router) to dispatch to one _BlogAddAction_ on GET, and _BlogCreateAction_ on POST.
 
 At this point we have fulfilled the ADR pattern of components and collaborations:
 
@@ -372,7 +372,7 @@ At this point we have fulfilled the ADR pattern of components and collaborations
 
 - the _Responder_ code handles all presentation logic.
 
-## Introducing A Domain Payload
+## Introducing a Domain Payload
 
 > N.b.: A _Domain Payload_ can be complementary to ADR, but is not a required component of the pattern.
 
@@ -404,7 +404,7 @@ class Payload
 }
 ```
 
-Then we modify the _BlogService_ to return a _Payload_ instead of unwrapped domain objects:
+Then, we modify the _BlogService_ to return a _Payload_ instead of unwrapped domain objects:
 
 ```php
 class BlogService
@@ -517,4 +517,4 @@ class BlogCreateResponder
 }
 ```
 
-By using a _Domain Payload_, we can avoid having to inspect domain objects directly to determine how to present them, and instead check the status that the domain passed back explicitly. This makes presentation logic easier to read and follow.
+By using a _Domain Payload_, we can avoid having to inspect domain objects directly to determine how to present them, and instead check the status the domain passed back explicitly. This makes presentation logic easier to read and follow.
