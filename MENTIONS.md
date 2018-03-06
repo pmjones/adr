@@ -1,6 +1,6 @@
 # Mentions
 
-Mentions, discussions, and commentary regarding _Action Domain Responder_. (Linking here does not constitute endorsement, agreement, or correctness.)
+Mentions, discussions, and commentary regarding _Action Domain Responder_; linking here does not constitute endorsement, agreement, or correctness.
 
 - The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
 
@@ -8,11 +8,11 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_. (Link
 
 - Jon Leighton writes about a "Focused Controller" that maps well to the _Action_ element in ADR at <http://www.jonathanleighton.com/articles/2012/explaining-focused-controller>.
 
-- A follow-up post regarding _View_ vs _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
+- A follow-up post regarding _View_ versus _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
 
-- Akihito Koritama offers these notes: <https://koriym.github.io/blog/2014/06/08/action-domain-responder/>
+- Akihito Koritama offers these notes: <https://koriym.github.io/blog/2014/06/08/action-domain-responder/>.
 
-- Nate Abele opines that ADR should be described as an alternative to (not merely a refinement of) MVC <http://paul-m-jones.com/archives/5993#comment-2597>
+- Nate Abele observes ADR should be described as an alternative to (not merely a refinement of) MVC <http://paul-m-jones.com/archives/5993#comment-2597>.
 
 - [How should errors be handled in ADR?](https://www.reddit.com/r/PHP/comments/6yd366/how_should_errors_be_handled_in_adr_pattern/)
 
@@ -36,7 +36,7 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_. (Link
 
 - [Let go of "Action Methods"](https://matthiasnoback.nl/2014/06/framework-independent-controllers-part-3/)
 
-- [Should request and action be decoupled, so that an action can be fired off from anywhere (e.g. CLI or web)?](https://github.com/pmjones/adr/issues/50)
+- [Should request and action be decoupled, so that an action can be fired off from anywhere (e.g., CLI or web)?](https://github.com/pmjones/adr/issues/50)
 
 - <https://www.entropywins.wtf/blog/2016/11/24/implementing-the-clean-architecture/>, and <http://paul-m-jones.com/archives/6535> as a followup
 
@@ -68,7 +68,7 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_. (Link
 
 - <https://github.com/DeSmart/adr>: ADR package for DeSmart/laravel-vanilla.
 
-- [Adrenaline](https://github.com/bitExpert/adrenaline): A PSR-7 micro framework built on top of the Adroit middleware
+- [Adrenaline](https://github.com/bitExpert/adrenaline): A PSR-7 microframework built on top of the Adroit middleware
 
 - <https://github.com/hiraeth-php/adr>: Acton-Domain-Responder baseline for the Hiraeth Nano-Framework
 

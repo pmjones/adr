@@ -1,6 +1,6 @@
 # Bibliography
 
-This is a partial bibilography of research material.
+This is a partial bibliography of research material.
 
 ## Model View Controller
 
