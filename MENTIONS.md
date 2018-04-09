@@ -95,3 +95,5 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_; linki
 - <https://github.com/cadrephp/Cadre.CliAdr>: Command line ADR implementation
 
 - [Action-Domain-Responder with Slim](https://www.slimframework.com/docs/cookbook/action-domain-responder.html)
+
+- [Using Command and Event Buses to create a CQRS-friendly application](https://speakerdeck.com/shrikeh/command-and-e-mission-control-using-command-and-event-buses-to-create-a-cqrs-friendly-application?slide=66)
