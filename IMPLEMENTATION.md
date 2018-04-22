@@ -26,7 +26,7 @@ Yes. However, note that building the _data transfer object_ has to be completed 
 
 ### Can the _Action_ Use a Command Bus?
 
-Command Bus is a domain logic pattern, not a user interface pattern, and should be used in the _Domain_, not in the _Action_. For a longer discussion of this, see [Command Bus and Action-Domain-Responder](Command Bus and Action-Domain-Responder).
+Command Bus is a domain logic pattern, not a user interface pattern, and should be used in the _Domain_, not in the _Action_. For a longer discussion of this, see [Command Bus and Action-Domain-Responder](http://paul-m-jones.com/archives/6268).
 
 ### Should the _Action_ Handle Domain Exceptions?
 
