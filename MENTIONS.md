@@ -97,3 +97,5 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_; linki
 - [Action-Domain-Responder with Slim](https://www.slimframework.com/docs/cookbook/action-domain-responder.html)
 
 - [Using Command and Event Buses to create a CQRS-friendly application](https://speakerdeck.com/shrikeh/command-and-e-mission-control-using-command-and-event-buses-to-create-a-cqrs-friendly-application?slide=66)
+
+- [The Software Architecture Chronicles: Action-Domain-Responder](https://herbertograca.com/2018/09/03/action-domain-responder/) "It seems to me that, at the moment of this writing, ADR is the best adaptation of MVC for the HTTP request/response paradigm because it clearly adapts the HTTP requests and responses to the Domain requests and responses while still keeping the Domain completely decoupled from the presentation layer."
