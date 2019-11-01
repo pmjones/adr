@@ -185,4 +185,4 @@ There are hints of ADR, especially the _Responder_ element, in [Separated Presen
 
 (Emphasis added.)
 
-The Responder element of ADR clearly fulfills that description. Putting together the HTTP Response headers and body are the sole responsibility of the Responder.
+The _Responder_ element clearly fulfills that description. Putting together the HTTP Response headers and body are the sole responsibility of the Responder.
