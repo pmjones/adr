@@ -179,8 +179,10 @@ It may be that ADR could be considered an expanded or superset variation of RMR,
 
 ### Separated Presentation
 
-There are hints of ADR, especially the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html). Separated Presentation is a meta-pattern that describes the general concern of separating domain code from presentation code. Fowler writes:
+There are hints of ADR, especially the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html), a meta-pattern that describes the general concern of separating domain code from presentation code. Fowler writes:
 
-> Presentation code would manipulate GUI widgets and structures in a rich client application, HTTP headers and HTML in a web application, or command line arguments and print statements in a command line application. We then divide the application into two logical modules with all the presentation code in one module and the rest in another module.
+> Presentation code would manipulate GUI widgets and structures in a rich client application, **HTTP headers and HTML in a web application,** or command line arguments and print statements in a command line application. We then divide the application into two logical modules with all the presentation code in one module and the rest in another module.
+
+(Emphasis added.)
 
 The Responder element of ADR clearly fulfills that description. Putting together the HTTP Response headers and body are the sole responsibility of the Responder.
