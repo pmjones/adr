@@ -11,7 +11,6 @@ As a user interface pattern, MVC was originally proposed in 1979 for client-side
 - [MVC: Xerox PARC 1978-79](https://heim.ifi.uio.no/~trygver/themes/mvc/mvc-index.html)
 - [Applications Programming in Smalltalk-80: How to use Model-View-Controller (MVC)](https://web.archive.org/web/20150518095937/http://st-www.cs.illinois.edu/users/smarch/st-docs/mvc.html)
 - [A Description of the Model-View-Controller User Interface Paradigm in the Smalltalk-80 System](http://www.create.ucsb.edu/~stp/PostScript/mvc.pdf)
-- [Model-View-Controller (MVC) Architecture](https://www.scribd.com/document/130366010/125469296-Model-View-Controller-MVC-Architecture)
 
 Here is how "Pattern Oriented Software Architecture, Volume 1" (p 130) describes the operation of _Model View Controller_:
 
