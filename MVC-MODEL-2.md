@@ -1,6 +1,6 @@
 # _Model View Controller_ and "Model 2"
 
-The dominant pattern name used to describe server-side web application interactions is _Model View Controller_ (MVC). However, what server-side developers have come to think of as "MVC" is not actually MVC at all.
+The dominant pattern name used to describe server-side web application interactions is _Model View Controller_ (MVC). However, what server-side developers have come to think of as "MVC" is not MVC at all.
 
 ## Model View Controller
 
@@ -30,15 +30,15 @@ So far, so good, even if a server-side developer has to squint a little at the _
 
 Here is a corroborating description, by [Krasner and Pope](http://www.create.ucsb.edu/~stp/PostScript/mvc.pdf), of how MVC is supposed to work:
 
-- "Models are those components of the system application that actually do the work ... the domain-specific software simulation or implementation of the application's central structure." (This sounds similar to what a server-side developer might expect.)
+- "Models are those components of the system application that actually do the work ... the domain-specific software simulation or implementation of the application's central structure." *(This sounds similar to what a server-side developer might expect.)*
 
-- "[V]iews deal with everything graphical; they request data from their model, and display the data." (Do server-side views ask for data from the model; e.g., do they ask it to pull data from the database? Typically the answer is "no"; indeed, a view interacting with the database indicates that concerns have been poorly separated.)
+- "[V]iews deal with everything graphical; they request data from their model, and display the data." *(Do server-side views ask for data from the model; e.g., do they ask it to pull data from the database? Typically the answer is "no"; indeed, a view interacting with the database indicates that concerns have been poorly separated.)*
 
-- "Controllers contain the interface between their associated models and views and the input devices (keyboard, pointing device, time).  Controllers also deal with scheduling interactions with other view-controller pairs: they track mouse movement between application views, and implement messages for mouse button activity and input from the input sensor." (This sounds unlike any _Controller_ a server-side developer might put together.)
+- "Controllers contain the interface between their associated models and views and the input devices (keyboard, pointing device, time).  Controllers also deal with scheduling interactions with other view-controller pairs: they track mouse movement between application views, and implement messages for mouse button activity and input from the input sensor." *(This sounds unlike any _Controller_ a server-side developer might put together.)*
 
-Indeed, it turns out there is not just one MVC triad for the application as a whole. Instead, each element on the screen is an MVC triad: one MVC triad for each text field, each button, each popup menu, and so on. Martin Fowler in his [GUI Architectures](http://martinfowler.com/eaaDev/uiArchs.html) essay confirms "there's not just one view and controller, you have a view-controller pair for each element of the screen, each of the controls, and the screen as a whole." So there are lots of little models, views, and controllers operating as user interfaces within the application as a whole.
+Indeed, it turns out there is not just one MVC triad for the application as a whole. Instead, each element on the screen is backed by its own MVC triad: one MVC triad for each text field, each button, each popup menu, and so on. Martin Fowler in his [GUI Architectures](http://martinfowler.com/eaaDev/uiArchs.html) essay confirms that "there's not just one view and controller, you have a view-controller pair for each element of the screen, each of the controls, and the screen as a whole." So there are lots of little models, views, and controllers interacting as user interfaces within the application as a whole.
 
-Further, there is a subject/observer messaging system connecting all these little MVC triads together, so they can continuously notify each other of changes. Back to Krasner and Pope:
+Further, there is a subject/observer messaging system conncting all these separate MVC triads together, so that they can continuously notify each other of changes. Back to Krasner and Pope:
 
 > Views and controllers of a model are registered in a list as dependents of the model, to be informed whenever some aspect of the model is changed. When a model has changed, a message is broadcast to notify all of its dependents about the change.
 
@@ -46,13 +46,13 @@ Finally, the interaction cycle is dramatically different from what a server-side
 
 > [T]he user takes some input action and the active controller notifies the model to change itself accordingly. The model carries out the prescribed operations, possibly changing its state, and broadcasts to its dependents (views and controllers) that it has changed, possibly telling them the nature of the change. Views can then inquire of the model about its new state, and update their display if necessary. Controllers may change their method of interaction depending on the new state of the model.
 
-That is not at all how a server-side over-the-network HTTP-oriented user interface operates. Server-side applications do not present a graphical user interface of many interconnected screen elements all continuously communicating with each other back and forth in memory, responding to mouse movements, button clicks, and key presses. Instead, the server-side application is centered around *exactly one* user interface interaction: it receives an entire HTTP request and delivers an entire HTTP response in return.
+That is not at all how a server-side over-the-network HTTP-oriented user interface operates. Server-side applications do not present a graphical user interface of many interconnected screen elements all continuously communicating with each other back and forth in memory, responding to mouse movements, button clicks, and key presses. Instead, a server-side application is centered around *exactly one* user interface interaction: it receives an entire HTTP Request, and delivers an entire HTTP Response in return.
 
 All of this is to say MVC was never intended for server-side, over-the-network, HTTP request/response user interfaces.
 
 ## "Model 2"
 
-Any reference to MVC on the server side exists only because Sun Microsystems appropriated the components of _Model View Controller_ for their own applications, then subverted the purpose of and collaborations between those components. (For a well-written history of this, see [Interactive Application Architecture Patterns](https://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/), esp. "The Model-View-Controller Pattern for Web Applications.")
+Any reference to MVC on the server side exists only because Sun Microsystems appropriated the components of _Model View Controller_ for their own web applications, then subverted the purpose of and collaborations between those components. (For a well-written history of this, see [Interactive Application Architecture Patterns](https://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/), esp. "The Model-View-Controller Pattern for Web Applications.")
 
 This appropriation and subversion was codified by Sun under the name "Model 2" and later solidified by Struts. Server-side developers now equate "Model 2" with "MVC" on the server side as a result, even though any connection between the two is misleading at best and entirely unfounded at worst. Readers will find [the 1999 article introducing Model 2](https://www.javaworld.com/article/2076557/java-web-development/understanding-javaserver-pages-model-2-architecture.html) concludes:
 

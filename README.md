@@ -39,6 +39,4 @@ _Responder_ is the presentation logic to build an HTTP response from the data it
 
 Example code resides in the [`example`](https://github.com/pmjones/adr-example) repository.
 
-* * *
-
-You can read about the history of this pattern [here](./HISTORY.md), and you can find the acknowledgments [here](./ACKNOWLEDGEMENTS.md).
+You can also read about [the history of this pattern](./HISTORY.md), [the research bibliography](./BIBLIO.md), and [the author's acknowledgments](./ACKNOWLEDGEMENTS.md).

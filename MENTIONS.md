@@ -2,17 +2,17 @@
 
 Mentions, discussions, and commentary regarding _Action Domain Responder_; linking here does not constitute endorsement, agreement, or correctness.
 
-- The original blog post that led to this offering is at <http://paul-m-jones.com/archives/5970>.
+- The original blog post that led to this offering is at <http://paul-m-jones.com/post/2014/05/05/action-domain-response-a-tentative-mvc-refinement/>.
 
-- Stephan Hochdörfer responded to the original ADR offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; follow-up discussion appears at <http://paul-m-jones.com/archives/5987> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
+- Stephan Hochdörfer responded to the original ADR offering at <http://blog.bitexpert.de/blog/controller-classes-vs.-action-classes>; follow-up discussion appears at <http://paul-m-jones.com/post/2014/05/19/stephan-hochdorfer-and-action-domain-responder/> and <http://www.reddit.com/r/PHP/comments/25y89a/stephan_hochdörfer_and_actiondomainresponder>.
 
 - Jon Leighton writes about a "Focused Controller" that maps well to the _Action_ element in ADR at <http://www.jonathanleighton.com/articles/2012/explaining-focused-controller>.
 
-- A follow-up post regarding _View_ versus _Responder_ is at <http://paul-m-jones.com/archives/5993> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
+- A follow-up post regarding _View_ versus _Responder_ is at <http://paul-m-jones.com/post/2014/05/26/the-template-is-not-the-view/> with Reddit commentary at <http://www.reddit.com/r/PHP/comments/26j3nf/the_template_is_not_the_view/> and <http://www.reddit.com/r/webdev/comments/26j5o9/the_template_is_not_the_view_xpost_from_rphp/>.
 
 - Akihito Koritama offers these notes: <https://koriym.github.io/blog/2014/06/08/action-domain-responder/>.
 
-- Nate Abele observes ADR should be described as an alternative to (not merely a refinement of) MVC <http://paul-m-jones.com/archives/5993#comment-2597>.
+- Nate Abele observes that ADR should be described as an alternative to (not merely a refinement of) MVC <http://paul-m-jones.com/post/2014/05/26/the-template-is-not-the-view/#comment-2597>
 
 - [How should errors be handled in ADR?](https://www.reddit.com/r/PHP/comments/6yd366/how_should_errors_be_handled_in_adr_pattern/)
 
@@ -38,7 +38,7 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_; linki
 
 - [Should request and action be decoupled, so that an action can be fired off from anywhere (e.g., CLI or web)?](https://github.com/pmjones/adr/issues/50)
 
-- <https://www.entropywins.wtf/blog/2016/11/24/implementing-the-clean-architecture/>, and <http://paul-m-jones.com/archives/6535> as a followup
+- <https://www.entropywins.wtf/blog/2016/11/24/implementing-the-clean-architecture/>, and <http://paul-m-jones.com/post/2017/02/21/wikimedia-clean-architecture-and-adr/> as a followup
 
 - [Does the Action know about HTTP?](https://www.reddit.com/r/PHP/comments/5x6m7z/random_thoughts_on_the_state_of_php_mvc/deg1a1b/?sort=old)
 
@@ -53,6 +53,8 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_; linki
 - [Action-Domain-Responder](https://www.reddit.com/r/PHP/comments/26ogvj/actiondomainresponder/)
 
 - [How to do Everything with PHP Middleware](http://www.darrenmothersele.com/blog/2017/03/28/php-middleware/)
+
+- [ADR and Authn/Authz](https://www.reddit.com/r/PHP/comments/5gy9h6/new_in_symfony_33_json_authentication/dawu5wz/)
 
 - [API Platform](https://api-platform.com/docs/core/operations/)
 
@@ -98,4 +100,8 @@ Mentions, discussions, and commentary regarding _Action Domain Responder_; linki
 
 - [Using Command and Event Buses to create a CQRS-friendly application](https://speakerdeck.com/shrikeh/command-and-e-mission-control-using-command-and-event-buses-to-create-a-cqrs-friendly-application?slide=66)
 
-- [The Software Architecture Chronicles: Action-Domain-Responder](https://herbertograca.com/2018/09/03/action-domain-responder/) "It seems to me that, at the moment of this writing, ADR is the best adaptation of MVC for the HTTP request/response paradigm because it clearly adapts the HTTP requests and responses to the Domain requests and responses while still keeping the Domain completely decoupled from the presentation layer."
+- [The Software Architecture Chronicles: Action-Domain-Responder](https://herbertograca.com/2018/09/03/action-domain-responder/): "It seems to me that, at the moment of this writing, ADR is the best adaptation of MVC for the HTTP request/response paradigm because it clearly adapts the HTTP requests and responses to the Domain requests and responses while still keeping the Domain completely decoupled from the presentation layer."
+
+- Followup response and clarifications to the review from Herberto Graça [here](http://paul-m-jones.com/post/2018/12/19/clarifications-to-a-review-of-action-domain-responder/).
+
+- [No More MVC](https://dev.to/mustardsauce/no-more-mvc-4l97); Hacker News discussion [here](https://news.ycombinator.com/item?id=16150585)

@@ -2,7 +2,7 @@
 
 ## Applicability
 
-Adherents to _Model View Controller_, knowing its origins as graphical user interface pattern, may rationalize its validity as a pattern on the web like so:
+Adherents to _Model View Controller_, knowing its origins as a graphical user interface pattern, might rationalize its validity as a pattern on the server side like so:
 
 - The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client browser (as _Controller_) sends an HTTP request event to the server when the user clicks a link, or a submits a form, etc.
 
@@ -20,13 +20,13 @@ _Action Domain Responder_ specifically addresses the user interface components a
 
 Adherents to "Model 2" MVC may object that _Action Domain Responder_ could be described using variations on _Controller_ and _View_, instead of as a pattern of its own. For example:
 
-- It could be that an _Action_ is a variation similar to [_Page Controller_](https://www.martinfowler.com/eaaCatalog/pageController.html), and thus better termed _Action Controller_ , [_Focused Controller_](http://www.jonathanleighton.com/articles/2012/explaining-focused-controller/), or [_Invokable Controller_](https://github.com/woohoolabs/harmony#using-invokable-controllers). It would thereby fit the _Controller_ component of "Model 2" MVC.  (Indeed, the formal description for _Page Controller_ says it represents a "page or action.")
+- It could be that an _Action_ is a variation similar to [_Page Controller_](https://www.martinfowler.com/eaaCatalog/pageController.html), and thus better termed _Action Controller_ , [_Single Action Controller_](https://www.google.com/search?q=single+action+controller), [_Focused Controller_](http://www.jonathanleighton.com/articles/2012/explaining-focused-controller/), or [_Invokable Controller_](https://github.com/woohoolabs/harmony#using-invokable-controllers). It would thereby fit the _Controller_ component of "Model 2" MVC.  (Indeed, the formal description for _Page Controller_ says that it represents a "page or action.")
 
 - Likewise, it could be that _Responder_ is a variation similar to [_Template View_](https://www.martinfowler.com/eaaCatalog/templateView.html) or [_Transform View_](https://www.martinfowler.com/eaaCatalog/transformView.html), and thus better termed a _Response View_. It would thereby fit the _View_ portion of "Model 2" MVC.
 
-Those alternative formulations are not as good of a description of web-based interactions as ADR.
+Those alternative formulations are not as good a description of server-side components and collaborations as ADR is.
 
-One reason is the origins of MVC in graphical user interfaces, in particular the continuous interaction between many small MVC triads in memory to notify each other of updates. In ADR, no such continuous messaging occurs; the Action invokes the Domain, then it invokes the Responder, but neither the Domain nor Responder communicate any changes to each other. Also, there is only one interaction, that of receiving the HTTP request and then sending the HTTP response in return.
+One reason has to do with the origins of MVC in graphical user interfaces, in particular the continuous interaction between many separate MVC triads in memory to notify each other of updates. On the server side, no such continuous messaging occurs. There only one interaction: that of receiving the HTTP Request and then sending the HTTP Response in return.  ADR reflects this reality very well: the Action invokes the Domain, then it invokes the Responder, but neither the Domain nor Responder communicate any changes to each other.
 
 Another reason is the "Model 2" exhortation to place all processing logic in the _Controller_. This strikes me as a poor separation of concerns; business logic should go in a domain layer, not in a user interface component.
 
@@ -38,7 +38,7 @@ Some critics feel _Action Domain Responder_ is missing some elements.
 
 ### HTTP Request and Response
 
-Because ADR is an HTTP-specific user interface pattern, the presence of HTTP request and response elements is presumed as a sine qua non.
+Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Request and Response elements is presumed as a *sine qua non*.
 
 ### Front Controller
 
@@ -50,37 +50,30 @@ The ADR pattern does not describe routing, dispatching, or other web handler ele
 
 - dispatch directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed
 
-- bypass any ADR subsystem entirely in favor of some other subsystem
+- bypass any ADR subsystem entirely in favor of some other subsystem, such as ...
 
-    - when routing fails due to URL path, HTTP method, or other mismatches
-    - when the requested content-type cannot be presented by a _Responder_
-    - when authentication credentials or session identifiers are not present, among other things.
+    - when routing fails due to URL path, HTTP method, or other mismatches; or,
+    - when the requested content-type cannot be presented by a _Responder_; or,
+    - when authentication credentials or session identifiers are not present.
 
 This is to say that although _Action Domain Responder_ may be one part of the request/response user interface, it may not be the entirety of the user interface.
 
+
 ## Other Patterns
 
-These are some of the other patterns generally seen as refinements of, replacements for, or complements to _Model View Controller_. See also [the pattern discussion from Derek Greer at LosTechies](http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/). Is ADR really one of these other, pre-existing patterns, just under a different name? Here are the other patterns mentioned by critics of ADR, with their similarities and differences explained.
+These are some of the other patterns generally seen as refinements of, replacements for, or complements to _Model View Controller_. See also [the pattern discussion from Derek Greer at LosTechies](http://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/).
+
+Is ADR really one of these other, pre-existing patterns, just under a different name? Here are the other patterns that have been mentioned by critics of ADR, with their similiarties and differences explained.
+
+### Data Context Interaction
+
+[DCI is described as a complement to MVC](https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction), not a replacement for MVC, since it is not a user interface pattern. As such, it is fair to call it a complement to ADR as well.
 
 ### Entity Boundary Interactor
 
 [EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) appears to go by several synonyms: ports and adapters, hexagonal architecture, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
 
-EBI is in part an alternative to MVC where the core application elements and behaviors, represented by _Interactor_ and _Entity_ objects, are separated from the incoming and outgoing data streams by a _Boundary_. This has the effect of cleanly separating the application itself from the details of the input and output mechanisms, so the core behaviors are never dependent on any particular element of the receiving and delivery systems. There is a great deal more to EBI architectures, such as use cases and roles.
-
-I confess to being unfamiliar with EBI, and so that description may be incorrect in whole or in part.  It occurs to me from my limited reading EBI may better describe domain interactions rather than MVC architectural patterns. If the above description is accurate, it appears that ADR maps only roughly to EBI:
-
--  The ADR _Action_ and _Responder_ elements may represent a web-specific EBI _Boundary_.
-
-- The ADR _Domain_ element may represent an EBI _Interactor_ element, encapsulating or otherwise hiding the EBI _Entity_ elements from the ADR _Action_.
-
-Alternatively, in ports-and-adapters or hexagonal architecture terms, it may be reasonable to think of the _Action_ as a port through which an EBI _Boundary_ is invoked as part of the ADR _Domain_. Finally, the _Responder_ could be seen as an adapter back through which the application data is returned.
-
-Regardless, it does not appear ADR is a direct replacement for EBI. It seems more likely that they are complements to each other.
-
-### Data Context Interaction
-
-[DCI is described as a complement to MVC](https://en.wikipedia.org/wiki/Data,_Context,_and_Interaction), not a replacement for MVC. I think it is fair to call it a complement to ADR as well.
+As with DCI, hexagonal architecture is not a user-interface pattern. It too might best seen as a *complement* to MVC, not a replacement for MVC, and so it is fair to regard it as a complement to ADR as well.
 
 ### Model View Adapter
 
@@ -176,13 +169,3 @@ To me, this seems like mixing concerns just a bit too much. I'd rather see a cle
 There seems to be no allowance for other kinds of HTTP responses, such as "Not Found."  That kind of response is clearly not a representation of the requested resource.
 
 It may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into a _Domain_ and an _Action_, and where the _Representation_ (i.e., the building of the response) is handled by a _Responder_.
-
-### Separated Presentation
-
-There are hints of ADR, especially the _Responder_ element, in [Separated Presentation](http://martinfowler.com/eaaDev/SeparatedPresentation.html), a meta-pattern that describes the general concern of separating domain code from presentation code. Fowler writes:
-
-> Presentation code would manipulate GUI widgets and structures in a rich client application, **HTTP headers and HTML in a web application,** or command line arguments and print statements in a command line application. We then divide the application into two logical modules with all the presentation code in one module and the rest in another module.
-
-(Emphasis added.)
-
-The _Responder_ element clearly fulfills that description. Putting together the HTTP Response headers and body are the sole responsibility of the Responder.

@@ -1,24 +1,24 @@
 # Implementation Notes
 
-_Action Domain Responder_ is a user interface pattern. It is not an entire application architecture in itself. With that in mind, this section describes other components, collaborations, and patterns which might be used in conjunction with ADR within an application architecture, along with notes and suggestions from ADR implementors.
+_Action Domain Responder_ is a user interface pattern. It is not an entire application architecture in itself. With that in mind, this section describes other components, collaborations, and patterns that might be used in conjunction with ADR within an application architecture, along with notes and suggestions from ADR implementors.
 
 ## Action
 
-The key heuristic of the _Action_ is it should contain almost no logic at all. It collects input from the HTTP request, passes that input to the _Domain_, then hands control over to the _Responder_.
+The key heuristic of the _Action_ is that its responsibilities are very limited. It collects input from the HTTP Request, passes that input to the _Domain_, then hands control over to the _Responder_.
 
 The _Action_ is intentionally very spare. Handle any business logic in the _Domain_ and any presentation logic in the _Responder_.
 
-The only exception here is the _Action_ may provide default values for user inputs when they are not present in the HTTP request; this is easily handled via ternaries rather than if/then blocks.
+As a rule of thumb, if an _Action_ contains any if/then blocks, try/catch blocks, loops, etc., then the _Action_ is doing too much. The only exception here is that the _Action_ may provide default values for user inputs when they are not present in the HTTP Request; this is easily handled via ternaries rather than if/then blocks.
 
 ### How Should the _Action_ Receive the HTTP Request?
 
-The HTTP Request might be injected into the _Action_ constructor, or it might be passed as a method argument invoking the _Action_ logic. Each is a valid way to pass the HTTP request, with its own tradeoffs.
+The HTTP Request might be injected into the _Action_ constructor, or it might be passed as a method argument invoking the _Action_ logic. Each is a valid way to pass the HTTP Request, and each has its own tradeoffs.
 
 ### Should the _Action_ Validate Input?
 
 A **user interface** component should not perform **domain logic** input validations.
 
-It is better to pass the user input to the _Domain_, and let the domain logic perform the validation. The _Domain_ can report back if the inputs are invalid, perhaps with domain-specific messages.
+It is better to pass the user input to the _Domain_, and let the domain logic perform the validation. The _Domain_ can then report back if the inputs are invalid, perhaps with domain-specific messages.
 
 ### Can the _Action_ Build a DTO as the Domain Input?
 
@@ -26,11 +26,11 @@ Yes. However, note that building the _data transfer object_ has to be completed 
 
 ### Can the _Action_ Use a Command Bus?
 
-Command Bus is a domain logic pattern, not a user interface pattern, and should be used in the _Domain_, not in the _Action_. For a longer discussion of this, see [Command Bus and Action-Domain-Responder](http://paul-m-jones.com/archives/6268).
+Command Bus is a domain logic pattern, not a user interface pattern, and should be used in the _Domain_, not in the _Action_. For a longer discussion of this, see [Command Bus and Action-Domain-Responder](http://paul-m-jones.com/post/2016/03/08/command-bus-and-action-domain-responder/).
 
 ### Should the _Action_ Handle Domain Exceptions?
 
-No. A **user interface** element should not be in charge of handling **domain logic** exceptions. The _Domain_ should handle its own exceptions, and report that back the _Action_, perhaps as part of a _Domain Payload_.
+No. A **user interface** element should not be in charge of handling **domain logic** exceptions. The _Domain_ should handle its own exceptions, and report the handling results back the _Action_, perhaps as part of a _Domain Payload_.
 
 ### Can the _Action_ Manipulate the _Responder_ Before Invoking It?
 
@@ -46,19 +46,19 @@ The following is also reasonable:
     $this->responder->setPayload($payload);
     return $this->responder->createResponse();
 
-However, take care there is no conditional logic required.  All presentation logic should go in the _Responder_; the _Action_ should only pass values to it and then invoke it.
+However, take care that no conditional logic is required.  All presentation logic should go in the _Responder_; the _Action_ should only pass values to it and then invoke it.
 
 ### Can the _Action_ Return the _Responder_ Instead of Invoking It?
 
 An earlier draft of this pattern noted, "the _Action_ may return a _Responder_, which is then invoked to return a response, which is then invoked to send itself."
 
-Why would code calling the _Action_ need back anything other than a response? If there is any logic to modifying how the _Responder_ builds the HTTP response, it would best be incorporated or composed into the _Responder_.
+But why would code calling the _Action_ need back anything other than a response? If there is any logic to modifying how the _Responder_ builds the HTTP Response, it would best be incorporated or composed into the _Responder_.
 
-As such, returning the _Responder_ to be invoked by something else to create the response (instead of returning a response directly) still maintains the separations properly, but should be considered an inferior form of the pattern.
+As such, returning the _Responder_ to be invoked by something else to create the response (instead of returning a response directly) still separates concerns properly, but should be considered an inferior form of the pattern.
 
 ### Can There Be a Single _Action_ for the Entire Interface?
 
-Because _Action_ logic is purposely very simple and always occurs in the same order, it is possible to create a single generic _Action_ class which handles all user interface interactions. However, this may preclude the use of dependency injection systems. In turn, the implementor will have to figure out how to give the _Action_ access to the necessary the _Domain_ and _Responder_ logic, and perhaps how to collect input in different cases.
+Because _Action_ responsbilities are purposely very limited, it is possible to create a single generic _Action_ class that handles all user interface interactions. However, this may preclude the use of dependency injection systems. In turn, the implementor will have to figure out how to give the _Action_ access to the necessary the _Domain_ and _Responder_ logic, and perhaps how to collect input in different cases.
 
 One such implementation is [Arbiter](https://github.com/arbiterphp/Arbiter.Arbiter). In short, a router or other web handler component builds an _Action_ [description](https://github.com/arbiterphp/Arbiter.Arbiter/blob/1.x/src/Action.php) composed of an input-collection callable, a domain-logic callable, and a response-building callable. The _Action_ [handler](https://github.com/arbiterphp/Arbiter.Arbiter/blob/1.x/src/ActionHandler.php) then invokes the callables in the proper order, resolving object instances as needed along the way.
 
@@ -66,7 +66,7 @@ One such implementation is [Arbiter](https://github.com/arbiterphp/Arbiter.Arbit
 
 Remember the _Domain_ in ADR is an **entry point** into domain logic. The domain logic itself might be as simple as a single infrastructure interaction, or it might be a complex layer of interconnected services and objects notifying and observing each other before returning their final status.
 
-Neither the _Action_ nor the _Responder_ care about the internal workings of the _Domain_, only that the _Domain_ can be invoked by the _Action_, and the result (if any) can be presented by the _Responder_.
+Neither the _Action_ nor the _Responder_ is concerned about the internal workings of the _Domain_. ADR is concerned only that the _Domain_ can be invoked by the _Action_, and that the results can be presented by the _Responder_.
 
 ### What Goes in the _Domain_?
 
@@ -76,7 +76,7 @@ One easy heuristic to remember is this: "If it touches storage, it goes in the _
 
 Now, what if the storage interaction is to retrieve only presentation values; for example, translations for template text, which require no business logic at all? It may be reasonable for the _Responder_ to retrieve such values itself.
 
-Even so, for the sake of a consistent heuristic, I opine it would be better for the _Action_ to pass to the _Domain_, as part of the _Domain_ input, an instruction to return those values as part of its returned payload.
+Even so, for the sake of a consistent heuristic, I opine that it would be better for the _Action_ to pass to the _Domain_ (as part of the _Domain_ input) an instruction to return those values as part of its returned payload.
 
 ### Proper Separation From User Interface
 
@@ -118,9 +118,9 @@ The use of _Template View_, _Two Step View_, and _Transform View_ implementation
 
 ### Widgets and Panels
 
-Some presentations may have several different panels, content areas, or subsections which have different data sources. These may be handled through a template system or other presentation subsystem, but they should not be in charge of retrieving their own data from the _Domain_. Instead, the _Domain_ should provide all the needed data for these widgets when the _Action_ invokes it.
+Some presentations may have several different panels, content areas, or subsections that have different data sources. These may be handled through a template system or other presentation subsystem, but they must not be in charge of retrieving their own data from the _Domain_. Instead, the _Domain_ should provide all the needed data for these widgets when the _Action_ invokes it.
 
-For a beginning example of how to do so, see [Solving The “Widget Problem” In ADR](http://paul-m-jones.com/archives/6760).
+For a beginning example of how to do so, see [Solving The “Widget Problem” In ADR](http://paul-m-jones.com/post/2017/12/28/solving-the-widget-problem-in-adr/).
 
 ## Other Topics
 
@@ -132,7 +132,7 @@ However, it would be inefficient for an HTTP request to pass through the web han
 
 As such, it may be reasonable for the web handler, after routing a request, to look ahead to the _Responder_ for the routed _Action_ and determine if the _Responder_ can provide any of the acceptable content types in the request.
 
-This would not be a negotiation per se, merely a check to see if the `Accepts` header contains any of the types the _Responder_ states it can handle. Since the web handler and the _Responder_ all exist in the user interface layer, this does not represent an inappropriate dependency.
+This would not be a negotiation per se, merely a check to see if the `Accepts` header contains any of the types that the _Responder_ states it can handle. Since the web handler and the _Responder_ all exist in the user interface layer, this does not represent an inappropriate dependency.
 
 For an example, see the Radar framework; specifically:
 
@@ -159,11 +159,11 @@ However, some session implementations may be so thoroughly intertwined in a lang
 
 - `session_commit()` writes the `$_SESSION` superglobal data back to storage, and writes a cookie header directly to the outgoing response buffer. The combines the concerns of infrastructure interactions and presentations.
 
-These kinds of situations make it difficult to intercept the automatic input collection process with an HTTP request object, the automatic output process with an HTTP response object, and of course the infrastructure and domain logic concerns.
+These kinds of situations make it difficult to intercept the automatic input collection process with an HTTP Request object, the automatic output process with an HTTP Response object, and the infrastructure and domain logic concerns.
 
-This is not an ADR issue per se, but with how PHP session functions combine request-reading, storage-interaction, and response-sending. This becomes a problem only when using HTTP request/response objects that are not hooked into automated PHP behaviors.
+This is an issue not with ADR per se, but with how PHP session functions combine request-reading, storage-interaction, and response-sending.  It becomes a problem only when using HTTP Request/Response objects that are not hooked into automated PHP behaviors.
 
-If you *can* find a way around it, you should. One way is to [disable some elements of automatic session handling while leaving others in place](http://paul-m-jones.com/archives/6310). Another may be to avoid automatic session handling entirely, in favor of a domain-logic-friendly solution such as [the one presented here](https://www.futureproofphp.com/2017/05/02/best-way-handle-sessions-adr/).
+If you *can* find a way around it, you should. One way is to [disable some elements of automatic session handling while leaving others in place](http://paul-m-jones.com/post/2016/04/12/psr-7-and-session-cookies/). Another may be to avoid automatic session handling entirely, in favor of a domain-logic-friendly solution such as [the one presented here](https://www.futureproofphp.com/2017/05/02/best-way-handle-sessions-adr/).
 
 Unfortunately, while there **ought** to a clean separation of input collection, reading from and writing to storage, and output presentation, doing so might not be practical under some language and framework constraints. In those cases, session work with HTTP request and response objects might have to be done in a way which is not as clean as we might prefer.
 
@@ -181,15 +181,15 @@ As with sessions, authentication work **should** be done in the _Domain_, since 
 
 #### Routing
 
-If authentication work belongs in the _Domain_, how does one do routing? Often, developers will want to restrict some routes to authenticated users only. Does this mean the router, a user interface component, must have access to the domain layer?
+Often, developers will want to restrict some routes to authenticated users only. Does that mean the router, a user interface component, must have access to the domain layer where authentication logic resides?
 
-The answer is maybe not. If the route condition is based on something like "Is the user authenticated at all, regardless of who it is?" then the answer is to check not for **authentication** but **anonymity**. That is, if the incoming HTTP request has no credentials or tokens associated with it, then the request is anonymous and can be routed appropriately. Authentication work involving credential storage and validation can then be removed from the router and placed into the _Domain_.
+The answer is, "maybe not."  If the route conditions are based on something like "Is the user authenticated at all, regardless of who it is?", then the answer is to check not for **authentication** but for **anonymity**. That is, if the incoming HTTP Request has no credentials or tokens associated with it, then the request is anonymous, and can be routed appropriately. Authentication work involving credential storage and validation can then be removed from the router and placed into the _Domain_.
 
 #### Applicability
 
 There is a case to be made, because authentication identifies and manages a user interaction, it belongs in the user interface code. I am intuitively opposed to doing so, but it is a supportable point of view.
 
-The problem then is, how is the user to be represented to the domain logic? We want to avoid the domain logic being dependent on a particular user interface component.
+The problem then becomes: how is the user to be represented to the domain logic? We want to avoid the domain logic being dependent on a particular user interface component.
 
 One solution here is for the user-interface code to create a user component provided by the domain layer. That user component can then be passed into the _Action_, whether as a constructor parameter, as an added HTTP request parameter, or in some other way. The _Action_ can then treat the user component as input to the _Domain_, and everything proceeds from there.
 
@@ -201,7 +201,7 @@ Whereas authentication identifies a user, authorization controls what the user i
 
 As with authentication, how is one to do routing (a user interface concern) if the router cannot tell if the user is allowed to be dispatched along a particular route? The answer is to realize authorization is not over particular routes, but over the particular _Domain_ functionality to which those routes lead. It might also be over functionality regarding a specific resource within the _Domain_, in which case the resource must be loaded (in part or in whole) by the _Domain_ as part of the authorization check.
 
-Thus, it is the _Domain_ that should check if the user is allowed to perform a particular function; if so, the _Domain_ continues, but if not, the _Domain_ can report back appropriately. This keeps the _Domain_, instead of a user interface component, as the proper authority over its functionality.
+Thus, it is the _Domain_ that should check if the user is allowed to perform a particular function. If so, the _Domain_ continues; but if not, the _Domain_ can report back appropriately. This keeps the _Domain_, instead of a user interface component, as the proper authority over domain layer functionality.
 
 For an extended conversation about this, see this discussion on [Auth Gates and User Roles](https://www.reddit.com/r/PHP/comments/64910c/laravel_auth_gates_and_user_roles/?sort=old).
 
@@ -219,7 +219,7 @@ Although ADR is envisioned as a user interface pattern for server-side applicati
 
 - the _Responder_, instead of generating an HTTP response, uses the _Domain_ result to write to STDOUT and STDERR.
 
-The _Domain_, in this case, may use a logging system writing to STDOUT and STDERR as well, to provide continuous output back to the user. This is not necessarily a violation of ADR, since the logging is incidental to the operation of the _Domain_, but it does show how the pattern is not necessarily well-suited the environment.
+The _Domain_, in this case, may use a logging or notifier/observer system that writes to STDOUT and STDERR as well, to provide continuous output back to the user. This is not necessarily a violation of ADR, since the logging and notification are incidental to the operation of the _Domain_, but it does show how the pattern is not necessarily well-suited the environment.
 
 For one example of this kind of non-interactive use, see [Cadre CliAdr](https://github.com/cadrephp/Cadre.CliAdr).
 

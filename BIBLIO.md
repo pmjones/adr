@@ -27,9 +27,9 @@ These relate to the "Model 2" (mis-)use of the term _Model View Controller_ to d
 
 These are more recent "looking back" and "history of" articles talking about MVC and Model 2.
 
-- 2009: [Model View Controller Explained](https://www.tomdalling.com/software-design/model-view-controller-explained/)
 - 2004: [MVC, Model 2, Java WebApps, (and callcc, why not)](http://kasparov.skife.org/blog/2004/11/05/)
 - 2007: [Interactive Application Architecture Patterns](https://lostechies.com/derekgreer/2007/08/25/interactive-application-architecture/)
+- 2009: [Model View Controller Explained](https://www.tomdalling.com/software-design/model-view-controller-explained/)
 - 2011: [Model View Controller: History, theory and usage](https://web.archive.org/web/20110325084040/http://amix.dk/blog/post/19615)
 - 2011: [Sproutcore MVC VS Rails MVC](https://gmoeck.github.io/2011/03/10/sproutcore-mvc-vs-rails-mvc.html)
 - 2011: [MVC Is Not An Application Architecture](https://vimeo.com/40968850)
