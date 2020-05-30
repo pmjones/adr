@@ -4,9 +4,9 @@
 
 Adherents to _Model View Controller_, knowing its origins as a graphical user interface pattern, might rationalize its validity as a pattern on the server side like so:
 
-- The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client browser (as _Controller_) sends an HTTP request event to the server when the user clicks a link, or a submits a form, etc.
+- The _Controller_ exists on the client browser. The browser receives button clicks, mouse movements, and key presses, just like in the GUI pattern. The client browser (as _Controller_) sends an HTTP Request event to the server when the user clicks a link, or a submits a form, etc.
 
-- The _Model_ exists on the server. When the client browser (as _Controller_) sends an HTTP request event to the server, the client receives back the updated _Model_ data as an HTTP response event. (The data may be an entire page or only a portion thereof.) This is like the GUI pattern as well, except the client is interacting with remote, instead of local, resources encapsulating business logic.
+- The _Model_ exists on the server. When the client browser (as _Controller_) sends an HTTP Request event to the server, the client receives back the updated _Model_ data as an HTTP Response event. (The data may be an entire page or only a portion thereof.) This is like the GUI pattern as well, except the client is interacting with remote, instead of local, resources encapsulating business logic.
 
 - The _View_ exists on the client browser. The client browser (as _View_), receiving the updated _Model_ data in the form of an HTTP Response, re-renders its screen with the changes, either as an entirely new page or as changes to an existing page.
 
@@ -26,11 +26,11 @@ Adherents to "Model 2" MVC may object that _Action Domain Responder_ could be de
 
 Those alternative formulations are not as good a description of server-side components and collaborations as ADR is.
 
-One reason has to do with the origins of MVC in graphical user interfaces, in particular the continuous interaction between many separate MVC triads in memory to notify each other of updates. On the server side, no such continuous messaging occurs. There only one interaction: that of receiving the HTTP Request and then sending the HTTP Response in return.  ADR reflects this reality very well: the Action invokes the Domain, then it invokes the Responder, but neither the Domain nor Responder communicate any changes to each other.
+One reason has to do with the origins of MVC in graphical user interfaces, in particular the continuous interaction between many separate MVC triads in memory to notify each other of updates. On the server side, no such continuous messaging occurs. There only one interaction: that of receiving the HTTP Request, and then sending the HTTP Response in return.  ADR reflects this reality: the Action invokes the Domain, then it invokes the Responder, but neither the Domain nor Responder communicate any changes to each other.
 
-Another reason is the "Model 2" exhortation to place all processing logic in the _Controller_. This strikes me as a poor separation of concerns; business logic should go in a domain layer, not in a user interface component.
+Another reason is the "Model 2" exhortation to place all processing logic in the _Controller_. This is a poor separation of concerns; business logic should go in the domain layer, not in the user interface layer.
 
-It is better to make a clean break with the term MVC (with its graphical user interface history) and use a new term (ADR) which is specifically for server-side over-the-network request/response environments.
+It is better to make a clean break with the term MVC (with its graphical user interface history) and use a new term (ADR) specifically for server-side over-the-network request/response environments.
 
 ## Missing Components
 
@@ -44,16 +44,16 @@ Because ADR is an HTTP-specific user interface pattern, the presence of HTTP Req
 
 The ADR pattern does not describe routing, dispatching, or other web handler elements. Those elements are more properly the purview of [_Front Controller_](https://www.martinfowler.com/eaaCatalog/frontController.html). When it comes to ADR, a _Front Controller_ might:
 
-- inspect and/or modify the HTTP request before dispatching it to the _Action_
+- inspect and/or modify the HTTP Request before dispatching it to the _Action_,
 
-- inspect and/or modify the HTTP response returned by the _Action_
+- inspect and/or modify the HTTP Response returned by the _Action_,
 
-- dispatch directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed
+- dispatch directly to a _Responder_ without passing through an _Action_, in particular when there is no _Domain_ interaction needed,
 
 - bypass any ADR subsystem entirely in favor of some other subsystem, such as ...
 
-    - when routing fails due to URL path, HTTP method, or other mismatches; or,
-    - when the requested content-type cannot be presented by a _Responder_; or,
+    - when routing fails due to URL path, HTTP method, or other mismatches,
+    - when the requested content-type cannot be presented by a _Responder_, or
     - when authentication credentials or session identifiers are not present.
 
 This is to say that although _Action Domain Responder_ may be one part of the request/response user interface, it may not be the entirety of the user interface.
@@ -71,9 +71,9 @@ Is ADR really one of these other, pre-existing patterns, just under a different 
 
 ### Entity Boundary Interactor
 
-[EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) appears to go by several synonyms: ports and adapters, hexagonal architecture, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
+[EBI](http://www.whitewashing.de/2012/08/13/oop_business_applications_entity_boundary_interactor.html) goes by several synonyms: hexagonal architecture, ports and adapters, and [ECB](http://www.cs.sjsu.edu/~pearce/modules/patterns/enterprise/ecb/ecb.htm) (Entity-Control-Boundary). It is further described as part of a [Clean Architecture](http://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html) by Robert Martin.
 
-As with DCI, hexagonal architecture is not a user-interface pattern. It too might best seen as a *complement* to MVC, not a replacement for MVC, and so it is fair to regard it as a complement to ADR as well.
+As with DCI, EBI/hexagonal/etc. is not a user interface pattern, so it too might best seen as a complement to MVC, not a replacement for MVC --- and likewise to regard it as a complement to ADR.
 
 ### Model View Adapter
 
@@ -97,13 +97,13 @@ ADR, in contrast, is for request/response environments.
 
 > N.b.: [MVP has been retired](http://www.martinfowler.com/eaaDev/ModelViewPresenter.html) in favor of [_Supervising Controller_](http://www.martinfowler.com/eaaDev/SupervisingPresenter.html) and [_Passive View_](http://www.martinfowler.com/eaaDev/PassiveScreen.html).
 
-At first, this seems like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each other as noted on the _Passive View_ page. From Fowler's narrative:
+At first, this looks like a candidate match for ADR, especially in that the _Passive View_ and the _Model_ have no dependencies on each other as noted on the _Passive View_ page. From Fowler's narrative:
 
 > Supervising Controller uses a controller both to handle input response but also to manipulate the view to handle more complex view logic ...
 >
 > A Passive View handles this by reducing the behavior of the UI components to the absolute minimum by using a controller that not just handles responses to user events, but also does all the updating of the view. This allows testing to be focused on the controller with little risk of problems in the view.
 
-Let us examine this a little more closely.
+Let us examine this a little more closely:
 
 - _Model_ and the _Domain_ map closely, as they do in MVC.
 
@@ -117,13 +117,15 @@ In all, this seems a case of close-but-not-quite.
 
 ### Model View ViewModel
 
-[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) seems to map only incompletely to ADR. The _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
+[MVVM](https://en.wikipedia.org/wiki/Model_View_ViewModel) maps only incompletely to ADR.
+
+True, the _Model_ in MVVM maps closely to the _Model_ in MVC and the _Domain_ in ADR. Similarly, the _View_ in MVVM maps closely to the _View_ in MVC and the _Responder_ in ADR.
 
 However, the _ViewModel_ does not map well to a _Controller_ in MVC or an _Action_ in ADR. Because ADR is a refinement of MVC, it seems reasonable to think comparisons between MVVM and MVC would apply equally well to ADR.
 
 For an extended description of those differences, please see these articles from [Joel Wenzel](http://joel.inpointform.net/software-development/mvvm-vs-mvp-vs-mvc-the-differences-explained/), [Avtar Singh Sohi](http://www.codeproject.com/Articles/228214/Understanding-Basics-of-UI-Design-Pattern-MVC-MVP), [Rachel Appel](http://www.rachelappel.com/comparing-the-mvc-and-mvvm-patterns-along-with-their-respective-viewmodels), and [Niraj Bhatt](https://nirajrules.wordpress.com/2009/07/18/mvc-vs-mvp-vs-mvvm/).
 
-In email discussions with an interested party, I was informed MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. If this is true, then a _ViewModel_ is just as useful in ADR as it would be in MVC. Perhaps this could be considered a variation on [_Domain Payload_](https://vaughnvernon.co/?page_id=40) as used in ADR.
+In email discussions with an interested party, I was informed MVVM is just like MVC, but with an added _ViewModel_ to intermediate between the _View_ and _Model_. In that case, a _ViewModel_ is just as useful in ADR as it would be in MVC. Perhaps _ViewModel_ could be considered a variation on [_Domain Payload_](https://vaughnvernon.co/?page_id=40) as used in ADR.
 
 ### Models Operations Views Events
 
@@ -134,9 +136,7 @@ From [the originating site](http://cirw.in/blog/time-to-move-on):
 > - Views mediate between your application and the user.
 > - Events are used to join all these components together safely.
 
-This is an interesting pattern in itself. The idea of _Models_ and _Operations_ seems to map well to Domain-Driven Design idioms.
-
-However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:
+This is an interesting pattern; _Models_ and _Operations_ are reminiscent of to Domain-Driven Design idioms. However, I do not think MOVE is a close fit for ADR, specifically because of this paragraph:
 
 > Listening on events is what gives MOVE (and MVC) the inversion of control that you need to allow models to update views without the models being directly aware of which views they are updating.
 
@@ -148,11 +148,11 @@ In ADR, the _Domain_ and the _Responder_ do not update each other. The _Domain_ 
 
 > PAC is used as a hierarchical structure of agents, each consisting of a triad of presentation, abstraction and control parts. The agents (or triads) communicate with each other only through the control part of each triad. It also differs from MVC in that within each triad, it completely insulates the presentation (view in MVC) and the abstraction (model in MVC). This provides the option to separately multithread the model and view which can give the user experience of very short program start times, as the user interface (presentation) can be shown before the abstraction has fully initialized.
 
-This does not seem to fit the description of ADR very well.
+This does not fit the description of ADR very well.
 
 ### Resource Method Representation
 
-[RMR](http://www.peej.co.uk/articles/rmr-architecture.html) and ADR seem very similar, and seem to map well to each other:
+[RMR](http://www.peej.co.uk/articles/rmr-architecture.html) and ADR are very similar, and map well to each other:
 
     Resource       <--> Domain
     Method         <--> Action
@@ -162,10 +162,10 @@ However, some nuances of RMR make me think they are still somewhat different fro
 
 > So in an OO language, a HTTP resource can be thought of as an object with private member variables and a number of public methods that correspond to the standard HTTP methods. From an MVC point of view, a resource can be thought of as a model with a bit of controller thrown in.
 
-To me, this seems like mixing concerns just a bit too much. I'd rather see a cleaner separation of the domain model from the action being applied to the domain.
+To me, this mixes concerns just a bit too much. I'd rather see a cleaner separation of the domain model from the action being applied to the domain.
 
 > So the representation is like a view in MVC, we give it a resource object and tell it to serialize the data into its output format.
 
-There seems to be no allowance for other kinds of HTTP responses, such as "Not Found."  That kind of response is clearly not a representation of the requested resource.
+There seems to be no allowance for other kinds of HTTP Responses, such as "Not Found."  That kind of response is clearly not a representation of the requested resource.
 
 It may be that ADR could be considered an expanded or superset variation of RMR, one where a _Resource_ and an action one can perform on it are cleanly separated into a _Domain_ and an _Action_, and where the _Representation_ (i.e., the building of the response) is handled by a _Responder_.

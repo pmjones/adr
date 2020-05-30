@@ -2,7 +2,7 @@
 
 ## Origin (March 2014)
 
-While writing Chapter 10 of [MLAPHP](https://leanpub.com/mlaphp), on extracting presentation logic to _View_ files in an MVC structure, I realized there was no logical place to put the refactored HTTP response header work. HTTP headers and status are not business logic, but at the same time, no template system had any support for them. This led me to realize in a server-side application, in a request/response over-the-network environment, the presentation delivered from a server-side application is the entire HTTP response and not just the body of the response message.
+While writing Chapter 10 of [Modernizing Legacy Applications in PHP](https://leanpub.com/mlaphp), on extracting presentation logic to _View_ files in an MVC structure, I realized there was no logical place to put the refactored HTTP response header work. HTTP headers and status are not business logic, but at the same time, no template system had any support for them. This led me to realize in a server-side application, in a request/response over-the-network environment, the presentation delivered from a server-side application is the entire HTTP response and not just the body of the response message.
 
 ## Initial Draft (May 2014)
 

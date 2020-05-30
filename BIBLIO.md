@@ -15,7 +15,7 @@ These relate to the original Smalltalk-80 _Model View Controller_ pattern to des
 
 ## Model 2
 
-These relate to the "Model 2" (mis-)use of the term _Model View Controller_ to describe server-sider over-the-network request/response interfaces.
+These relate to the "Model 2" (mis-)use of the term _Model View Controller_ to describe server-side over-the-network request/response interfaces.
 
 - 1999: [JSP model 2 architecture](https://en.wikipedia.org/wiki/JSP_model_2_architecture)
 - 1999: [Understanding JavaServer Pages Model 2 architecture: Exploring the MVC design pattern}(https://www.javaworld.com/article/2076557/java-web-development/understanding-javaserver-pages-model-2-architecture.html)
