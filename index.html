@@ -34,12 +34,12 @@
 <!-- -->
 
 <p><em>Action Domain Responder</em> organizes a single user interface interaction between an HTTP client and a HTTP server-side application into three distinct roles.</p>
-<p><a href="./adr.png" target="_blank"><img src="./adr.png" alt="ADR" style="max-width:100%;"></a></p>
+<p><a href="https://github.com/pmjones/adr/blob/master/adr.png" target="_blank" rel="noopener noreferrer"><img src="adr.png" alt="ADR" style="max-width:100%;"></a></p>
 <h3>
 <a id="user-content-components" class="anchor" href="#components" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Components</h3>
-<p><em>Action</em> is the logic to connect the <em>Domain</em> and <em>Responder</em>. It invokes the <em>Domain</em> with inputs collected from the HTTP Request, then invokes the <em>Responder</em> with the data it needs to build an HTTP Response.</p>
-<p><em>Domain</em> is an entry point to the domain logic forming the core of the application, modifying state and persistence as needed. This may be a Transaction Script, Service Layer, Application Service, or something similar.</p>
-<p><em>Responder</em> is the presentation logic to build an HTTP Response from the data it receives from the <em>Action</em>. It deals with status codes, headers and cookies, content, formatting and transformation, templates and views, and so on.</p>
+<p><em>Action</em> is the logic to connect the <em>Domain</em> and <em>Responder</em>. It invokes the <em>Domain</em> with inputs collected from the HTTP Request, then invokes the <em>Responder</em> with the data needed to build an HTTP Response.</p>
+<p><em>Domain</em> is an entry point to the domain logic forming the core of the application. It may be a <em>Transaction Script</em>, <em>Service Layer</em>, <em>Application Service</em>, or something similar.</p>
+<p><em>Responder</em> is the presentation logic to build an HTTP Response using data it receives from the <em>Action</em>. It deals with status codes, headers and cookies, content, formatting and transformation, templates and views, and so on.</p>
 <h3>
 <a id="user-content-collaborations" class="anchor" href="#collaborations" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Collaborations</h3>
 <ol>
@@ -75,8 +75,7 @@
 <li><a href="https://github.com/pmjones/adr/blob/master/MENTIONS.md">ADR discussions, mentions, implementations, etc.</a></li>
 </ul>
 <p>Example code resides in the <a href="https://github.com/pmjones/adr-example"><code>example</code></a> repository.</p>
-<hr>
-<p>You can read about the history of this pattern <a href="https://github.com/pmjones/adr/blob/master/HISTORY.md">here</a>, and you can find the acknowledgments <a href="https://github.com/pmjones/adr/blob/master/ACKNOWLEDGEMENTS.md">here</a>.</p>
+<p>You can also find out about <a href="https://github.com/pmjones/adr/blob/master/HISTORY.md">the history of this pattern</a>, <a href="https://github.com/pmjones/adr/blob/master/BIBLIO.md">the research bibliography</a>, and <a href="https://github.com/pmjones/adr/blob/master/ACKNOWLEDGEMENTS.md">the author's acknowledgments</a>.</p>
 
 <!-- -->
 
@@ -86,7 +85,7 @@
     <!-- FOOTER  -->
     <div id="footer_wrap" class="outer">
       <footer class="inner">
-        <p class="copyright">Copyright &copy; 2014-2018, <a href="http://paul-m-jones.com">Paul M. Jones</a>.</p>
+        <p class="copyright">Copyright &copy; 2014-2020, <a href="http://paul-m-jones.com">Paul M. Jones</a>.</p>
       </footer>
     </div>
 
