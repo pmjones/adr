@@ -1,8 +1,8 @@
 # Tradeoffs
 
-One benefit overall is ADR more closely describes the current day-to-day practice and work of web interactions than "Model 2" MVC. A request comes in and gets dispatched to an action; the action interacts with the domain and emits a response. The response work, including both headers and content, is cleanly separated from the input collection and the domain logic.
+One benefit overall is that ADR more closely describes the current day-to-day practice and work of web interactions than "Model 2" MVC. A request comes in and gets dispatched to an action; the action interacts with the domain and emits a response. The response work, including both headers and content, is cleanly separated from the input collection and the domain logic.
 
-One drawback is we end up with more classes in the application. Although there are degenerate forms which still maintain separation between input collection, domain logic, and presentation, it will usually be the case that each _Action_ goes in its own class and each _Responder_ also goes in its own class. For a "Model 2" MVC class of five action methods, that may mean as many as five _Action_ classes and five _Responder_ classes.
+One drawback is that we end up with more classes in the application. Although there are degenerate forms which still maintain separation between input collection, domain logic, and presentation, it will usually be the case that each _Action_ goes in its own class and each _Responder_ also goes in its own class. For a "Model 2" MVC class of five action methods, that may mean as many as five _Action_ classes and five _Responder_ classes.
 
 This drawback may not be so terrible in the longer term. Individual classes may lead to cleaner or shallower inheritance hierarchies. It may also lead to better testability of the _Action_ separate from the _Responder_. These will play themselves out differently in different systems. Others have noted many classes may be more easily manageable via IDEs and editors than fewer classes but more methods since class lookups are frequently easier than method lookups.
 
