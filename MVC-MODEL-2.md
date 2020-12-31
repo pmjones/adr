@@ -46,7 +46,7 @@ It turns out that there not just one-and-only-one MVC triad to covers an applica
 
 Martin Fowler in his [GUI Architectures](http://martinfowler.com/eaaDev/uiArchs.html) essay confirms that "there's not just one view and controller, you have a view-controller pair for each element of the screen, each of the controls, and the screen as a whole." So there are lots of models, views, and controllers interacting as user interfaces within the application.
 
-Further, there is a subject/observer messaging system conncting all these separate MVC triads together, so that they can continuously notify each other of changes. Back to Krasner and Pope:
+Further, there is a subject/observer messaging system connecting all these separate MVC triads together, so that they can continuously notify each other of changes. Back to Krasner and Pope:
 
 > Views and controllers of a model are registered in a list as dependents of the model, to be informed whenever some aspect of the model is changed. When a model has changed, a message is broadcast to notify all of its dependents about the change.
 
