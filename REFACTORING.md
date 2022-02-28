@@ -427,11 +427,11 @@ class BlogService
         $blog = $this->model->newInstance($data);
 
         if (! $blog->isValid()) {
-            return new Payload('INVALID', [$blog => 'blog']);
+            return new Payload('INVALID', ['blog' => $blog]);
         }
 
         $blog->save();
-        return new Payload('SAVED', [$blog => 'blog']);
+        return new Payload('SAVED', ['blog' => $blog]);
     }
 }
 ```
